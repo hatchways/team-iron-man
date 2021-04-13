@@ -8,7 +8,22 @@
   padding-bottom: 3%;
 }
 
+form {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px;
+}
+
 hr {
   width: 10%;
   border: 1px solid #00e676;
+}
+
+input {
+  border: none;
+  width: 80%;
+}
+
+input:focus {
+  outline: none;
 }
