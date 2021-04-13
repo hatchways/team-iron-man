@@ -6,12 +6,16 @@ import { theme } from "./themes/theme";
 import LandingPage from "./pages/Landing";
 
 import "./App.css";
+import AssignRoles from './pages/AssignRoles';
 
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <Route path="/" component={LandingPage} />
+        <div className="App">
+          <Route path="/assignroles" component={AssignRoles} />
+        </div>
       </BrowserRouter>
     </MuiThemeProvider>
   );
