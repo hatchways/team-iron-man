@@ -3,7 +3,8 @@ Component for inviting friends to a new game.
 */
 
 import React, { useState, useEffect } from "react";
-import { Grid, Button, Divider } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
+import LinkIcon from '@material-ui/icons/Link';
 
 function GameInvitation() {
 
@@ -19,10 +20,14 @@ function GameInvitation() {
     // Add the input to the list of emails then clear the input.
     // Need to implement actual sending of the email.
     const sendInvitation = () => {
-        setEmailList([...emailList, emailInput]);
-        setEmailInput("");
 
-        // Implement sending of the actual invitation here.
+        // Only if the user input is not empty.
+        if (emailInput.length > 0) {
+            setEmailList([...emailList, emailInput]);
+            setEmailInput("");
+
+            // Implement sending of the actual invitation here.
+        }
     }
 
     return (
@@ -39,7 +44,7 @@ function GameInvitation() {
                             emailList.map(
                                 email =>
                                     <React.Fragment>
-                                        <span className="invitation">{email + " invited"}</span>
+                                        <span className="invitation">&#10004; {email + " invited"}</span>
                                         <br />
                                     </React.Fragment>)}
                     </div>
@@ -47,8 +52,8 @@ function GameInvitation() {
                 <Grid item xs={3}>
                     <div className="item">
                         Or share link:
-                        <br />
-                        <Button variant="outlined">Copy</Button>
+                        <br /><br />
+                        <Button variant="outlined"><LinkIcon />Copy</Button>
                     </div>
                 </Grid>
             </Grid>
