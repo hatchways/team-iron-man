@@ -4,8 +4,8 @@
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
   border-radius: 10px;
-  padding: 5%;
-  padding-bottom: 8%;
+  padding: 20px;
+  padding-bottom: 50px;
 }
 
 form {
@@ -42,4 +42,7 @@ input:focus {
 
 .item-left {
   text-align: left;
+  padding-right: 80px;
+  padding-left: 50px;
+  border-right: 1px solid lightgray;
 }

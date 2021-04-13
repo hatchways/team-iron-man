@@ -3,7 +3,7 @@ Component for inviting friends to a new game.
 */
 
 import React, { useState, useEffect } from "react";
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Divider } from '@material-ui/core';
 
 function GameInvitation() {
 
@@ -27,7 +27,7 @@ function GameInvitation() {
 
     return (
         <div>
-            <Grid container spacing={0}>
+            <Grid container alignItems="center">
                 <Grid item xs={9}>
                     <div className="item item-left">
                         Invite friends via email:
