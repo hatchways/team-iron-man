@@ -27,3 +27,9 @@ input {
 input:focus {
   outline: none;
 }
+
+.invitation {
+  text-align: left;
+  font-style: italic;
+  color: gray;
+}
