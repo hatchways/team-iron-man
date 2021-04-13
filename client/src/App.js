@@ -13,7 +13,9 @@ function App() {
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <Route path="/" component={LandingPage} />
-        <Route path="/newgame" component={NewGame} />
+        <div className="App">
+          <Route path="/newgame" component={NewGame} />
+        </div>
       </BrowserRouter>
     </MuiThemeProvider>
   );
