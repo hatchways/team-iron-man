@@ -13,15 +13,23 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
-import "../styles/assignRoles.css";
 
 const useStyles = makeStyles({
     grid: {
-        marginLeft: '50px',
+        marginLeft: '100px',
+        marginBottom: '30px',
         width: '100%',
         border: '1px solid theme.palette.divider',
         borderRadius: 'theme.shape.borderRadius',
         backgroundColor: 'theme.palette.background.paper',
+    },
+    list: {
+        width: '50%',
+        marginLeft: '140px',
+        marginBottom: '20px'
+    },
+    listItem: {
+        marginLeft: '-10px'
     },
     sectionOne: {
         marginRight: '20%'
@@ -37,54 +45,52 @@ const useStyles = makeStyles({
 export default function AvailableRoles() {
     const classes = useStyles();
     return (
-        <div>
-            <List>
-                <ListItem>
+        <React.Fragment>
+            <List className={classes.list}>
+                <ListItem className={classes.listItem}>
                     <ListItemText primary="Red Spy Master" align="center"/>
                     <Fab size="small" color="default" aria-label="Add">
                         <AddIcon />
                     </Fab>
                 </ListItem>
                 <Divider variant="inset" component="li" />
-                <ListItem>
+                <ListItem className={classes.listItem}>
                     <ListItemText primary="Red Field Agent" align="center"/>
                     <Fab size="small" color="default" aria-label="Add">
                         <AddIcon />
                     </Fab>
                 </ListItem>
                 <Divider variant="inset" component="li" />
-                <ListItem>
+                <ListItem className={classes.listItem}>
                     <ListItemText primary="Blue Spy Master" align="center"/>
                     <Fab size="small" color="default" aria-label="Add">
                         <AddIcon />
                     </Fab>
                 </ListItem>
                 <Divider variant="inset" component="li" />
-                <ListItem>
+                <ListItem className={classes.listItem}>
                     <ListItemText primary="Blue Field Agent" align="center"/>
                     <Fab size="small" color="default" aria-label="Add">
                         <AddIcon />
                     </Fab>
                 </ListItem>
             </List>
-            <div>
-                <Grid container alignItems="center" className={classes.grid}>
-                    <Typography color="textPrimary" style={{ fontWeight: 600 }} className={classes.sectionOne}>
-                        Players ready for match:
-                    </Typography>
-                    <Divider orientation="vertical" flexItem />
-                    <List>
-                        <ListItem>
-                            <Typography color="textPrimary" style={{ fontWeight: 600 }} align="center" className={classes.sectionTwo}>
-                            Share match id:
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Button variant="contained" size="small" startIcon={<InsertLinkIcon  />}>Copy</Button>
-                        </ListItem>
-                    </List>
-                </Grid>
-            </div>
-        </div>
+            <Grid container alignItems="center" className={classes.grid}>
+                <Typography color="textPrimary" style={{ fontWeight: 600 }} className={classes.sectionOne}>
+                    Players ready for match:
+                </Typography>
+                <Divider orientation="vertical" flexItem />
+                <List>
+                    <ListItem>
+                        <Typography color="textPrimary" style={{ fontWeight: 600 }} align="center" className={classes.sectionTwo}>
+                        Share match id:
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Button variant="contained" size="small" startIcon={<InsertLinkIcon  />}>Copy</Button>
+                    </ListItem>
+                </List>
+            </Grid>
+        </React.Fragment>
     );
 }
