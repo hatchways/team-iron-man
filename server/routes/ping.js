@@ -7,7 +7,7 @@ router.post("/", function(req, res, next) {
   if (
     teamName &&
     process.env.TEAM_MEMBERS &&
-    process.env.TEAM_MEMBERS.indexOf(teamName) >= 0
+    process.env.TEAM_MEMBERS.split(", ").indexOf(teamName) >= 0
   )
     res.status(200).send({ response: `${teamName} is part of the team!` });
   else
