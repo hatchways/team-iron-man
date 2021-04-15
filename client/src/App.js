@@ -8,8 +8,12 @@ import LandingPage from "./pages/Landing";
 import "./App.css";
 
 function App() {
+	//use setNav to toggle a differnt Navigation bar
+	const [toggleNav, setNav] = useState(false);
+
   return (
     <MuiThemeProvider theme={theme}>
+     <Navigation toggleNav={toggleNav}/>
       <BrowserRouter>
         <Route path="/" component={LandingPage} />
       </BrowserRouter>
