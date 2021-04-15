@@ -53,7 +53,7 @@ function GameInvitation() {
                     <div className="item">
                         Or share link:
                         <br /><br />
-                        <Button variant="outlined" onClick={() => { navigator.clipboard.writeText("placeholder") }}><LinkIcon />Copy</Button>
+                        <Button variant="outlined" onClick={() => { navigator.clipboard.writeText("placeholder") }}><LinkIcon /> Copy</Button>
                     </div>
                 </Grid>
             </Grid>
