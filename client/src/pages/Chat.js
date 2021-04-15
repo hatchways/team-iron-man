@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
-import "../styles/chat.css";
 
 
 const useStyles = makeStyles({
