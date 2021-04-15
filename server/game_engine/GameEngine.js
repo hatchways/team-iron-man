@@ -38,6 +38,7 @@ class Game {
         // of guesses has been made.
         const card = this.board[row][column];
         card.revealed = true;
+        this.incrementGuesses();
         if (card.color === this.turn) {
             this.turn === "blue" ? this.incrementBluePoints : this.incrementRedPoints;
             if (this.getBluePoints === 9 || this.getRedPoints === 8) {
@@ -110,6 +111,10 @@ class Game {
         this.redPoints++;
     }
 
+    incrementGuesses() {
+        this.guessesMade++;
+    }
+
     setMaxGuesses(maxGuesses) {
         this.maxGuesses = maxGuesses;
     }
@@ -119,6 +124,7 @@ class Game {
     }
 
     gameOver() {
+        //TODO: save match to database?
 
     }
 
@@ -126,6 +132,10 @@ class Game {
         this.shuffleBoard();
         this.bluePoints = 0;
         this.redPoints = 0;
+        this.turn = "blue";
+        this.turnPhase = "clue";
+        this.clue = "";
+        this.guessesMade = 0;
     }
 
     shuffleBoard() {
