@@ -10,7 +10,7 @@ const useStyles = makeStyles({
 });
 
 //
-const Navigation = React.memo(({ toggleNav }) => {
+const Navigation = ({ toggleNav }) => {
   const classes = useStyles();
   return (
     <AppBar
@@ -24,6 +24,6 @@ const Navigation = React.memo(({ toggleNav }) => {
       </Toolbar>
     </AppBar>
   );
-});
+};
 
 export default Navigation;
