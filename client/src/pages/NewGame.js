@@ -4,7 +4,7 @@ UI for creating a new game.
 
 import React from "react";
 import GameInvitation from "../components/GameInvitation"
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
     container: {
@@ -17,10 +17,19 @@ const useStyles = makeStyles({
         paddingBottom: "50px",
     },
 
+    header: {
+        fontWeight: "600",
+        fontSize: "48px",
+    },
+
     hr: {
         width: "10%",
         border: "1px solid #00e676"
     },
+
+    spacing: {
+        marginTop: "20px",
+    }
 })
 
 
@@ -28,18 +37,19 @@ function NewGame() {
 
     const classes = useStyles();
 
-    // Implement creation of new game in the future.
+    // TODO: Implement creation of new game in the future.
     const createGame = () => {
 
     }
 
     return (
         <div className={classes.container}>
-            <h1>New Game</h1>
+            <Typography color="textPrimary" className={classes.header}>
+                New Game
+                </Typography>
             <hr className={classes.hr} />
             <GameInvitation />
-            <br />
-            <Button variant="contained" color="secondary" onClick={createGame}>Create Game</Button>
+            <Button variant="contained" color="secondary" onClick={createGame} className={classes.spacing}>Create Game</Button>
         </div>
     );
 }

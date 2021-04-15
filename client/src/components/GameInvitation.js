@@ -2,11 +2,15 @@
 Component for inviting friends to a new game.
 */
 
-import React, { useState, useEffect } from "react";
-import { Grid, Button, makeStyles, Input } from '@material-ui/core';
+import React, { useState } from "react";
+import { Grid, Button, makeStyles, TextField, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 const useStyles = makeStyles({
+
+    block: {
+        display: "block",
+    },
 
     form: {
         border: "1px solid lightgray",
@@ -40,35 +44,32 @@ const useStyles = makeStyles({
         textAlign: "left",
         paddingRight: "80px",
         paddingLeft: "50px",
-        borderRight: "1px solid lightgray"
+        borderRight: "1px solid lightgray",
+    },
+    spacingTop: {
+        marginTop: "2em",
     }
-
 })
 
 function GameInvitation() {
 
     const classes = useStyles();
 
-    // States for user input and list of emails invited.
     const [emailInput, setEmailInput] = useState("");
     const [emailList, setEmailList] = useState([]);
 
-    // Updates the state when the user input changes.
     const onInputChange = (e) => {
         setEmailInput(e.target.value);
     }
 
-    // Add the input to the list of emails then clear the input.
-    // Need to implement actual sending of the email.
     const sendInvitation = (e) => {
 
         e.preventDefault();
-        // Only if the user input is not empty.
         if (emailInput.length > 0) {
             setEmailList([...emailList, emailInput]);
             setEmailInput("");
 
-            // Implement sending of the actual invitation here.
+            // TODO: Implement sending of the actual invitation here.
         }
     }
 
@@ -77,25 +78,23 @@ function GameInvitation() {
             <Grid container alignItems="center">
                 <Grid item xs={9}>
                     <div className={classes.item + " " + classes.itemLeft}>
-                        Invite friends via email:
+                        <Typography>Invite friends via email:</Typography>
                         <form onSubmit={sendInvitation} className={classes.form}>
-                            <Input value={emailInput} onChange={onInputChange} placeholder="Email address" classes={{ root: classes.input, focused: classes.inputFocused }} disableUnderline />
+                            <TextField value={emailInput} onChange={onInputChange} placeholder="Email address" className={classes.input} InputProps={{ disableUnderline: true }} />
                             <Button variant="contained" type="submit">Send invite</Button>
                         </form>
                         {emailList.length > 0 &&
                             emailList.map(
                                 email =>
-                                    <React.Fragment>
-                                        <span className={classes.invitation}>&#10004; {email + " invited"}</span>
-                                        <br />
+                                    <React.Fragment key={email}>
+                                        <span className={classes.invitation + " " + classes.block}>&#10004; {email + " invited"}</span>
                                     </React.Fragment>)}
                     </div>
                 </Grid>
                 <Grid item xs={3}>
-                    <div className={classes.item}>
-                        Or share link:
-                        <br /><br />
-                        <Button variant="outlined" onClick={() => { navigator.clipboard.writeText("placeholder") }}><LinkIcon />Copy</Button>
+                    <div className={classes.item + " " + classes.block}>
+                        <Typography>Or share link:</Typography>
+                        <Button variant="outlined" onClick={() => { navigator.clipboard.writeText("placeholder") }} className={classes.spacingTop}><LinkIcon />&nbsp;Copy</Button>
                     </div>
                 </Grid>
             </Grid>
