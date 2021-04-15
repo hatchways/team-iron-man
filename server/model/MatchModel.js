@@ -1,8 +1,8 @@
 export class MatchModel {
-  constructor(userNameArr, userIDArr) {
+  constructor(userIDs) {
 
-    // variables for storing who starts the match and their unique IDs
-    this.userIDs = userIDArr;       // array datatype
+    // variables for storing unique IDs of who starts the game
+    this.userIDs = userIDs;       // array datatype
 
     // more variables will be saved in match model
 
