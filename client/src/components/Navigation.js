@@ -20,7 +20,6 @@ const Navigation = ({ toggleNav }) => {
       <Toolbar>
         {/* Additional features like profile icons can be added later */}
         <Typography variant="h6">C L U E W O R D S</Typography>
-        {console.log("I shouldn't rerender")}
       </Toolbar>
     </AppBar>
   );
