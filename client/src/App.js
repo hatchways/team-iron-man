@@ -4,6 +4,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import { theme } from "./themes/theme";
 import LandingPage from "./pages/Landing";
+import Navigation from './components/navigation';
+import LogIn_Signup from './pages/LogIn_Signup';
 
 import "./App.css";
 
@@ -22,8 +24,8 @@ function App() {
           path="/"
           render={(props) => <LandingPage status={status} />}
         />
-        <Route exact path="/login" component={SigninPage} />
-        <Route exact path="/signup" component={SigninPage} />
+        <Route exact path="/login" component={LogIn_Signup} />
+        <Route exact path="/signup" component={LogIn_Signup} />
       </BrowserRouter>
     </MuiThemeProvider>
   );
