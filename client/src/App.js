@@ -22,6 +22,8 @@ function App() {
           path="/"
           render={(props) => <LandingPage status={status} />}
         />
+        <Route exact path="/login" component={SigninPage} />
+        <Route exact path="/signup" component={SigninPage} />
       </BrowserRouter>
     </MuiThemeProvider>
   );
