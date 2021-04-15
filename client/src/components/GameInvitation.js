@@ -61,7 +61,6 @@ function GameInvitation() {
     const [emailInput, setEmailInput] = useState("");
     const [emailList, setEmailList] = useState([]);
 
-
     const onInputChange = (e) => {
         setEmailInput(e.target.value);
     }
@@ -92,7 +91,6 @@ function GameInvitation() {
                                 className={classes.input}
                                 variant="outlined"
                                 type="email"
-                                helperText="Please enter a valid email address."
                                 InputProps={{ endAdornment: <Button variant="contained" type="submit" className={classes.submitButton}>Send Invite</Button> }}
                             />
 
