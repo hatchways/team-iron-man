@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { MuiThemeProvider } from "@material-ui/core";
+import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 import { BrowserRouter, Route } from "react-router-dom";
 
 import { theme } from "./themes/theme";
@@ -17,6 +17,7 @@ function App() {
 
   return (
     <MuiThemeProvider theme={theme}>
+    <CssBaseline />
      <Navigation toggleNav={toggleNav}/>
       <BrowserRouter>
         <Route
