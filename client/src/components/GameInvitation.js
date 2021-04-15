@@ -2,7 +2,7 @@
 Component for inviting friends to a new game.
 */
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid, Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
