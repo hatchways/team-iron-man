@@ -1,24 +1,24 @@
-import React, {useState} from "react";
-import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
-import { BrowserRouter, Route } from "react-router-dom";
+import React, { useState } from 'react';
+import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-import { theme } from "./themes/theme";
-import LandingPage from "./pages/Landing";
+import { theme } from './themes/theme';
+import LandingPage from './pages/Landing';
 import Navigation from './components/Navigation';
 import LogIn_SignUp from './pages/LogIn_SignUp.js';
 
-import "./App.css";
+import './App.css';
 
 function App() {
-	//use setNav to toggle a differnt Navigation bar
-	const [toggleNav, setNav] = useState(false);
-	//use setStatus to redirect to a home route instead of signin if JWT is authenticated
-	const [status, setStatus] = useState(false);
+  //use setNav to toggle a differnt Navigation bar
+  const [toggleNav, setNav] = useState(false);
+  //use setStatus to redirect to a home route instead of signin if JWT is authenticated
+  const [status, setStatus] = useState(false);
 
   return (
     <MuiThemeProvider theme={theme}>
-    <CssBaseline />
-     <Navigation toggleNav={toggleNav}/>
+      <CssBaseline />
+      <Navigation toggleNav={toggleNav} />
       <BrowserRouter>
         <Route
           exact

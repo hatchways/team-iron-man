@@ -87,7 +87,7 @@ const LogIn_SignUp = () => {
   };
 
   return (
-    <Grid container >
+    <Grid container>
       <Grid item xs></Grid>
       <Grid item xs={8} sm={6} md={4} p={2}>
         <Box pt={4} textAlign="center">
