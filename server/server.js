@@ -1,18 +1,17 @@
-const express = require('express');
-const expressWs = require('express-ws');
+const express = require("express");
+const http = require("http");
 const app = express();
-expressWs(app);
-const connections = new Set();
-const wsHandler = (ws) => {
-  connections.add(ws);
-  ws.on('message', (message) => {
-    connections.forEach((conn) => conn.send(message));
-  });
-  ws.on('close', () => {
-    connections.delete(ws);
-  });
-}
-app.ws('/chat', wsHandler);
-app.use(express.static('build'));
+const server = http.createServer(app);
+const socket = require("socket.io");
+const io = socket(server);
 
-app.listen(8080);
+io.on("connection", socket => {
+    socket.emit("id", socket.id);
+    socket.on("send message", body => {
+        io.emit("message", body)
+    })
+})
+
+server.listen(8000, () => {
+  console.log("Server is listening on port 8000")
+});
