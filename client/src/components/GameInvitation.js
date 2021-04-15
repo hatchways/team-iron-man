@@ -86,9 +86,8 @@ function GameInvitation() {
                         {emailList.length > 0 &&
                             emailList.map(
                                 email =>
-                                    <React.Fragment key={email}>
-                                        <span className={classes.invitation + " " + classes.block}>&#10004; {email + " invited"}</span>
-                                    </React.Fragment>)}
+                                    <Typography className={classes.invitation + " " + classes.block}>&#10004; {email + " invited"}</Typography>)}
+
                     </div>
                 </Grid>
                 <Grid item xs={3}>
