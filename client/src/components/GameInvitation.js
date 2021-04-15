@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 
     input: {
         border: "none",
-        width: "80%"
+        width: "100%"
     },
 
     inputFocused: {
@@ -48,6 +48,9 @@ const useStyles = makeStyles({
     },
     spacingTop: {
         marginTop: "2em",
+    },
+    submitButton: {
+        width: "150px",
     }
 })
 
@@ -57,6 +60,7 @@ function GameInvitation() {
 
     const [emailInput, setEmailInput] = useState("");
     const [emailList, setEmailList] = useState([]);
+
 
     const onInputChange = (e) => {
         setEmailInput(e.target.value);
@@ -79,9 +83,19 @@ function GameInvitation() {
                 <Grid item xs={9}>
                     <div className={classes.item + " " + classes.itemLeft}>
                         <Typography>Invite friends via email:</Typography>
-                        <form onSubmit={sendInvitation} className={classes.form}>
-                            <TextField value={emailInput} onChange={onInputChange} placeholder="Email address" className={classes.input} InputProps={{ disableUnderline: true }} />
-                            <Button variant="contained" type="submit">Send invite</Button>
+                        <form onSubmit={sendInvitation}>
+                            <TextField
+                                value={emailInput}
+                                id="email-address"
+                                onChange={onInputChange}
+                                placeholder="Email address"
+                                className={classes.input}
+                                variant="outlined"
+                                type="email"
+                                helperText="Please enter a valid email address."
+                                InputProps={{ endAdornment: <Button variant="contained" type="submit" className={classes.submitButton}>Send Invite</Button> }}
+                            />
+
                         </form>
                         {emailList.length > 0 &&
                             emailList.map(
