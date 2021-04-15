@@ -37,6 +37,7 @@ class Game {
         // if the game is over based on points, if not then check if the max number
         // of guesses has been made.
         const card = this.board[row][column];
+        card.revealed = true;
         if (card.color === this.turn) {
             this.turn === "blue" ? this.incrementBluePoints : this.incrementRedPoints;
             if (this.getBluePoints === 9 || this.getRedPoints === 8) {
@@ -136,7 +137,8 @@ class Game {
             "Ball", "Tail", "Shoe", "Rainbow", "Pole", "Computer", "Cellphone", "Camera", "Bitcoin", "Money", "Book",
             "Television", "House", "Doll",
             "Run", "Change", "Teleport", "Slash", "Switch", "Eat", "Picture", "Dare", "Retire"];
-        var colors = [9, 8, 7, 1]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
+        var colorsIndex = [9, 8, 7, 1]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
+        var colors = ["blue", "red", "white", "black"]
         this.board = []; //Reset the board
         for (var i = 0; i < 5; i++) {
             this.board.push([]); //Push empty row
@@ -146,7 +148,7 @@ class Game {
                 var card = { word: words[randomWordIndex], color: colors[randomColorIndex], revealed: false }
                 words.splice(randomWordIndex, 1); //Remove the word from the list so it can't be picked again.
                 // If the limit for a specific color is reached, remove it from the list, otherwise decrement it.
-                colors[randomColorIndex] === 1 ? colors.splice(randomColorIndex, 1) : colors[randomColorIndex]--;
+                colorsIndex[randomColorIndex] === 1 ? (colors.splice(randomColorIndex, 1), colorsIndex.splice(randomColorIndex, 1)) : colorsIndex[randomColorIndex]--;
                 this.board[i].push(card);
             }
         }
