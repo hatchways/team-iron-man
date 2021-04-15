@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import { MuiThemeProvider } from "@material-ui/core";
 import { BrowserRouter, Route } from "react-router-dom";
 
 import { theme } from "./themes/theme";
 import LandingPage from "./pages/Landing";
-import Navigation from './components/navigation';
-import LogIn_Signup from './pages/LogIn_Signup';
+import Navigation from './components/Navigation';
+import LogIn_SignUp from './pages/LogIn_SignUp.js';
 
 import "./App.css";
 
@@ -24,8 +24,8 @@ function App() {
           path="/"
           render={(props) => <LandingPage status={status} />}
         />
-        <Route exact path="/login" component={LogIn_Signup} />
-        <Route exact path="/signup" component={LogIn_Signup} />
+        <Route exact path="/login" component={LogIn_SignUp} />
+        <Route exact path="/signup" component={LogIn_SignUp} />
       </BrowserRouter>
     </MuiThemeProvider>
   );

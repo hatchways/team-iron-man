@@ -7,7 +7,6 @@ import {
   Grid,
   Box,
   makeStyles,
-  Divider,
 } from '@material-ui/core';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -40,7 +39,7 @@ const LogIn_SignUp = () => {
   const classes = useStyles();
 
   //Determines which form elements to render based on the path
-  const signInForm = useLocation().pathname === '/signin' ? true : false;
+  const signInForm = useLocation().pathname === '/login' ? true : false;
 
   //change this to change the min length requirement
   const minLength = 6;
@@ -88,10 +87,10 @@ const LogIn_SignUp = () => {
   };
 
   return (
-    <Grid container>
+    <Grid container >
       <Grid item xs></Grid>
       <Grid item xs={8} sm={6} md={4} p={2}>
-        <Box pt={4}>
+        <Box pt={4} textAlign="center">
           <Paper elevation={3}>
             <form onSubmit={handleSubmit} className={classes.formPadding}>
               <Box>
