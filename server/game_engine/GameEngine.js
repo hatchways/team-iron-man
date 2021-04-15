@@ -29,6 +29,8 @@ class Game {
         this.maxGuesses = 0;
         this.board = [];
         this.winner = "";
+        this.turnCount = 0; // Turn and move counters could be useful to store.
+        this.moveCount = 0;
         this.shuffleBoard();
     }
 
@@ -38,6 +40,7 @@ class Game {
         // of guesses has been made.
         const card = this.board[row][column];
         card.revealed = true;
+        this.moveCount++;
         this.incrementGuesses();
         if (card.color === this.turn) {
             this.turn === "blue" ? this.incrementBluePoints : this.incrementRedPoints;
@@ -69,6 +72,7 @@ class Game {
         this.turn === "blue" ? this.turn = "red" : this.turn = " blue";
         this.guessesMade = 0;
         this.turnPhase = "clue";
+        this.turnCount++;
     }
 
     nextPhase() {
