@@ -29,7 +29,7 @@ class Game {
         this.maxGuesses = 0;
         this.board = [];
         this.winner = "";
-        this.turnCount = 0; // Turn and move counters could be useful to store.
+        this.turnCount = 1; // Turn and move counters could be useful to store.
         this.moveCount = 0;
         this.shuffleBoard();
     }
