@@ -10,20 +10,18 @@ import SignUp from './pages/SignUp';
 import './App.css';
 
 function App() {
-  //use setNav to toggle a differnt Navigation bar
-  const [toggleNav, setNav] = useState(false);
-  //use setStatus to redirect to a home route instead of signin if JWT is authenticated
-  const [status, setStatus] = useState(false);
+  //this is placeholder for now. To be moved to ContextProvider
+  const [isLoggedIn, setStatus] = useState(false);
 
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <Navigation toggleNav={toggleNav} />
+      <Navigation toggleNav={isLoggedIn} />
       <BrowserRouter>
         <Route
           exact
           path="/"
-          render={(props) => <LandingPage status={status} />}
+          render={(props) => <LandingPage status={isLoggedIn} />}
         />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
