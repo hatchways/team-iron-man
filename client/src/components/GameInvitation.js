@@ -77,39 +77,40 @@ function GameInvitation() {
     }
 
     return (
-        <div>
-            <Grid container alignItems="center">
-                <Grid item xs={9}>
-                    <div className={classes.item + " " + classes.itemLeft}>
-                        <Typography>Invite friends via email:</Typography>
-                        <form onSubmit={sendInvitation}>
-                            <TextField
-                                value={emailInput}
-                                id="email-address"
-                                onChange={onInputChange}
-                                placeholder="Email address"
-                                className={classes.input}
-                                variant="outlined"
-                                type="email"
-                                InputProps={{ endAdornment: <Button variant="contained" type="submit" className={classes.submitButton}>Send Invite</Button> }}
-                            />
+        <Grid container alignItems="center">
+            <Grid item xs={9}>
+                <div className={classes.item + " " + classes.itemLeft}>
+                    <Typography>Invite friends via email:</Typography>
+                    <form onSubmit={sendInvitation}>
+                        <TextField
+                            value={emailInput}
+                            id="email-address"
+                            onChange={onInputChange}
+                            placeholder="Email address"
+                            className={classes.input}
+                            variant="outlined"
+                            type="email"
+                            InputProps={{ endAdornment: <Button variant="contained" type="submit" className={classes.submitButton}>Send Invite</Button> }}
+                        />
 
-                        </form>
-                        {emailList.length > 0 &&
-                            emailList.map(
-                                email =>
-                                    <Typography className={classes.invitation + " " + classes.block}>&#10004; {email + " invited"}</Typography>)}
-
-                    </div>
-                </Grid>
-                <Grid item xs={3}>
-                    <div className={classes.item + " " + classes.block}>
-                        <Typography>Or share link:</Typography>
-                        <Button variant="outlined" onClick={() => { navigator.clipboard.writeText("placeholder") }} className={classes.spacingTop}><LinkIcon />&nbsp;Copy</Button>
-                    </div>
-                </Grid>
+                    </form>
+                    {emailList.length > 0 &&
+                        emailList.map(
+                            email =>
+                                <Typography
+                                    className={classes.invitation + " " + classes.block}
+                                    key={email}>
+                                    &#10004; {email + " invited"}
+                                </Typography>)}
+                </div>
             </Grid>
-        </div>
+            <Grid item xs={3}>
+                <div className={classes.item + " " + classes.block}>
+                    <Typography>Or share link:</Typography>
+                    <Button variant="outlined" onClick={() => { navigator.clipboard.writeText("placeholder") }} className={classes.spacingTop}><LinkIcon />&nbsp;Copy</Button>
+                </div>
+            </Grid>
+        </Grid>
     );
 }
 
