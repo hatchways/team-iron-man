@@ -38,7 +38,7 @@ const initialValData = {
   confirmValidation: true,
 };
 
-const Register = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [valData, setValData] = useState(initialValData);
 
@@ -178,4 +178,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;
