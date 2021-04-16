@@ -40,7 +40,6 @@ const LogIn = () => {
   const handleChange = (event) => {
     const { value, name } = event.target;
     setLogInData((prevState) => ({ ...prevState, [name]: value }));
-    console.log(logInData[name]);
   };
 
   const handleSubmit = (event) => {
