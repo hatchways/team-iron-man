@@ -8,8 +8,7 @@ import {
   Box,
   makeStyles,
 } from '@material-ui/core';
-import React, { useEffect, useState, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 
 const useStyles = makeStyles({
   textField: {
@@ -27,63 +26,26 @@ const useStyles = makeStyles({
   },
 });
 
+const initialLogInData = {
+  signInEmail: '',
+  signInPassword: '',
+};
+
 const LogIn = () => {
   //state declaration
-  const [signInEmail, setEmail] = useState('');
-  const [signInPassword, setPassword] = useState('');
-  const [registerName, setName] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [lengthValidation, setLengthValidation] = useState(true);
-  const [confirmValidation, setConfirmValidation] = useState(true);
+  const [logInData, setLogInData] = useState(initialLogInData);
 
   const classes = useStyles();
 
-  //Determines which form elements to render based on the path
-  const signInForm = useLocation().pathname === '/login' ? true : false;
-
-  //change this to change the min length requirement
-  const minLength = 6;
-
-  //front-end validation for registering users
-  const handleValidation = useCallback(() => {
-    if (signInPassword !== '' && signInPassword.length < minLength) {
-      setLengthValidation(false);
-    } else {
-      setLengthValidation(true);
-    }
-    if (confirmPassword !== '' && signInPassword !== confirmPassword) {
-      setConfirmValidation(false);
-    } else {
-      setConfirmValidation(true);
-    }
-  }, [signInPassword, confirmPassword]);
-
-  useEffect(() => {
-    handleValidation();
-  }, [signInPassword, confirmPassword, handleValidation]);
-
   const handleChange = (event) => {
     const { value, name } = event.target;
-    if (name === 'signInEmail') {
-      setEmail(value);
-      console.log(signInEmail);
-    } else if (name === 'signInPassword') {
-      setPassword(value);
-    } else if (name === 'registerName') {
-      setName(value);
-    } else if (name === 'confirmPassword') {
-      setConfirmPassword(value);
-    }
+    setLogInData((prevState) => ({ ...prevState, [name]: value }));
+    console.log(logInData[name]);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setEmail('');
-    setPassword('');
-    setName('');
-    setConfirmPassword('');
-    setLengthValidation(true);
-    setConfirmValidation(true);
+    setLogInData(initialLogInData);
   };
 
   return (
@@ -95,30 +57,12 @@ const LogIn = () => {
             <form onSubmit={handleSubmit} className={classes.formPadding}>
               <Box>
                 <Typography variant="h4">
-                  {signInForm ? (
-                    <legend>Sign In</legend>
-                  ) : (
-                    <legend>Sign Up</legend>
-                  )}
+                  <legend>Sign In</legend>
+
                   <hr className={classes.seperator} />
                 </Typography>
               </Box>
               <Box mt={4}>
-                {signInForm ? null : (
-                  <Box>
-                    <TextField
-                      variant="outlined"
-                      className={classes.textField}
-                      margin="normal"
-                      required
-                      id="name"
-                      value={registerName}
-                      label="Full Name"
-                      name="registerName"
-                      onChange={handleChange}
-                    />
-                  </Box>
-                )}
                 <Box>
                   <TextField
                     variant="outlined"
@@ -126,7 +70,7 @@ const LogIn = () => {
                     margin="normal"
                     required
                     id="email"
-                    value={signInEmail}
+                    value={logInData.signInEmail}
                     label="Email Address"
                     name="signInEmail"
                     type="email"
@@ -140,41 +84,13 @@ const LogIn = () => {
                     required
                     className={classes.textField}
                     id="password"
-                    value={signInPassword}
+                    value={logInData.signInPassword}
                     label="Password"
                     name="signInPassword"
-                    error={!lengthValidation && !signInForm}
-                    helperText={
-                      !lengthValidation && !signInForm
-                        ? `Password must be equal to or greater than ${minLength} characters`
-                        : false
-                    }
                     type="password"
                     onChange={handleChange}
                   />
                 </Box>
-                {signInForm ? null : (
-                  <Box>
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      className={classes.textField}
-                      id="confirmPassword"
-                      value={confirmPassword}
-                      label="Confirm Password"
-                      name="confirmPassword"
-                      error={!confirmValidation}
-                      helperText={
-                        !confirmValidation
-                          ? 'Confirm Password should match Password'
-                          : false
-                      }
-                      type="password"
-                      onChange={handleChange}
-                    />
-                  </Box>
-                )}
               </Box>
               <Box p={2.5} m={1}>
                 <Button variant="contained" color="secondary" type="Submit">
@@ -183,17 +99,10 @@ const LogIn = () => {
               </Box>
               <Box>
                 <Typography>
-                  {signInForm ? (
-                    <Link href="/signup" variant="body2" color="textSecondary">
-                      Don't have an account?
-                      <strong className={classes.bold}>Sign up?</strong>
-                    </Link>
-                  ) : (
-                    <Link href="/login" variant="body2" color="textSecondary">
-                      Already have an account?
-                      <strong className={classes.bold}>Sign in?</strong>
-                    </Link>
-                  )}
+                  <Link href="/signup" variant="body2" color="textSecondary">
+                    Don't have an account?
+                    <strong className={classes.bold}>Sign up?</strong>
+                  </Link>
                 </Typography>
               </Box>
             </form>
