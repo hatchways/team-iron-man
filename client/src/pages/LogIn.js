@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-const LogIn_SignUp = () => {
+const LogIn = () => {
   //state declaration
   const [signInEmail, setEmail] = useState('');
   const [signInPassword, setPassword] = useState('');
@@ -205,4 +205,4 @@ const LogIn_SignUp = () => {
   );
 };
 
-export default LogIn_SignUp;
+export default LogIn;
