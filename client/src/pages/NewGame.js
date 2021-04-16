@@ -13,8 +13,10 @@ const useStyles = makeStyles({
         backgroundColor: "white",
         boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)",
         borderRadius: "10px",
-        padding: "20px",
-        paddingBottom: "50px",
+        padding: "50px",
+        paddingBottom: "80px",
+        marginLeft: "25%",
+        marginTop: "9%"
     },
 
     header: {
@@ -26,9 +28,12 @@ const useStyles = makeStyles({
         width: "10%",
         border: "1px solid #00e676"
     },
-
     spacing: {
         marginTop: "20px",
+    },
+    background: {
+        display: "flex",
+        justifyContent: "center",
     }
 })
 
@@ -46,7 +51,7 @@ function NewGame() {
         <div className={classes.container}>
             <Typography color="textPrimary" className={classes.header}>
                 New Game
-                </Typography>
+                    </Typography>
             <hr className={classes.hr} />
             <GameInvitation />
             <Button variant="contained" color="secondary" onClick={createGame} className={classes.spacing}>Create Game</Button>
