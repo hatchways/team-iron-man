@@ -163,7 +163,7 @@ const SignUp = () => {
               </Box>
               <Box>
                 <Typography>
-                  <Link href="/signin" variant="body2" color="textSecondary">
+                  <Link href="/login" variant="body2" color="textSecondary">
                     Already have an account?
                     <strong className={classes.bold}>Sign in?</strong>
                   </Link>
