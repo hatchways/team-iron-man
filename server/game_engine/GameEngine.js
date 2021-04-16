@@ -127,9 +127,10 @@ class Game {
         this.winner = team;
     }
 
+    //Not sure if this will be useful, maybe to help with front end integration.
     gameOver() {
         //TODO: save match to database?
-
+        this.turnPhase = "gameOver";
     }
 
     restartGame() {
