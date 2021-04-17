@@ -99,7 +99,7 @@ const LogIn = () => {
               <Box>
                 <Typography>
                   <Link href="/signup" variant="body2" color="textSecondary">
-                    Don't have an account?
+                    Don't have an account?{" "}
                     <strong className={classes.bold}>Sign up?</strong>
                   </Link>
                 </Typography>

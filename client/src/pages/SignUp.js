@@ -51,9 +51,6 @@ const SignUp = () => {
       lengthValidation:
         formData.registerPassword.length >= minLength ||
         formData.registerPassword.length === 0,
-    }));
-    setValData((prevState) => ({
-      ...prevState,
       confirmValidation: formData.registerPassword === formData.confirmPassword,
     }));
   }, [formData.registerPassword, formData.confirmPassword]);
@@ -158,13 +155,13 @@ const SignUp = () => {
               </Box>
               <Box p={2.5} m={1}>
                 <Button variant="contained" color="secondary" type="Submit">
-                  Sign In
+                  Sign Up
                 </Button>
               </Box>
               <Box>
                 <Typography>
                   <Link href="/login" variant="body2" color="textSecondary">
-                    Already have an account?
+                    Already have an account?{" "}
                     <strong className={classes.bold}>Sign in?</strong>
                   </Link>
                 </Typography>
