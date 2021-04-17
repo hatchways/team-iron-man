@@ -51,9 +51,6 @@ const SignUp = () => {
       lengthValidation:
         formData.registerPassword.length >= minLength ||
         formData.registerPassword.length === 0,
-    }));
-    setValData((prevState) => ({
-      ...prevState,
       confirmValidation: formData.registerPassword === formData.confirmPassword,
     }));
   }, [formData.registerPassword, formData.confirmPassword]);
