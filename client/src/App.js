@@ -4,7 +4,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import { theme } from "./themes/theme";
 import Navigation from './components/Navigation';
-import NewGame from "./pages/NewGame";
+import GameLayout from './pages/GameLayout';
+//import NewGame from "./pages/NewGame";
 
 import "./App.css";
 
@@ -17,7 +18,7 @@ function App() {
       <CssBaseline />
       <Navigation toggleNav={isLoggedIn} />
       <BrowserRouter>
-        <Route path="/newgame" component={NewGame} />
+        <Route path="/" component={GameLayout} />
       </BrowserRouter>
     </MuiThemeProvider>
   );
