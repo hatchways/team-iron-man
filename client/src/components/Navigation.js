@@ -62,7 +62,7 @@ const useStyles = makeStyles({
 });
 
 //
-const Navigation = ({ toggleNav }) => {
+const Navigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
 
