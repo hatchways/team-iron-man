@@ -1,8 +1,15 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const login = require('../controllers/login');
+const signup = require('../controllers/register');
+const bcrypt = require('bcryptjs');
 
-router.get("/welcome", function (req, res, next) {
-  res.status(200).send({ welcomeMessage: "Step 1 (completed)" });
+router.post('/login', (req, res) => {
+  login.handleLogIn(req, res, bcrypt);
+});
+
+router.post('/signup', (req, res) => {
+  signup.handleRegister(req, res, bcrypt);
 });
 
 module.exports = router;
