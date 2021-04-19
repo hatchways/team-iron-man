@@ -180,16 +180,16 @@ class Game {
 
     assignRole(playerId, role) {
         switch (role) {
-            case blueSpymaster:
+            case "blueSpymaster":
                 this.blueSpymaster = playerId;
                 break;
-            case redSpymaster:
+            case "redSpymaster":
                 this.redSpymaster = playerId;
                 break;
-            case blueGuesser:
+            case "blueGuesser":
                 this.blueGuessers.push(playerId);
                 break;
-            case this.redGuessers:
+            case "redGuessers":
                 this.redGuessers.push(playerId);
                 break;
             default:
