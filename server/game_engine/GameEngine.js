@@ -14,12 +14,12 @@ Method for restarting: all the words get reshuffled again, points reset to 0.
 
 class Game {
 
-    constructor(blueGuessers, blueSpymaster, redGuessers, redSpymaster) {
+    constructor() {
 
-        this.blueGuessers = blueGuessers;
-        this.blueSpymaster = blueSpymaster
-        this.redGuessers = redGuessers;
-        this.redSpymaster = redSpymaster;
+        this.blueGuessers = "";
+        this.blueSpymaster = ""
+        this.redGuessers = "";
+        this.redSpymaster = "";
         this.turn = "blue";
         this.turnPhase = "clue"; // Have a seperate phase so players can't click on stuff while the spymaster comes up with a clue.
         this.clue = "";
@@ -169,12 +169,36 @@ class Game {
         }
     }
 
-    to_json() {
+    getRoles() {
         return {
             blueGuessers: this.blueGuessers,
             blueSpymaster: this.blueSpymaster,
             redGuessers: this.redGuessers,
-            redSpymaster: this.redSpymaster,
+            redSpymaster: this.redSpymaster
+        }
+    }
+
+    assignRole(playerId, role) {
+        switch (role) {
+            case blueSpymaster:
+                this.blueSpymaster = playerId;
+                break;
+            case redSpymaster:
+                this.redSpymaster = playerId;
+                break;
+            case blueGuesser:
+                this.blueGuessers.push(playerId);
+                break;
+            case this.redGuessers:
+                this.redGuessers.push(playerId);
+                break;
+            default:
+                console.log("Error, something went wrong.")
+        }
+    }
+
+    to_json() {
+        return {
             turn: this.turn,
             turnPhase: this.turnPhase,
             clue: this.clue,
