@@ -168,6 +168,26 @@ class Game {
             }
         }
     }
+
+    to_json() {
+        return {
+            blueGuessers: this.blueGuessers,
+            blueSpymaster: this.blueSpymaster,
+            redGuessers: this.redGuessers,
+            redSpymaster: this.redSpymaster,
+            turn: this.turn,
+            turnPhase: this.turnPhase,
+            clue: this.clue,
+            bluePoints: this.bluePoints,
+            redPoints: this.redPoints,
+            guessesMade: this.guessesMade,
+            maxGuesses: this.maxGuesses,
+            board: this.board,
+            winner: this.winner,
+            turnCount: this.turnCount,
+            moveCount: this.moveCount,
+        }
+    }
 }
 
 export default Game;
