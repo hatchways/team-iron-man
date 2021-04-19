@@ -1,14 +1,9 @@
-export class MatchModel {
-  constructor(userIDs) {
+const mongoose = require('mongoose')
 
-    // variables for storing unique IDs of who starts the game
-    this.userIDs = userIDs;       // array datatype
+const Schema = mongoose.Schema;
 
-    // more variables will be saved in match model
+const matchModel = new Schema({
+  userIDs: {String: ID},
+});
 
-  }
-
-  // more functions are needed during the game
-
-
-}
+module.exports = matchModel;
