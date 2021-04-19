@@ -14,8 +14,9 @@ Method for restarting: all the words get reshuffled again, points reset to 0.
 
 class Game {
 
-    constructor() {
+    constructor(hostId) {
 
+        this.host = hostId;
         this.blueGuessers = "";
         this.blueSpymaster = ""
         this.redGuessers = "";
