@@ -9,7 +9,7 @@ const handleRegister = (req, res, bcrypt) => {
     return res.status(400).json('All fields must be filled');
   }
   if (confirmPassword !== password) {
-    return res.status(400).json('Passwords do not match';
+    return res.status(400).json('Passwords do not match');
   }
   if (password.length < MINLENGTH) {
     return res.status(400).json(`Password must be at least ${MINLENGTH}`);
