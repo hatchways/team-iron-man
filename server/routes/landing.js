@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const login = require('../controllers/login');
-const signup = require('../controllers/register');
+const signup = require('../controllers/signup');
 const bcrypt = require('bcryptjs');
 
 router.post('/login', (req, res) => {
