@@ -189,7 +189,7 @@ class Game {
             case "blueGuesser":
                 this.blueGuessers.push(playerId);
                 break;
-            case "redGuessers":
+            case "redGuesser":
                 this.redGuessers.push(playerId);
                 break;
             default:
