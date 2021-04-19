@@ -144,7 +144,7 @@ class Game {
     }
 
     shuffleBoard() {
-        var words = ["Cat", "Dog", "Bird", "Fox", "Monkey", "Snake", "Panda", "Dinosaur", "Dolphin", "Human", "Monster", "Slime",
+        let words = ["Cat", "Dog", "Bird", "Fox", "Monkey", "Snake", "Panda", "Dinosaur", "Dolphin", "Human", "Monster", "Slime",
             "Blueberry", "Strawberry", "Orange", "Mango", "Banana", "Apple", "Tomato", "Cucumber", "Cherry", "Avocado",
             "Car", "Airplane", "Bike", "Truck", "Tesla",
             "Sword", "Shield", "Staff", "Bow", "Helmet", "Dagger", "Gun", "Belt", "Armor",
@@ -152,15 +152,15 @@ class Game {
             "Ball", "Tail", "Shoe", "Rainbow", "Pole", "Computer", "Cellphone", "Camera", "Bitcoin", "Money", "Book",
             "Television", "House", "Doll",
             "Run", "Change", "Teleport", "Slash", "Switch", "Eat", "Picture", "Dare", "Retire"];
-        var colorsIndex = [9, 8, 7, 1]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
-        var colors = ["blue", "red", "white", "black"]
+        let colorsIndex = [9, 8, 7, 1]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
+        let colors = ["blue", "red", "white", "black"]
         this.board = []; //Reset the board
-        for (var i = 0; i < 5; i++) {
+        for (let i = 0; i < 5; i++) {
             this.board.push([]); //Push empty row
-            for (var j = 0; j < 5; j++) {
+            for (let j = 0; j < 5; j++) {
                 const randomWordIndex = Math.floor(Math.random() * words.length); //Pick random word
                 const randomColorIndex = Math.floor(Math.random() * colors.length); //Pick random color
-                var card = { word: words[randomWordIndex], color: colors[randomColorIndex], revealed: false }
+                let card = { word: words[randomWordIndex], color: colors[randomColorIndex], revealed: false }
                 words.splice(randomWordIndex, 1); //Remove the word from the list so it can't be picked again.
                 // If the limit for a specific color is reached, remove it from the list, otherwise decrement it.
                 colorsIndex[randomColorIndex] === 1 ? (colors.splice(randomColorIndex, 1), colorsIndex.splice(randomColorIndex, 1)) : colorsIndex[randomColorIndex]--;
