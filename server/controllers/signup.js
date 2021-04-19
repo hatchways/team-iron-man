@@ -1,4 +1,4 @@
-const User = require('../model/UserModel');
+const User = require('../models/UserModel');
 const { genJWT } = require('../utility/util');
 
 const handleRegister = (req, res, bcrypt) => {

@@ -1,4 +1,4 @@
-const User = require('../model/UserModel');
+const User = require('../models/UserModel');
 const { JwtStrategy } = require('passport-jwt');
 
 const cookieExtractor = (req) => {
