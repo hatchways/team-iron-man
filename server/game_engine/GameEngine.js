@@ -17,9 +17,9 @@ class Game {
     constructor(hostId) {
 
         this.host = hostId;
-        this.blueGuessers = "";
-        this.blueSpymaster = ""
-        this.redGuessers = "";
+        this.blueGuessers = [];
+        this.blueSpymaster = "";
+        this.redGuessers = [];
         this.redSpymaster = "";
         this.turn = "blue";
         this.turnPhase = "clue"; // Have a seperate phase so players can't click on stuff while the spymaster comes up with a clue.
@@ -180,22 +180,7 @@ class Game {
     }
 
     assignRole(playerId, role) {
-        switch (role) {
-            case "blueSpymaster":
-                this.blueSpymaster = playerId;
-                break;
-            case "redSpymaster":
-                this.redSpymaster = playerId;
-                break;
-            case "blueGuesser":
-                this.blueGuessers.push(playerId);
-                break;
-            case "redGuesser":
-                this.redGuessers.push(playerId);
-                break;
-            default:
-                console.log("Error, something went wrong.")
-        }
+        role.indexOf("Spymaster") === -1 ? this[role].push(playerId) : this[role] = playerId;
     }
 
     toJson() {
