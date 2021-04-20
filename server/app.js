@@ -6,7 +6,6 @@ const logger = require("morgan");
 const mongoose = require('mongoose');
 
 const indexRouter = require("./routes/index");
-const pingRouter = require("./routes/ping");
 
 const { json, urlencoded } = express;
 
@@ -35,7 +34,6 @@ app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/ping", pingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
