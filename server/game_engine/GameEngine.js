@@ -198,7 +198,7 @@ class Game {
         }
     }
 
-    to_json() {
+    toJson() {
         return {
             turn: this.turn,
             turnPhase: this.turnPhase,
