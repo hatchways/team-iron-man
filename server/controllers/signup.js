@@ -6,13 +6,13 @@ const handleRegister = (req, res, bcrypt) => {
   const SALT = 10;
   const { email, password, name, confirmPassword } = req.body;
   if (!email || !name || !password || !confirmPassword) {
-    return res.status(400).json('All fields must be filled');
+    return res.status(400).json({ message: 'All fields must be filled' });
   }
   if (confirmPassword !== password) {
-    return res.status(400).json('Passwords do not match');
+    return res.status(400).json({ message: 'Passwords do not match' });
   }
   if (password.length < MINLENGTH) {
-    return res.status(400).json(`Password must be at least ${MINLENGTH}`);
+    return res.status(400).json({ message: `Password must be at least ${MINLENGTH}`});
   }
   const hash = bcrypt.hashSync(password, SALT);
   return User.create({ name: name, password: hash, email: email })
@@ -26,7 +26,7 @@ const handleRegister = (req, res, bcrypt) => {
         .json({ email: user.email, name: user.name });
     })
     .catch((err) =>
-      res.status(500).json('Email already exists - duplicate key')
+      res.status(500).json({ message: 'Email already exists - duplicate key' })
     );
 };
 
