@@ -9,6 +9,7 @@ import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import './App.css';
 import AssignRoles from './pages/AssignRoles';
+import GameBoard from './pages/GameBoard';
 
 function App() {
   //this is placeholder for now. To be moved to ContextProvider
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route path="/assignroles" component={AssignRoles} />
+        <Route path="/board" component={GameBoard} />
       </BrowserRouter>
     </MuiThemeProvider>
   );
