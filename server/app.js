@@ -6,7 +6,7 @@ const cors = require('cors');
 const logger = require("morgan");
 const mongoose = require('mongoose');
 
-const authRouter = require("./routes/landing");
+const authRouter = require("./routes/auth");
 const pingRouter = require("./routes/ping");
 
 const { json, urlencoded } = express;
