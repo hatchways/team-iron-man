@@ -8,7 +8,10 @@ import {
   Grid,
   Box,
 } from '@material-ui/core';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { registerUser } from '../ContextProvider/actions';
+import { useUserDispatch, useUserState } from '../ContextProvider/user';
 
 const useStyles = makeStyles({
   textField: {
@@ -41,8 +44,12 @@ const initialValData = {
 const SignUp = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [valData, setValData] = useState(initialValData);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { error } = useUserState();
+  const dispatch = useUserDispatch();
 
   const classes = useStyles();
+  const history = useHistory();
   //change this to change the min length requirement
   const minLength = 6;
   const handleValidation = useCallback(() => {
@@ -65,10 +72,18 @@ const SignUp = () => {
 
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setFormData(initialFormData);
-    setValData(initialValData);
+    if (valData.lengthValidation && valData.confirmPassword){
+      try {
+        const response = await registerUser(dispatch, formData);
+        if (response) {
+          return history.push('/login');
+        }
+      } catch (err) {
+        setSnackbarOpen(true);
+      }
+    }
   };
 
   return (
@@ -168,6 +183,11 @@ const SignUp = () => {
               </Box>
             </form>
           </Paper>
+          <Snackbar open={snackbarOpen}>
+            <Alert onClose={() => setSnackbarOpen(false)} severity="error">
+              {error}
+            </Alert>
+          </Snackbar>
         </Box>
       </Grid>
       <Grid item xs></Grid>
