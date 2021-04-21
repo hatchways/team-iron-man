@@ -3,12 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles({
-    element: {
-        marginBottom: '25px'
-    },
     box: {
-        height: 90,
-        width: '90%',
+        height: '100px',
+        width: '200px',
         boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
         cursor: 'pointer',
         borderRadius: '10px',
@@ -62,14 +59,12 @@ const Card = (props) => {
 
     return (
 
-        <div className={classes.element}>
-            <Box className={
-                (props.revealed ? classes[props.color + "Revealed"] + " " + classes["whiteTextRevealed"] : (
-                    props.spyMaster ? classes[props.color + "Text"] : ""
-                ) + " " + classes["defaultHidden"]) + " " + classes["box"]}>
-                {props.word}
-            </Box>
-        </div>
+        <Box className={
+            (props.revealed ? classes[props.color + "Revealed"] + " " + classes["whiteTextRevealed"] : (
+                props.spyMaster ? classes[props.color + "Text"] : ""
+            ) + " " + classes["defaultHidden"]) + " " + classes["box"]}>
+            {props.word}
+        </Box>
     );
 }
 
