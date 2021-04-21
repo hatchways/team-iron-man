@@ -5,6 +5,8 @@ const express = require("express");
 const { join } = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const mongoose = require('mongoose');
+
 const indexRouter = require("./routes/index");
 const http = require("http");
 const app = express();
@@ -20,6 +22,24 @@ io.on("connection", socket => {
 });
 
 const { json, urlencoded } = express;
+
+var app = express();
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGODB_ATLAS_URI, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1);
+  }
+};
+
+connectDB();
+
 
 app.use(logger("dev"));
 app.use(json());

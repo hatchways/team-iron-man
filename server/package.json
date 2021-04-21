@@ -14,6 +14,7 @@
     "express-ws": "^4.0.0",
     "http": "*",
     "http-errors": "~1.8.0",
+    "mongoose": "^5.12.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
     "socket.io": "^4.0.1",
