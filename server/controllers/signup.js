@@ -24,7 +24,7 @@ const handleRegister = (req, res) => {
         .json({ email: user.email, name: user.name });
     })
     .catch((err) =>
-      res.status(500).json({ message: 'Email already exists - duplicate key' })
+      res.status(500).json({ message: 'Email already exists' })
     );
 };
 
