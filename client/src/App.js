@@ -8,6 +8,7 @@ import Navigation from './components/Navigation';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import NewGame from "./pages/NewGame";
+import Chat from './pages/Chat';
 import './App.css';
 import AssignRoles from './pages/AssignRoles';
 import GameLayout from './pages/GameLayout';
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/signup" component={SignUp} />
         <Route path="/assignroles" component={AssignRoles} />
         <Route path="/newgame" component={NewGame} />
+        <Route path="/chat" component={Chat} />
         <Route path="/" component={GameLayout} />
       </BrowserRouter>
     </MuiThemeProvider>

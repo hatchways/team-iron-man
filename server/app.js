@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const createError = require("http-errors");
 const express = require("express");
 const { join } = require("path");
@@ -6,10 +8,20 @@ const cors = require('cors');
 const logger = require("morgan");
 const mongoose = require('mongoose');
 
-
 const authRouter = require("./routes/auth");
+const indexRouter = require("./routes/index");
+const http = require("http");
+const app = express();
+const server = http.createServer(app);
+const socket = require("socket.io");
+const io = socket(server);
 
-
+io.on("connection", socket => {
+  socket.on("message", ({name, message}) => {
+      io.emit("message", {name, message});
+      console.log(name + " has connected.");
+  });
+});
 
 const { json, urlencoded } = express;
 
@@ -38,11 +50,8 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-
 app.use("/api", authRouter);
-
-
-
+app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -59,5 +68,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({ error: err });
 });
-
 module.exports = app;
+
+//server for socket.io listens on port 3002
+server.listen(3002, () => {
+    console.log("Server is listening on port 3002");
+});
