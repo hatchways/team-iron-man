@@ -4,14 +4,25 @@ UI for Game Board
 
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import Card from "../components/Card";
+import Card from "./Card";
 
 const useStyles = makeStyles({
     root: {
-        marginTop: '20px',
-        marginLeft: '20%',
-        width: '60%',
+        width: "100%",
+        border: "1px solid black",
+        height: "90vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+    },
+    container: {
+        width: "100%",
+        height: "100%",
         display: 'grid',
+        gridColumnGap: '60px',
+        alignItems: "center",
+        justifyContent: "center",
         gridTemplateColumns: 'auto auto auto auto auto'
     }
 });
@@ -51,8 +62,8 @@ export default function GameBoard() {
     }
 
     return (
-        <React.Fragment>
-            <div className={classes.root}>
+        <div className={classes.root}>
+            <div className={classes.container}>
                 {board.map((function (row) {
                     return row.map(
                         card => (
@@ -61,6 +72,6 @@ export default function GameBoard() {
                         ))
                 }))}
             </div>
-        </React.Fragment>
+        </div>
     );
 }
