@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
 import { BrowserRouter, Route } from 'react-router-dom';
 
@@ -14,19 +14,17 @@ import GameLayout from './pages/GameLayout';
 import { UserProvider } from './ContextProvider/user';
 
 function App() {
-  //this is placeholder for now. To be moved to ContextProvider
-  const [isLoggedIn, setStatus] = useState(false);
-
+  //Routes can be cleaned up using Switch
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <UserProvider>
-        <Navigation toggleNav={isLoggedIn} />
+        <Navigation />
         <BrowserRouter>
           <Route
             exact
             path="/"
-            render={(props) => <LandingPage status={isLoggedIn} />}
+            component={LandingPage} />
           />
           <Route exact path="/login" component={LogIn} />
           <Route exact path="/signup" component={SignUp} />
