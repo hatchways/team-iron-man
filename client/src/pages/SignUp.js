@@ -10,7 +10,7 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import React, { useCallback, useEffect, useState, useContext } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { registerUser } from '../ContextProvider/actions';
 import { useUserDispatch, useUserState } from '../ContextProvider/user';
@@ -76,7 +76,6 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (valData.lengthValidation && valData.confirmPassword){
       try {
         const response = await registerUser(dispatch, formData);
         if (response) {
@@ -86,7 +85,7 @@ const SignUp = () => {
       } catch (err) {
         setSnackbarOpen(true);
       }
-    }
+
   };
 
   return (
