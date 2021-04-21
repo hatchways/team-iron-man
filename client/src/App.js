@@ -20,19 +20,21 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <Navigation toggleNav={isLoggedIn} />
-      <BrowserRouter>
-        <Route
-          exact
-          path="/"
-          render={(props) => <LandingPage status={isLoggedIn} />}
-        />
-        <Route exact path="/login" component={LogIn} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route path="/assignroles" component={AssignRoles} />
-        <Route path="/newgame" component={NewGame} />
-        <Route path="/game" component={GameLayout} />
-      </BrowserRouter>
+      <UserProvider>
+        <Navigation toggleNav={isLoggedIn} />
+        <BrowserRouter>
+          <Route
+            exact
+            path="/"
+            render={(props) => <LandingPage status={isLoggedIn} />}
+          />
+          <Route exact path="/login" component={LogIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route path="/assignroles" component={AssignRoles} />
+          <Route path="/newgame" component={NewGame} />
+          <Route path="/game" component={GameLayout} />
+        </BrowserRouter>
+      </UserProvider>
     </MuiThemeProvider>
   );
 }
