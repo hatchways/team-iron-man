@@ -1,15 +1,15 @@
 // change this if the server address/port changes
 const ROOT_URL = 'http://localhost:3001';
 
-const registerUser = async (dispatch, loginPayload) => {
+const registerUser = async (dispatch, registerPayload) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      email: loginPayload.registerEmail,
-      name: loginPayload.registerName,
-      password: loginPayload.registerPassword,
-      confirmPassword: loginPayload.confirmPassword,
+      email: registerPayload.registerEmail,
+      name: registerPayload.registerName,
+      password: registerPayload.registerPassword,
+      confirmPassword: registerPayload.confirmPassword,
     }),
   };
 
@@ -39,7 +39,7 @@ const loginUser = async (dispatch, loginPayload) => {
   };
 
   try {
-    const response = await fetch(`${ROOT_URL}/login`, requestOptions);
+    const response = await fetch(`${ROOT_URL}/api/login`, requestOptions);
     const data = await response.json();
     if (response.status === 200) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data.name });

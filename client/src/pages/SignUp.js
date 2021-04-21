@@ -3,11 +3,13 @@ import {
   Button,
   Typography,
   Link,
-  makeStyles,
   Paper,
   Grid,
   Box,
+  makeStyles,
+  Snackbar,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { registerUser } from '../ContextProvider/actions';

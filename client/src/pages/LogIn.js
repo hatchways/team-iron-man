@@ -58,7 +58,7 @@ const LogIn = () => {
       console.log(response);
       if (response) {
         //change this to direct user to a different page
-        return history.push('/newgame');
+        return history.push('/');
       }
     } catch (err) {
       setSnackbarOpen(true);
