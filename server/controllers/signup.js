@@ -1,9 +1,8 @@
 const User = require('../models/UserModel');
 const { genJWT } = require('../utility/util');
 
-const handleRegister = (req, res, bcrypt) => {
+const handleRegister = (req, res) => {
   const MINLENGTH = 6;
-  const SALT = 10;
   const { email, password, name, confirmPassword } = req.body;
   if (!email || !name || !password || !confirmPassword) {
     return res.status(400).json({ message: 'All fields must be filled' });
@@ -14,8 +13,7 @@ const handleRegister = (req, res, bcrypt) => {
   if (password.length < MINLENGTH) {
     return res.status(400).json({ message: `Password must be at least ${MINLENGTH}`});
   }
-  const hash = bcrypt.hashSync(password, SALT);
-  return User.create({ name: name, password: hash, email: email })
+  return User.create({ name: name, password: password, email: email })
     .then((user) => {
       res
         .cookie('jwt', genJWT(user), {

@@ -9,7 +9,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-  signup.handleRegister(req, res, bcrypt);
+  signup.handleRegister(req, res);
 });
 
 module.exports = router;
