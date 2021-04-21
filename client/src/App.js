@@ -30,7 +30,7 @@ function App() {
         <Route exact path="/signup" component={SignUp} />
         <Route path="/assignroles" component={AssignRoles} />
         <Route path="/newgame" component={NewGame} />
-        <Route path="/" component={GameLayout} />
+        <Route path="/gamelayout" component={GameLayout} />
       </BrowserRouter>
     </MuiThemeProvider>
   );
