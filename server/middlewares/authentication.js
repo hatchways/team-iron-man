@@ -8,7 +8,7 @@ const cookieExtractor = (req) => {
 
 const options = {
   jwtFromRequest: cookieExtractor(),
-  secretOrKey: process.env.SECRETE_KEY,
+  secretOrKey: process.env.SECRET_KEY,
 };
 
 const strategy = new JwtStrategy(options, (payload, done) => {
