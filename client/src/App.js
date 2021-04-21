@@ -32,7 +32,7 @@ function App() {
         <Route path="/assignroles" component={AssignRoles} />
         <Route path="/newgame" component={NewGame} />
         <Route path="/chat" component={Chat} />
-        <Route path="/" component={GameLayout} />
+        <Route path="/gamelayout" component={GameLayout} />
       </BrowserRouter>
     </MuiThemeProvider>
   );
