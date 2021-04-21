@@ -1,7 +1,7 @@
 const User = require('../models/UserModel');
 const { genJWT } = require('../utility/util');
 
-const handleLogIn = (req, res, bcrypt) => {
+const handleLogIn = (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ message: 'Email or password is missing' });
@@ -9,7 +9,7 @@ const handleLogIn = (req, res, bcrypt) => {
 
   return User.findOne({ email })
     .then((user) => {
-      const isValid = bcrypt.compareSync(password, user.password);
+      const isValid =  user.validatePassword(password);
       if (isValid) {
         return res
           .cookie('jwt', genJWT(user), {
