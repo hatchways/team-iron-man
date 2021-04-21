@@ -7,4 +7,4 @@ const matchModel = new Schema({
   userIDs: [String],
 });
 
-module.exports = matchModel;
+module.exports = mongoose.model("Match", matchModel);
