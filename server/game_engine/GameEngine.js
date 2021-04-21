@@ -153,8 +153,10 @@ class Game {
             "Ball", "Tail", "Shoe", "Rainbow", "Pole", "Computer", "Cellphone", "Camera", "Bitcoin", "Money", "Book",
             "Television", "House", "Doll",
             "Run", "Change", "Teleport", "Slash", "Switch", "Eat", "Picture", "Dare", "Retire"];
-        let colorsIndex = [9, 8, 7, 1]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
-        let colors = ["blue", "red", "white", "black"]
+        let colors = ["blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue",
+            "red", "red", "red", "red", "red", "red", "red", "red",
+            "white", "white", "white", "white", "white", "white", "white",
+            "black"]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
         this.board = []; //Reset the board
         for (let i = 0; i < 5; i++) {
             this.board.push([]); //Push empty row
@@ -163,8 +165,7 @@ class Game {
                 const randomColorIndex = Math.floor(Math.random() * colors.length); //Pick random color
                 let card = { word: words[randomWordIndex], color: colors[randomColorIndex], revealed: false }
                 words.splice(randomWordIndex, 1); //Remove the word from the list so it can't be picked again.
-                // If the limit for a specific color is reached, remove it from the list, otherwise decrement it.
-                colorsIndex[randomColorIndex] === 1 ? (colors.splice(randomColorIndex, 1), colorsIndex.splice(randomColorIndex, 1)) : colorsIndex[randomColorIndex]--;
+                colors.splice(randomColorIndex, 1);
                 this.board[i].push(card);
             }
         }
