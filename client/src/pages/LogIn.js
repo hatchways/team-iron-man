@@ -7,8 +7,13 @@ import {
   Grid,
   Box,
   makeStyles,
+  Snackbar,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { loginUser } from '../ContextProvider/actions';
+import { useUserDispatch, useUserState } from '../ContextProvider/user';
 
 const useStyles = makeStyles({
   textField: {
@@ -34,17 +39,29 @@ const initialLogInData = {
 const LogIn = () => {
   //state declaration
   const [logInData, setLogInData] = useState(initialLogInData);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { error } = useUserState();
+  const dispatch = useUserDispatch();
 
   const classes = useStyles();
+  const history = useHistory();
 
   const handleChange = (event) => {
     const { value, name } = event.target;
     setLogInData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setLogInData(initialLogInData);
+    try {
+      const response = await loginUser(dispatch, logInData);
+      console.log(response);
+      if (response) {
+        return history.push('/signup');
+      }
+    } catch (err) {
+      setSnackbarOpen(true);
+    }
   };
 
   return (
@@ -106,6 +123,11 @@ const LogIn = () => {
               </Box>
             </form>
           </Paper>
+          <Snackbar open={snackbarOpen}>
+            <Alert onClose={() => setSnackbarOpen(false)} severity="error">
+              {error}
+            </Alert>
+          </Snackbar>
         </Box>
       </Grid>
       <Grid item xs></Grid>
