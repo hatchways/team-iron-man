@@ -22,7 +22,7 @@ const handleLogIn = (req, res) => {
         return res.status(400).json({ message: 'Incorrect email or password' });
       }
     })
-    .catch((error) => res.status(400).json({ message: 'unable to get user' }));
+    .catch((error) => res.status(400).json({ message: 'Incorrect email or password' }));
 };
 
 module.exports = {
