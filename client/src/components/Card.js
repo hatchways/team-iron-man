@@ -21,9 +21,10 @@ const useStyles = makeStyles({
         background: "linear-gradient(to right, #5B86E5, #36D1DC)", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     },
     redRevealed: {
-        background: "#CB356B",
-        background: "-webkit-linear-gradient(to right, #BD3F32, #CB356B)",
-        background: "linear-gradient(to right, #BD3F32, #CB356B)",
+        background: "#ff9966",
+        background: "-webkit-linear-gradient(to right, #ff5e62, #ff9966)",
+        background: "linear-gradient(to right, #ff5e62, #ff9966)",
+
     },
     blackRevealed: {
         background: "#000000",
@@ -43,7 +44,7 @@ const useStyles = makeStyles({
         color: "#5B86E5 !important"
     },
     redText: {
-        color: "#BD3F32 !important"
+        color: "#ff5e62 !important"
     },
     blackText: {
         color: "black",
