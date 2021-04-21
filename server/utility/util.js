@@ -9,7 +9,7 @@ const genJWT = (user) => {
     issuedAt: Date.now(),
   };
 
-  const signedToken = jwt.sign(payload, process.env.SECRETE_KEY, {
+  const signedToken = jwt.sign(payload, process.env.SECRET_KEY, {
     expiresIn: expiresIn,
   });
 
