@@ -4,8 +4,8 @@ import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles({
     box: {
-        height: '100px',
-        width: '200px',
+        height: '125px',
+        width: '250px',
         boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
         cursor: 'pointer',
         borderRadius: '10px',
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: "500",
-        fontSize: "large"
+        fontSize: "x-large"
     },
     blueRevealed: {
         background: "#36D1DC", /* fallback for old browsers */

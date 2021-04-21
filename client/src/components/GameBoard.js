@@ -20,7 +20,7 @@ const useStyles = makeStyles({
         width: "100%",
         height: "100%",
         display: 'grid',
-        gridColumnGap: '60px',
+        gridColumnGap: '30px',
         alignItems: "center",
         justifyContent: "center",
         gridTemplateColumns: 'auto auto auto auto auto'
