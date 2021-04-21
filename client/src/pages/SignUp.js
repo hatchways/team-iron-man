@@ -78,7 +78,8 @@ const SignUp = () => {
       try {
         const response = await registerUser(dispatch, formData);
         if (response) {
-          return history.push('/login');
+          //change this to direct user to a different page
+          return history.push('/newgame');
         }
       } catch (err) {
         setSnackbarOpen(true);

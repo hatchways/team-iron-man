@@ -57,7 +57,8 @@ const LogIn = () => {
       const response = await loginUser(dispatch, logInData);
       console.log(response);
       if (response) {
-        return history.push('/signup');
+        //change this to direct user to a different page
+        return history.push('/newgame');
       }
     } catch (err) {
       setSnackbarOpen(true);
