@@ -2,10 +2,14 @@ const createError = require("http-errors");
 const express = require("express");
 const { join } = require("path");
 const cookieParser = require("cookie-parser");
+const cors = require('cors');
 const logger = require("morgan");
 const mongoose = require('mongoose');
 
-const indexRouter = require("./routes/index");
+
+const authRouter = require("./routes/auth");
+
+
 
 const { json, urlencoded } = express;
 
@@ -29,11 +33,16 @@ connectDB();
 
 app.use(logger("dev"));
 app.use(json());
+app.use(cors());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-app.use("/", indexRouter);
+
+app.use("/api", authRouter);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
