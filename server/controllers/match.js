@@ -1,25 +1,15 @@
-const matchModel = require("./../model/MatchModel");
-const mongoose = require('mongoose');
+const Match = require('./../models/MatchModel');
 
 // add a match and return match ID
-function addMatch() {
+const addMatch = (req, res) => {
+  const { id } = req.user;
+  return Match.create({ userIDs: [id] })
+    .then((match) => {
+      res.status(200).json({ match: match._id });
+    })
+    .catch((err) => res.status(400).json({ message: 'Match not created' }));
+};
 
-  const Match = mongoose.model("Match", matchModel);
-  const match = new Match({
-    userIDs: {ID: null},
-  });
-  let matchID = "nothing";
-  match.save(function(err, matchInfo) {
-    if (err) {throw err;}
-    else {
-      matchID = matchInfo._id.toString();
-      console.log('Match saved, ID: ' + matchInfo._id);
-
-    }
-
-  });
-  return matchID;
-
-}
-
-module.exports = addMatch;
+module.exports = {
+  addMatch,
+};
