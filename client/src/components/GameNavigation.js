@@ -62,7 +62,7 @@ const useStyles = makeStyles({
 });
 
 //
-const Navigation = () => {
+const GameNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -120,4 +120,4 @@ const Navigation = () => {
     );
 };
 
-export default Navigation;
+export default GameNavigation;
