@@ -6,8 +6,10 @@ const cors = require('cors');
 const logger = require("morgan");
 const mongoose = require('mongoose');
 
+
 const authRouter = require("./routes/auth");
-const pingRouter = require("./routes/ping");
+
+
 
 const { json, urlencoded } = express;
 
@@ -36,8 +38,11 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
+
 app.use("/api", authRouter);
-app.use("/ping", pingRouter);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
