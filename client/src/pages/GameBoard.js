@@ -4,12 +4,10 @@ UI for Game Board
 
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography } from '@material-ui/core';
-import { useState } from 'react';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
-    //   flexGrow: 1,
       marginTop: '20px',
       marginLeft: '20%',
       width: '60%',
@@ -22,29 +20,28 @@ const useStyles = makeStyles({
     box: {
       height: 90,
       width: '90%',
-      border: '2px solid',
-      borderRadius: '10px'
-    },
-    value: {
-        textAlign: 'center',
-        fontSize: '20px',
-        paddingTop: '25px'
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+      cursor: 'pointer',
+      borderRadius: '10px',
+      textAlign: 'center',
+      paddingTop: '20%'
     }
 });
 
 export default function GameBoard() {
-    let [bgColor, setBgColor] = useState('');
     const classes = useStyles();
     let testData = [];
     for (let i = 1; i < 26; i++) {
         testData.push(i);
     }
 
-    function handleColor(color) {
+    function handleColor(event) {
+        event.preventDefault = 'none';
+        let bgColor = event.target.style.backgroundColor;
         if (bgColor === 'grey') {
-            bgColor = setBgColor('white');
+            event.target.style.backgroundColor = 'white';
         } else {
-            bgColor = setBgColor(color);
+            event.target.style.backgroundColor = 'grey';
         }
     }
 
@@ -53,8 +50,8 @@ export default function GameBoard() {
             <div container className={classes.root}>
             {testData.map((value) => (
                     <div key={value} className={classes.element}>
-                        <Box id={value} onClick={() => handleColor('grey')} style={{backgroundColor: bgColor}} className={classes.box}>
-                           <Typography className={classes.value}>{value}</Typography>
+                        <Box onClick={handleColor} className={classes.box}>
+                            {value}
                         </Box>
                     </div>
                 ))}
