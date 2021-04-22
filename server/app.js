@@ -11,10 +11,15 @@ const mongoose = require('mongoose');
 const authRouter = require("./routes/auth");
 const indexRouter = require("./routes/index");
 const http = require("http");
-const app = express();
+// const app = express();
 const server = http.createServer(app);
 const socket = require("socket.io");
-const io = socket(server);
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+});
 
 io.on("connection", socket => {
   socket.on("message", ({name, message}) => {
