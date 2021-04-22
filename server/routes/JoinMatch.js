@@ -1,21 +1,8 @@
 const express = require('express');
-const mongoose = require('mongoose')
-const Match = require('./../models/MatchModel');
+const match = require('../controllers/match');
+const verifyToken = require('../middlewares/authentication');
 const router = express.Router();
 
-router.get('/match/:matchID', (req, res) => {
-  const { matchID } = req.params;
-
-  Match.findOneAndUpdate(
-    {_id: matchID},
-    {$push: {'userIDs': {/**** user's ObjectID here ****/}}},
-    {new: true}
-  ).then((meg) => {
-      console.log(meg);
-    });
-
-    res.send(/**** waiting page ***/);
-
-});
+router.post('/match/:matchID', verifyToken, match.joinMatch);
 
 module.exports = router;
