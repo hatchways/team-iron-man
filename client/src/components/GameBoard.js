@@ -147,9 +147,10 @@ export default function GameBoard() {
         }
     }
 
-    function onCardClick() {
-        // TODO: integrate with backend.
-    }
+    // TODO: integrate with backend.
+    //function onCardClick() {
+
+    //}
 
     return (
         <div className={classes.root}>
