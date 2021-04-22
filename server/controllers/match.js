@@ -2,7 +2,7 @@ const Match = require('./../models/MatchModel');
 
 // add a match and return match ID
 const addMatch = (req, res) => {
-  const { id } = req.user;
+  const id = req.userID;
   return Match.create({ userIDs: [id] })
     .then((match) => {
       res.status(200).json({ match: match._id });
