@@ -4,8 +4,8 @@ import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles({
     box: {
-        height: '125px',
-        width: '250px',
+        height: '80%',
+        width: '13vw',
         boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
         cursor: 'pointer',
         borderRadius: '10px',
