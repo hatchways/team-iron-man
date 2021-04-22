@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { theme } from './themes/theme';
 import LandingPage from './pages/Landing';
 import Navigation from './components/Navigation';
+import GameNavigation from './components/GameNavigation';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import NewGame from "./pages/NewGame";
@@ -12,6 +13,7 @@ import Chat from './pages/Chat';
 import './App.css';
 import AssignRoles from './pages/AssignRoles';
 import GameLayout from './pages/GameLayout';
+import GameBoard from './components/GameBoard';
 
 function App() {
   //this is placeholder for now. To be moved to ContextProvider
@@ -33,6 +35,7 @@ function App() {
         <Route path="/newgame" component={NewGame} />
         <Route path="/chat" component={Chat} />
         <Route path="/gamelayout" component={GameLayout} />
+        <Route path="/board" component={GameBoard} />
       </BrowserRouter>
     </MuiThemeProvider>
   );

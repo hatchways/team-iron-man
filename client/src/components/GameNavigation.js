@@ -53,7 +53,7 @@ const useStyles = makeStyles({
     },
 
     red: {
-        color: "#f50057"
+        color: "#ff5e62"
     },
 
     scoreSpacing: {
