@@ -5,8 +5,10 @@ const Schema = mongoose.Schema;
 
 const matchModel = new Schema({
   userIDs: [
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
   ],
 });
 
