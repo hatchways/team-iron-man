@@ -71,21 +71,19 @@ const SignUp = () => {
   const handleChange = (event) => {
     const { value, name } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-      try {
-        const response = await registerUser(dispatch, formData);
-        if (response) {
-          //change this to direct user to a different page
-          return history.push('/newgame');
-        }
-      } catch (err) {
-        setSnackbarOpen(true);
+    try {
+      const response = await registerUser(dispatch, formData);
+      if (response) {
+        //change this to direct user to a different page
+        return history.push('/newgame');
       }
-
+    } catch (err) {
+      setSnackbarOpen(true);
+    }
   };
 
   return (
@@ -178,7 +176,7 @@ const SignUp = () => {
               <Box>
                 <Typography>
                   <Link href="/login" variant="body2" color="textSecondary">
-                    Already have an account?{" "}
+                    Already have an account?{' '}
                     <strong className={classes.bold}>Sign in?</strong>
                   </Link>
                 </Typography>
