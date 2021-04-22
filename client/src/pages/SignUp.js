@@ -3,12 +3,17 @@ import {
   Button,
   Typography,
   Link,
-  makeStyles,
   Paper,
   Grid,
   Box,
+  makeStyles,
+  Snackbar,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { registerUser } from '../ContextProvider/actions';
+import { useUserDispatch, useUserState } from '../ContextProvider/user';
 
 const useStyles = makeStyles({
   textField: {
@@ -41,8 +46,12 @@ const initialValData = {
 const SignUp = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [valData, setValData] = useState(initialValData);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { error } = useUserState();
+  const dispatch = useUserDispatch();
 
   const classes = useStyles();
+  const history = useHistory();
   //change this to change the min length requirement
   const minLength = 6;
   const handleValidation = useCallback(() => {
@@ -62,13 +71,19 @@ const SignUp = () => {
   const handleChange = (event) => {
     const { value, name } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setFormData(initialFormData);
-    setValData(initialValData);
+    try {
+      const response = await registerUser(dispatch, formData);
+      if (response) {
+        //change this to direct user to a different page
+        return history.push('/newgame');
+      }
+    } catch (err) {
+      setSnackbarOpen(true);
+    }
   };
 
   return (
@@ -161,13 +176,18 @@ const SignUp = () => {
               <Box>
                 <Typography>
                   <Link href="/login" variant="body2" color="textSecondary">
-                    Already have an account?{" "}
+                    Already have an account?{' '}
                     <strong className={classes.bold}>Sign in?</strong>
                   </Link>
                 </Typography>
               </Box>
             </form>
           </Paper>
+          <Snackbar open={snackbarOpen}>
+            <Alert onClose={() => setSnackbarOpen(false)} severity="error">
+              {error}
+            </Alert>
+          </Snackbar>
         </Box>
       </Grid>
       <Grid item xs></Grid>
