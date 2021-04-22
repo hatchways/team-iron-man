@@ -1,6 +1,3 @@
-// change this if the server address/port changes
-const ROOT_URL = 'http://localhost:3001';
-
 const registerUser = async (dispatch, registerPayload) => {
   const requestOptions = {
     method: 'POST',
@@ -14,7 +11,7 @@ const registerUser = async (dispatch, registerPayload) => {
   };
 
   try {
-    const response = await fetch(`${ROOT_URL}/api/signup`, requestOptions);
+    const response = await fetch(`/api/signup`, requestOptions);
     const data = await response.json();
     if (response.status === 201) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data.name });
@@ -39,7 +36,7 @@ const loginUser = async (dispatch, loginPayload) => {
   };
 
   try {
-    const response = await fetch(`${ROOT_URL}/api/login`, requestOptions);
+    const response = await fetch(`/api/login`, requestOptions);
     const data = await response.json();
     if (response.status === 200) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data.name });
