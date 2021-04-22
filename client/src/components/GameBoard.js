@@ -68,7 +68,7 @@ export default function GameBoard() {
                     return row.map(
                         card => (
                             // Spymaster view coded in as a prop for now, will change during integration.
-                            <Card key={card.word} word={card.word} color={card.color} spyMaster={false} revealed={!card.revealed} />
+                            <Card key={card.word} word={card.word} color={card.color} spyMaster={false} revealed={card.revealed} />
                         ))
                 }))}
             </div>
