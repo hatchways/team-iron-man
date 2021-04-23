@@ -18,11 +18,11 @@ const joinMatch = (req, res) => {
     {_id: matchID},
     {$push: {'userIDs': {id}}},
     {new: true}
-  ).then((meg) => {
-    console.log(meg);
+  ).then(() => {
+    res.status(200).jason({status: 'Joining match'});
   })
   .catch((err) => {
-    console.log(err);
+    res.status(400).json({ message: 'Match is not joined' });
   });
 
 };
