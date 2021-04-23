@@ -16,6 +16,13 @@ const genJWT = (user) => {
   return signedToken;
 };
 
+
+const decodeJWT = (token) => {
+  const decrypt = jwt.verify(token, process.env.SECRET_KEY);
+  return decrypt.id;
+};
+
 module.exports = {
   genJWT,
+  decodeJWT,
 };

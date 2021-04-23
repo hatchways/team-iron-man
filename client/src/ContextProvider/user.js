@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useContext } from 'react';
+import { authUser } from './actions';
 import UserReducer from './reducer';
 
 const UserStateContext = createContext();
@@ -31,6 +32,10 @@ const initialState = {
 
 const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
+
+  useEffect(() => {
+    authUser(dispatch);
+  }, []);
 
   return (
     <UserStateContext.Provider value={state}>
