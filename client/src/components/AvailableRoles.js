@@ -87,17 +87,7 @@ export default function AvailableRoles() {
     }, [setMatchState]);
 
     const assignRole = (role) => {
-        // Check if the current user is not assigned a role.
-        if (
-            [
-                ...matchState.redGuessers,
-                ...matchState.blueGuesser,
-                matchState.redSpymaster,
-                matchState.blueSpymaster,
-            ].indexOf(user) === -1
-        ) {
-            socketRef.current.emit("assign-role", { user, role: role });
-        }
+        socketRef.current.emit("assign-role", { user, role: role });
     };
 
     const removeRole = (role) => {
