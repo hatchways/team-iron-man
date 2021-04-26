@@ -1,4 +1,4 @@
-const gameEngine = require('/game_engine/GameEngine');
+const gameEngine = require('./game_engine/GameEngine');
 let game = null;
 
 var socket = require("socket.io");

@@ -13,10 +13,10 @@ Method for restarting: all the words get reshuffled again, points reset to 0.
 */
 
 class Game {
-
-    constructor(hostId) {
-
+    constructor(hostId, matchId) {
         this.host = hostId;
+        this.matchId = matchId;
+        this.playersReady = [];
         this.blueGuessers = [];
         this.blueSpymaster = "";
         this.redGuessers = [];
@@ -46,7 +46,7 @@ class Game {
         if (card.color === this.turn) {
             this.turn === "blue" ? this.incrementBluePoints : this.incrementRedPoints;
             if (this.getBluePoints === 9 || this.getRedPoints === 8) {
-                this.setWinner(this.turn)
+                this.setWinner(this.turn);
                 this.gameOver();
             }
             if (this.guessesMade === this.maxGuesses) {
@@ -70,7 +70,7 @@ class Game {
     }
 
     nextTurn() {
-        this.turn === "blue" ? this.turn = "red" : this.turn = " blue";
+        this.turn === "blue" ? (this.turn = "red") : (this.turn = " blue");
         this.guessesMade = 0;
         this.turnPhase = "clue";
         this.turnCount++;
@@ -145,25 +145,117 @@ class Game {
     }
 
     shuffleBoard() {
-        let words = ["Cat", "Dog", "Bird", "Fox", "Monkey", "Snake", "Panda", "Dinosaur", "Dolphin", "Human", "Monster", "Slime",
-            "Blueberry", "Strawberry", "Orange", "Mango", "Banana", "Apple", "Tomato", "Cucumber", "Cherry", "Avocado",
-            "Car", "Airplane", "Bike", "Truck", "Tesla",
-            "Sword", "Shield", "Staff", "Bow", "Helmet", "Dagger", "Gun", "Belt", "Armor",
-            "Beach", "Jungle", "Desert", "Water", "Earth", "Wind", "Fire", "Grass", "Space", "Snow", "Moon", "Electricity",
-            "Ball", "Tail", "Shoe", "Rainbow", "Pole", "Computer", "Cellphone", "Camera", "Bitcoin", "Money", "Book",
-            "Television", "House", "Doll",
-            "Run", "Change", "Teleport", "Slash", "Switch", "Eat", "Picture", "Dare", "Retire"];
-        let colors = ["blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue",
-            "red", "red", "red", "red", "red", "red", "red", "red",
-            "white", "white", "white", "white", "white", "white", "white",
-            "black"]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
+        let words = [
+            "Cat",
+            "Dog",
+            "Bird",
+            "Fox",
+            "Monkey",
+            "Snake",
+            "Panda",
+            "Dinosaur",
+            "Dolphin",
+            "Human",
+            "Monster",
+            "Slime",
+            "Blueberry",
+            "Strawberry",
+            "Orange",
+            "Mango",
+            "Banana",
+            "Apple",
+            "Tomato",
+            "Cucumber",
+            "Cherry",
+            "Avocado",
+            "Car",
+            "Airplane",
+            "Bike",
+            "Truck",
+            "Tesla",
+            "Sword",
+            "Shield",
+            "Staff",
+            "Bow",
+            "Helmet",
+            "Dagger",
+            "Gun",
+            "Belt",
+            "Armor",
+            "Beach",
+            "Jungle",
+            "Desert",
+            "Water",
+            "Earth",
+            "Wind",
+            "Fire",
+            "Grass",
+            "Space",
+            "Snow",
+            "Moon",
+            "Electricity",
+            "Ball",
+            "Tail",
+            "Shoe",
+            "Rainbow",
+            "Pole",
+            "Computer",
+            "Cellphone",
+            "Camera",
+            "Bitcoin",
+            "Money",
+            "Book",
+            "Television",
+            "House",
+            "Doll",
+            "Run",
+            "Change",
+            "Teleport",
+            "Slash",
+            "Switch",
+            "Eat",
+            "Picture",
+            "Dare",
+            "Retire",
+        ];
+        let colors = [
+            "blue",
+            "blue",
+            "blue",
+            "blue",
+            "blue",
+            "blue",
+            "blue",
+            "blue",
+            "blue",
+            "red",
+            "red",
+            "red",
+            "red",
+            "red",
+            "red",
+            "red",
+            "red",
+            "white",
+            "white",
+            "white",
+            "white",
+            "white",
+            "white",
+            "white",
+            "black",
+        ]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
         this.board = []; //Reset the board
         for (let i = 0; i < 5; i++) {
             this.board.push([]); //Push empty row
             for (let j = 0; j < 5; j++) {
                 const randomWordIndex = Math.floor(Math.random() * words.length); //Pick random word
                 const randomColorIndex = Math.floor(Math.random() * colors.length); //Pick random color
-                let card = { word: words[randomWordIndex], color: colors[randomColorIndex], revealed: false }
+                let card = {
+                    word: words[randomWordIndex],
+                    color: colors[randomColorIndex],
+                    revealed: false,
+                };
                 words.splice(randomWordIndex, 1); //Remove the word from the list so it can't be picked again.
                 colors.splice(randomColorIndex, 1);
                 this.board[i].push(card);
@@ -176,16 +268,34 @@ class Game {
             blueGuessers: this.blueGuessers,
             blueSpymaster: this.blueSpymaster,
             redGuessers: this.redGuessers,
-            redSpymaster: this.redSpymaster
-        }
+            redSpymaster: this.redSpymaster,
+        };
     }
 
     assignRole(playerId, role) {
-        role.indexOf("Spymaster") === -1 ? this[role].push(playerId) : this[role] = playerId;
+        role.indexOf("Spymaster") === -1
+            ? this[role].push(playerId)
+            : (this[role] = playerId);
+        this.playersReady.push(playerId);
+    }
+
+    removeRole(playerId, role) {
+        role.indexOf("Spymaster") === -1
+            ? (this[role] = this[role].filter((player) => player !== playerId))
+            : (this[role] = "");
+        this.playersReady = this.playersReady.filter(
+            (player) => player !== playerId
+        );
     }
 
     toJson() {
         return {
+            host: this.host,
+            matchId: this.matchId,
+            blueGuessers: this.blueGuessers,
+            blueSpymaster: this.blueSpymaster,
+            redGuessers: this.redGuessers,
+            redSpymaster: this.redSpymaster,
             turn: this.turn,
             turnPhase: this.turnPhase,
             clue: this.clue,
@@ -197,8 +307,9 @@ class Game {
             winner: this.winner,
             turnCount: this.turnCount,
             moveCount: this.moveCount,
-        }
+            playersReady: this.playersReady,
+        };
     }
 }
 
-export default Game;
+module.exports = Game;
