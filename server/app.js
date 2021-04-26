@@ -9,8 +9,11 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 
 const authRouter = require("./routes/auth");
+const matchRouter = require('./routes/matchRouter');
 
 const { json, urlencoded } = express;
+
+var app = express();
 
 const connectDB = async () => {
   try {
