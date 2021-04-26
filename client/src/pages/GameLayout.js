@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import Chat from '../components/Chat';
+import Chat from '../pages/Chat';
 import GameBoard from '../components/GameBoard';
 
 function GameLayout(props) {
