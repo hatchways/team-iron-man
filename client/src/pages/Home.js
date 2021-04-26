@@ -54,7 +54,7 @@ function Home() {
     //const { user } = useUserState(); commented out for now, will need in the future
     //const { setMatchState } = useContext(MatchContext)
     const socketRef = useRef();
-    socketRef.current = io.connect("http:localhost:3002/");
+    socketRef.current = io.connect("/");
 
 
     // temporary function until the match controller gets reviewed/merged
