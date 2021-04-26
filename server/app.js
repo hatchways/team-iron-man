@@ -36,7 +36,6 @@ app.use(express.static(join(__dirname, 'public')));
 
 
 app.use('/api/user', matchRouter);
-app.use("/", indexRouter);
 app.use('/api', authRouter);
 
 // catch 404 and forward to error handler
