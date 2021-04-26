@@ -6,7 +6,7 @@ import React, { useContext } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import AvailableRoles from '../components/AvailableRoles';
-//import { MatchContext } from '../ContextProvider/match'; needs later
+import { MatchContext } from '../ContextProvider/match';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 export default function AssignRoles() {
 
-    //const { matchState } = useContext(MatchContext); will need later when match context provider is done
+    const { matchState } = useContext(MatchContext);
     const history = useHistory();
     const classes = useStyles();
 
