@@ -34,7 +34,7 @@ function App() {
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
-            <Route path="/assignroles" component={AssignRoles} />
+            <Route path="/join/:id" component={AssignRoles} />
             <Route path="/newgame" component={NewGame} />
             <Route path="/chat" component={Chat} />
             <Route path="/gamelayout" component={GameLayout} />
