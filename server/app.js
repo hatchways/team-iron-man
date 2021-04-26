@@ -12,6 +12,8 @@ const authRouter = require("./routes/auth");
 
 const { json, urlencoded } = express;
 
+var app = express();
+
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_ATLAS_URI, {
