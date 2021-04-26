@@ -10,8 +10,8 @@ exports.socketConnect = function (server) {
             console.log(name + " has connected.");
         });
 
-        socket.on('join-match', ({ }) => {
-            io.emit('join-game-engine', game.toJson());
+        socket.on('join-match', ({ matchId }) => {
+            io.emit('join-game-engine', game[matchId].toJson());
         })
 
         socket.on('create-game-engine', ({ user, matchId }) => {
