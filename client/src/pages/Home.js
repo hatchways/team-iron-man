@@ -58,7 +58,7 @@ function Home() {
     // temporary function until the match controller gets reviewed/merged
     const createGame = () => {
         socketRef.current.emit("create-game-engine", {
-            user: "test",
+            user,
             matchId: "6081f2f65c9146522058e58",
         });
         socketRef.current.on("start-game-engine", (game) => {
