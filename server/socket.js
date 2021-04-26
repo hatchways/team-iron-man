@@ -1,11 +1,6 @@
 var socket = require("socket.io");
 exports.socketConnect = function (server) {
-    const io = socket(server, {
-        cors: {
-            origin: "http://localhost:3000",
-            methods: ["GET", "POST"]
-        }
-    });
+    const io = socket(server);
     io.on("connection", socket => {
         socket.on("message", ({ name, message }) => {
             io.emit("message", { name, message });
