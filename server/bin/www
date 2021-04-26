@@ -8,6 +8,7 @@ require("dotenv").config();
  */
 
 var app = require("../app");
+const socketConn = require('../socket');
 var http = require("http");
 
 /**
@@ -22,7 +23,7 @@ app.set("port", port);
  */
 
 var server = http.createServer(app);
-
+socketConn.socketConnect(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
