@@ -82,13 +82,13 @@ function Join() {
         <div className={classes.container}>
             <Typography color="textPrimary" className={classes.header}>
                 Join A Match
-      </Typography>
+            </Typography>
             <hr className={classes.hr} />
             <form className={classes.center} onSubmit={submitMatchId}>
                 <div className={classes.block}>
                     <Typography className={classes.instructions}>
                         Enter a valid match ID below or paste the link into your browser.
-          </Typography>
+                    </Typography>
                     <TextField
                         value={matchId}
                         onChange={onTextChange}
@@ -104,7 +104,7 @@ function Join() {
                         disabled={matchId.length === 0}
                     >
                         Join Game
-          </Button>
+                    </Button>
                 </div>
             </form>
         </div>
