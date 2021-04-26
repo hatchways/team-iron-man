@@ -8,22 +8,7 @@ const cors = require('cors');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 
-const matchRouter = require('./routes/matchRouter');
-
-const authRouter = require('./routes/auth');
-const http = require('http');
-
-const app = express();
-const server = http.createServer(app);
-const socket = require('socket.io');
-const io = socket(server);
-
-io.on('connection', (socket) => {
-  socket.on('message', ({ name, message }) => {
-    io.emit('message', { name, message });
-    console.log(name + ' has connected.');
-  });
-});
+const authRouter = require("./routes/auth");
 
 const { json, urlencoded } = express;
 
@@ -69,8 +54,3 @@ app.use(function (err, req, res, next) {
   res.json({ error: err });
 });
 module.exports = app;
-
-//server for socket.io listens on port 3002
-server.listen(3002, () => {
-  console.log('Server is listening on port 3002');
-});
