@@ -38,7 +38,7 @@ export default function Chat() {
 
 	useEffect(
 		() => {
-			socketRef.current = io.connect("http://localhost:3002/");
+			socketRef.current = io.connect(window.location.origin);
             socketRef.current.on("message", ({ name, message }) => {
                 setChat([ ...chat, { name, message } ]);
             })

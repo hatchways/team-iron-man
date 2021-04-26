@@ -5,7 +5,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { theme } from './themes/theme';
 import LandingPage from './pages/Landing';
 import Navigation from './components/Navigation';
-import GameNavigation from './components/GameNavigation';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Join from './pages/Join';
