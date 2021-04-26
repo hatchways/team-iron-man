@@ -1,31 +1,16 @@
-const User = require('../models/UserModel');
-const { JwtStrategy } = require('passport-jwt');
+const { decodeJWT } = require('../utility/util');
 
-const cookieExtractor = (req) => {
-  const jwt = req && req.cookies ? req.cookies['jwt'] : null;
-  return jwt;
-};
-
-const options = {
-  jwtFromRequest: cookieExtractor(),
-  secretOrKey: process.env.SECRET_KEY,
-};
-
-const strategy = new JwtStrategy(options, (payload, done) => {
-  if (Date.now() > payload.expires) {
-    return done(null, false);
+const verifyToken = async (req, res, next) => {
+  const token = req.cookies.jwt || '';
+  try {
+    if (!token) {
+      return res.status(401).json('You need to Login');
+    }
+    req.userID = decodeJWT(token);
+    next();
+  } catch (err) {
+    return res.status(500).json(err.toString());
   }
-  User.findOne({ _id: payload.id })
-    .then((user) => {
-      if (user) {
-        return done(null, user);
-      } else {
-        return done(null, false);
-      }
-    })
-    .catch((err) => done(err, null));
-});
-
-module.exports = (passport) => {
-  passport.use(strategy);
 };
+
+module.exports = verifyToken;

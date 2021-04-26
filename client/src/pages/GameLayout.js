@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import Chat from '../pages/Chat';
-import Board from '../components/Board';
+import GameBoard from '../components/GameBoard';
 
 function GameLayout(props) {
 
@@ -11,7 +11,7 @@ function GameLayout(props) {
                 <Chat />
             </Grid>
             <Grid item xs={9}>
-                <Board />
+                <GameBoard />
             </Grid>
         </Grid>
     );

@@ -9,7 +9,7 @@ const handleLogIn = (req, res) => {
 
   return User.findOne({ email })
     .then((user) => {
-      const isValid =  user.validatePassword(password);
+      const isValid = user.validatePassword(password);
       if (isValid) {
         return res
           .cookie('jwt', genJWT(user), {
@@ -22,7 +22,9 @@ const handleLogIn = (req, res) => {
         return res.status(400).json({ message: 'Incorrect email or password' });
       }
     })
-    .catch((error) => res.status(400).json({ message: 'Incorrect email or password' }));
+    .catch((error) =>
+      res.status(400).json({ message: 'Incorrect email or password' })
+    );
 };
 
 module.exports = {

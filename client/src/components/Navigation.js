@@ -10,7 +10,7 @@ const useStyles = makeStyles({
 });
 
 //
-const Navigation = ({ toggleNav }) => {
+const Navigation = () => {
   const classes = useStyles();
   return (
     <AppBar position="static" className={classes.root}>
