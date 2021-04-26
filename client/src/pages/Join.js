@@ -70,7 +70,7 @@ function Join() {
     const submitMatchId = (e) => {
         e.preventDefault();
         // TODO: call api route for joining match
-        socketRef.current.emit("join-match", {});
+        socketRef.current.emit("join-match", { matchId });
         socketRef.current.on("join-game-engine", (game) => {
             //setMatchState(game);
             socketRef.current.disconnect();
