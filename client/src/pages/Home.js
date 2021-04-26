@@ -6,8 +6,8 @@ import React, { useContext, useRef } from "react";
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import io from "socket.io-client";
 import { useHistory } from 'react-router-dom';
-//import { useUserState } from '../ContextProvider/user'; Will use these later
-//import { MatchContext } from '../ContextProvider/match'; this will be added 
+import { useUserState } from '../ContextProvider/user';
+import { MatchContext } from '../ContextProvider/match';
 
 const useStyles = makeStyles({
     container: {
@@ -51,17 +51,17 @@ function Home() {
 
     const classes = useStyles();
     const history = useHistory();
-    //const { user } = useUserState(); commented out for now, will need in the future
-    //const { setMatchState } = useContext(MatchContext)
+    const { user } = useUserState();
+    const { setMatchState } = useContext(MatchContext)
     const socketRef = useRef();
-    socketRef.current = io.connect("http:localhost:3002/");
+    socketRef.current = io.connect("/");
 
 
     // temporary function until the match controller gets reviewed/merged
     const createGame = () => {
         socketRef.current.emit('create-game-engine', { user: "test", matchId: "6081f2f65c9146522058e58" });
         socketRef.current.on('start-game-engine', (game) => {
-            //setMatchState(game);
+            setMatchState(game);
             socketRef.current.disconnect();
         })
         return history.push(`/newgame/6081f2f65c9146522058e58`);
