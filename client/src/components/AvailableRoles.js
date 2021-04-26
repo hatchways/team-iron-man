@@ -87,11 +87,11 @@ export default function AvailableRoles() {
     }, [setMatchState]);
 
     const assignRole = (role) => {
-        socketRef.current.emit("assign-role", { user, role: role });
+        socketRef.current.emit("assign-role", { user, role: role, matchId: matchState.matchId });
     };
 
     const removeRole = (role) => {
-        socketRef.current.emit("remove-role", { user, role: role });
+        socketRef.current.emit("remove-role", { user, role: role, matchId: matchState.matchId });
     };
 
     return (
