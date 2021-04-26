@@ -6,7 +6,7 @@ import React, { useContext, useRef, useState } from "react";
 import { Button, makeStyles, Typography, TextField } from "@material-ui/core";
 import io from "socket.io-client";
 import { useHistory } from "react-router-dom";
-//import { MatchContext } from '../ContextProvider/match';
+import { MatchContext } from '../ContextProvider/match';
 
 const useStyles = makeStyles({
     container: {
@@ -58,9 +58,9 @@ const useStyles = makeStyles({
 function Join() {
     const classes = useStyles();
     const history = useHistory();
-    //const { setMatchState } = useContext(MatchContext) will need when the match context provider is done
+    const { setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
-    socketRef.current = io.connect("http:localhost:3002/"); //will change when the final version is merged
+    socketRef.current = io.connect("/");
     const [matchId, setMatchId] = useState("");
 
     const onTextChange = (e) => {
@@ -72,7 +72,7 @@ function Join() {
         // TODO: call api route for joining match
         socketRef.current.emit("join-match", { matchId });
         socketRef.current.on("join-game-engine", (game) => {
-            //setMatchState(game);
+            setMatchState(game);
             socketRef.current.disconnect();
         });
         return history.push(`/join/${matchId}`);
