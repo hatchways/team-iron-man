@@ -16,7 +16,7 @@ import Divider from "@material-ui/core/Divider";
 import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import { useUserState } from "../ContextProvider/user";
 import io from "socket.io-client";
-//import { MatchContext } from "../ContextProvider/match";
+import { MatchContext } from "../ContextProvider/match";
 
 const useStyles = makeStyles({
     grid: {
@@ -75,13 +75,13 @@ const useStyles = makeStyles({
 export default function AvailableRoles() {
     const classes = useStyles();
     const { user } = useUserState();
-    // const { matchState, setMatchState } = useContext(MatchContext); needs match context provider
+    const { matchState, setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
 
     useEffect(() => {
-        socketRef.current = io.connect("localhost:3002/"); //will change when the other stuff gets approved
+        socketRef.current = io.connect("/");
         socketRef.current.on("update-game-engine", (game) => {
-            //setMatchState(game);
+            setMatchState(game);
         });
         return () => socketRef.current.disconnect();
     }, [setMatchState]);
