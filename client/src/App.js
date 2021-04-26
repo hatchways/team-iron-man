@@ -5,6 +5,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { theme } from './themes/theme';
 import LandingPage from './pages/Landing';
 import Navigation from './components/Navigation';
+import GameNavigation from './components/GameNavigation';
+import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import NewGame from './pages/NewGame';
@@ -31,6 +33,7 @@ function App() {
           <Route path="/chat" component={Chat} />
           <Route path="/gamelayout" component={GameLayout} />
           <Route path="/board" component={GameBoard} />
+          <Route path="/home" component={Home} />
         </BrowserRouter>
       </UserProvider>
     </MuiThemeProvider>
