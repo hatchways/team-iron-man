@@ -2,10 +2,11 @@
 UI for creating a new game.
 */
 
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import GameInvitation from "../components/GameInvitation";
 import { Button, makeStyles, Typography } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { MatchContext } from "../ContextProvider/match";
 
 const useStyles = makeStyles({
     container: {
@@ -40,12 +41,13 @@ const useStyles = makeStyles({
 });
 
 function NewGame() {
-    const classes = useStyles();
     const history = useHistory();
+    const { matchState } = useContext(MatchContext);
+    const classes = useStyles();
 
     // TODO: Implement creation of new game in the future.
     const createGame = () => {
-        history.push("/assignroles");
+        history.push(`/join/${matchState.matchId}`);
     };
 
     return (
