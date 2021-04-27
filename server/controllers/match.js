@@ -19,7 +19,7 @@ const joinMatch = (req, res) => {
     {$push: {'userIDs': {id}}},
     {new: true}
   ).then(() => {
-    res.status(200).jason({status: 'Joining match'});
+    res.status(200).json({status: 'Joining match'});
   })
   .catch((err) => {
     res.status(400).json({ message: 'Match is not joined' });
