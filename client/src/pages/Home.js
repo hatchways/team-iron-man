@@ -55,37 +55,27 @@ function Home() {
     const socketRef = useRef();
     socketRef.current = io.connect("/");
 
-    // temporary function until the match controller gets reviewed/merged
-    const createGame = () => {
-        socketRef.current.emit("create-game-engine", {
-            user,
-            matchId: "6081f2f65c9146522058e58",
-        });
-        socketRef.current.on("start-game-engine", (game) => {
-            setMatchState(game);
-            socketRef.current.disconnect();
-        });
-        return history.push(`/newgame/6081f2f65c9146522058e58`);
-    };
+    const newGame = async () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        };
+        try {
+            const response = await fetch(`/api/user/newmatch`, requestOptions);
+            const data = await response.json();
+            if (response.status === 200) {
+                socketRef.current.emit('create-game-engine', { user, matchId: data.match });
+                socketRef.current.on("start-game-engine", (game) => {
+                    setMatchState(game);
+                    socketRef.current.disconnect();
+                });
+                return history.push(`/newgame/${data.match}`);
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
-    /*
-      const newGame = async () => {
-          const requestOptions = {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' }
-          };
-          try {
-              const response = await fetch(`/api/user/newmatch`, requestOptions);
-              const data = await response.json();
-              if (response.status === 200) {
-                  socketRef.current.emit('create-game-engine', { user: "test" })
-                  return history.push(`/newgame/${data.match}`);
-              }
-          } catch (error) {
-              throw error;
-          }
-      }
-      */
     const joinGame = () => {
         return history.push("/join");
     };
@@ -94,18 +84,18 @@ function Home() {
         <div className={classes.container}>
             <Typography color="textPrimary" className={classes.header}>
                 Welcome
-      </Typography>
+            </Typography>
             <hr className={classes.hr} />
             <div className={classes.center}>
                 <div className={classes.block}>
                     <Button
                         variant="contained"
                         color="secondary"
-                        onClick={createGame}
+                        onClick={newGame}
                         className={classes.button}
                     >
                         New Game
-          </Button>
+                    </Button>
                     <Button
                         variant="contained"
                         color="secondary"
@@ -113,7 +103,7 @@ function Home() {
                         className={classes.button}
                     >
                         Join Game
-          </Button>
+                    </Button>
                 </div>
             </div>
         </div>
