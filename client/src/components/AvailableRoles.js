@@ -17,6 +17,7 @@ import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import { useUserState } from "../ContextProvider/user";
 import io from "socket.io-client";
 import { MatchContext } from "../ContextProvider/match";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
     grid: {
@@ -77,14 +78,23 @@ export default function AvailableRoles() {
     const { user } = useUserState();
     const { matchState, setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
+    const history = useHistory();
+    const matchId = history.location.pathname.substring(history.location.pathname.lastIndexOf('/') + 1);
 
     useEffect(() => {
         socketRef.current = io.connect("/");
-        socketRef.current.on("update-game-engine", (game) => {
-            setMatchState(game);
-        });
+        if (matchState) {
+            socketRef.current.on("update-game-engine-" + matchState.matchId, (game) => {
+                setMatchState(game);
+            });
+        } else {
+            socketRef.current.emit("get-game-engine", { matchId });
+            socketRef.current.on("update-game-engine-" + matchId, (game) => {
+                setMatchState(game);
+            });
+        }
         return () => socketRef.current.disconnect();
-    }, [setMatchState]);
+    }, [matchId, matchState, setMatchState]);
 
     const assignRole = (role) => {
         socketRef.current.emit("assign-role", { user, role: role, matchId: matchState.matchId });
@@ -281,6 +291,7 @@ export default function AvailableRoles() {
                             variant="contained"
                             size="small"
                             startIcon={<InsertLinkIcon />}
+                            onClick={() => console.log(matchState)}
                         >
                             Copy
             </Button>
