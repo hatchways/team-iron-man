@@ -32,6 +32,7 @@ class Game {
         this.winner = "";
         this.turnCount = 1; // Turn and move counters could be useful to store.
         this.moveCount = 0;
+        this.inProgress = false;
         this.shuffleBoard();
     }
 
@@ -288,6 +289,10 @@ class Game {
         );
     }
 
+    setInProgress() {
+        this.inProgress = true;
+    }
+
     toJson() {
         return {
             host: this.host,
@@ -308,6 +313,7 @@ class Game {
             turnCount: this.turnCount,
             moveCount: this.moveCount,
             playersReady: this.playersReady,
+            inProgress: this.inProgress
         };
     }
 }

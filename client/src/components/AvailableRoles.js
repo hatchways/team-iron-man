@@ -291,7 +291,7 @@ export default function AvailableRoles() {
                             variant="contained"
                             size="small"
                             startIcon={<InsertLinkIcon />}
-                            onClick={() => console.log(matchState)}
+                            onClick={() => navigator.clipboard.writeText(matchId)}
                         >
                             Copy
                         </Button>
