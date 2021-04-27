@@ -105,11 +105,16 @@ export default function AvailableRoles() {
     }, [matchId, matchState, setMatchState, history]);
 
     const assignRole = (role) => {
-        socketRef.current.emit("assign-role", { user, role: role, matchId: matchState.matchId });
+        if (!matchState.inProgress) {
+            socketRef.current.emit("assign-role", { user, role: role, matchId: matchState.matchId });
+        }
+
     };
 
     const removeRole = (role) => {
-        socketRef.current.emit("remove-role", { user, role: role, matchId: matchState.matchId });
+        if (!matchState.inProgress) {
+            socketRef.current.emit("remove-role", { user, role: role, matchId: matchState.matchId });
+        }
     };
 
     return (
