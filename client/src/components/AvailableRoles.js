@@ -264,7 +264,7 @@ export default function AvailableRoles() {
                     className={classes.sectionOne}
                 >
                     Players ready for match:
-        </Typography>
+                </Typography>
                 {matchState && matchState.playersReady.length > 0 && (
                     <List className={classes.block}>
                         {matchState.playersReady.map((player) => (
@@ -284,7 +284,7 @@ export default function AvailableRoles() {
                             className={classes.sectionTwo}
                         >
                             Share match id:
-            </Typography>
+                        </Typography>
                     </ListItem>
                     <ListItem>
                         <Button
@@ -294,7 +294,7 @@ export default function AvailableRoles() {
                             onClick={() => console.log(matchState)}
                         >
                             Copy
-            </Button>
+                        </Button>
                     </ListItem>
                 </List>
             </Grid>
