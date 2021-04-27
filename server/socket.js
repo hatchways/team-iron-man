@@ -32,5 +32,10 @@ exports.socketConnect = function (server) {
         socket.on('get-game-engine', ({ matchId }) => {
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
+
+        socket.on('set-match-in-progress', ({ matchId }) => {
+            game[matchId].setInProgress();
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
     });
 }
