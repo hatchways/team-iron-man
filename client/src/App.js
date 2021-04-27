@@ -9,6 +9,7 @@ import GameNavigation from './components/GameNavigation';
 import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
+import Join from './pages/Join';
 import NewGame from './pages/NewGame';
 import Chat from './pages/Chat';
 import './App.css';
@@ -36,6 +37,7 @@ function App() {
             <Route exact path="/signup" component={SignUp} />
             <Route path="/assignroles" component={AssignRoles} />
             <Route path="/newgame" component={NewGame} />
+            <Route exact path="/join" component={Join} />
             <Route path="/chat" component={Chat} />
             <Route path="/gamelayout" component={GameLayout} />
             <Route path="/board" component={GameBoard} />
