@@ -47,7 +47,7 @@ const SignUp = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [valData, setValData] = useState(initialValData);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const { error } = useUserState();
+  const { error, isLoggedIn } = useUserState();
   const dispatch = useUserDispatch();
 
   const classes = useStyles();
@@ -67,6 +67,12 @@ const SignUp = () => {
   useEffect(() => {
     handleValidation();
   }, [formData, handleValidation]);
+
+   useEffect(() => {
+    if (isLoggedIn) {
+      return history.push('/home');
+    }
+  }, [isLoggedIn, history]);
 
   const handleChange = (event) => {
     const { value, name } = event.target;
