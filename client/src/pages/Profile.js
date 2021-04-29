@@ -1,5 +1,5 @@
 /*
-UI for home page.
+UI for Profile page.
 */
 
 import React, { useState } from "react";
