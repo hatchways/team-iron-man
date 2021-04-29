@@ -7,7 +7,7 @@ const handleChangePassword = (req, res) => {
     }
     return User.findById({ _id: req.userID })
         .then(user => {
-            const isValid = user.validatePassword(password);
+            const isValid = user.validatePassword(oldPassword);
             if (isValid) {
                 user.password = newPassword;
 
