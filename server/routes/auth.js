@@ -4,6 +4,7 @@ const login = require('../controllers/login');
 const signup = require('../controllers/signup');
 const changeUserName = require('../controllers/changeUserName');
 const changePassword = require('../controllers/changePassword');
+const ChangeAvatar = require('../controllers/changeAvatar');
 const { authUser } = require('../controllers/authLogin');
 const verifyToken = require('../middlewares/authentication');
 
@@ -18,6 +19,8 @@ router.post('/signup', (req, res) => {
 router.post('/changeusername', verifyToken, changeUserName.handleChangeUserName);
 
 router.post('/changepassword', verifyToken, changePassword.handleChangePassword);
+
+router.post('/changeavatar', verifyToken, ChangeAvatar.handleChangeAvatar);
 
 router.get('/authLogin', authUser);
 
