@@ -20,6 +20,7 @@ import { MatchContext } from './ContextProvider/match';
 import GameBoard from './components/GameBoard';
 import Profile from './pages/Profile';
 
+
 function App() {
 
   const [matchState, setMatchState] = useState(null);
