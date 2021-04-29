@@ -4,23 +4,13 @@ UI for home page.
 
 import React, { useState } from "react";
 import {
-    Button,
     makeStyles,
     Typography,
     Grid,
     Avatar,
     Divider,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    TextField,
-    InputAdornment,
 } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SettingsIcon from "@material-ui/icons/Settings";
-import IconButton from "@material-ui/core/IconButton";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useUserState } from "../ContextProvider/user";
 import ChangeUserName from '../components/ChangeUserName';
 import ChangePassword from '../components/ChangePassword';
@@ -81,32 +71,12 @@ const useStyles = makeStyles({
         width: "80px",
         height: "80px",
     },
-    accordionSummary: {
-        backgroundColor: "#00e676",
-    },
-    input: {
-        width: "100%",
-    },
-    inputHalf: {
-        width: "95%",
-    },
-    inputLabel: {
-        margin: "10px 0 10px 0",
-        textAlign: "left",
-        fontWeight: "bold",
-    },
-    buttonGreen: {
-        backgroundColor: "#00e676",
-        textTransform: "none",
-        "&:hover": {
-            backgroundColor: "#00a152",
-        },
-    },
+
 });
 
 function Profile() {
     const classes = useStyles();
-    const { user } = useUserState();
+    const { _id, user, email } = useUserState();
     const [passwordError, setPasswordError] = useState(false);
     const [inputValues, setInputValues] = useState({
         userName: user,
@@ -158,8 +128,8 @@ function Profile() {
                         {user}
                     </Typography>
                     <Typography color="textPrimary" className={classes.subheader}>
-                        testuser@test.com
-          </Typography>
+                        {_id}
+                    </Typography>
                 </Grid>
             </Grid>
             <Divider className={classes.hr} variant="middle" />
