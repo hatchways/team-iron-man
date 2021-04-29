@@ -72,7 +72,7 @@ const useStyles = makeStyles({
 const AuthNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
-    const { avatar } = useUserState();
+    const { user, avatar } = useUserState();
     const history = useHistory();
 
     const handleClick = (event) => {
@@ -95,7 +95,7 @@ const AuthNavigation = () => {
                     <Typography className={classes.title} onClick={() => history.push("/home")}>C L U E W O R D S</Typography>
                 </Grid>
                 <Grid item xs={6} className={classes.right}>
-                    <Button variant="contained" className={classes.newGameButton}>New Game</Button>
+                    <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
                     <Avatar alt="avatar" src={avatar} />
                     <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         My Profile<ArrowDropDownIcon />
