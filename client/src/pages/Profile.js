@@ -151,7 +151,6 @@ function Profile() {
         <div className={classes.container}>
             <Grid container>
                 <Grid item xs={2} className={classes.left}>
-
                     <Avatar
                         alt="Some Dude"
                         src={avatar}
@@ -193,6 +192,7 @@ function Profile() {
                 handleClickShowPassword={handleClickShowPassword}
             />
             <ChangeAvatar />
+            <Divider className={classes.hr} variant="middle" />
         </div>
     );
 }
