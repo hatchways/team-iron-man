@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
+import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { useUserState } from "../ContextProvider/user";
 import { useHistory } from 'react-router';
@@ -34,7 +34,6 @@ const useStyles = makeStyles({
         alignItems: "center",
         justifyContent: "flex-end",
     },
-
     newGameButton: {
         marginRight: "10px",
         color: "white",
@@ -43,31 +42,37 @@ const useStyles = makeStyles({
             backgroundColor: "#76ff03",
         }
     },
-
     menuItem: {
         "&:hover": {
             backgroundColor: "lightgray"
         }
     },
-
     blue: {
         color: "#2196f3",
     },
-
     red: {
         color: "#ff5e62"
     },
-
     scoreSpacing: {
         margin: "0 10px 20px 10px"
+    },
+    title: {
+        fontWeight: "500",
+        fontSize: "large",
+        transition: "font-size 0.2s ease-in",
+        '&:hover': {
+            fontWeight: "600",
+            fontSize: "20px",
+            cursor: "pointer",
+            transition: "font-size 0.2s ease-in;"
+        }
     }
 });
 
-//
 const AuthNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
-    const { user, avatar } = useUserState();
+    const { avatar } = useUserState();
     const history = useHistory();
 
     const handleClick = (event) => {
@@ -87,7 +92,7 @@ const AuthNavigation = () => {
         <Toolbar className={classes.root}>
             <Grid container>
                 <Grid item xs={6} className={classes.left}>
-                    <Typography variant="h6">C L U E W O R D S</Typography>
+                    <Typography className={classes.title} onClick={() => history.push("/home")}>C L U E W O R D S</Typography>
                 </Grid>
                 <Grid item xs={6} className={classes.right}>
                     <Button variant="contained" className={classes.newGameButton}>New Game</Button>
