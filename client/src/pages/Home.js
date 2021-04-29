@@ -2,7 +2,7 @@
 UI for home page.
 */
 
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import io from "socket.io-client";
 import { useHistory } from 'react-router-dom';
