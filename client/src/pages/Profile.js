@@ -113,11 +113,9 @@ function Profile() {
         };
         try {
             const response = await fetch(`/api/changeusername`, requestOptions);
-            const data = await response.json();
             if (response.status === 200) {
-                console.log(data);
+                return history.go(0);
             }
-            return history.go(0);
         } catch (error) {
             throw error;
         }
@@ -133,11 +131,9 @@ function Profile() {
             };
             try {
                 const response = await fetch(`/api/changepassword`, requestOptions);
-                const data = await response.json();
                 if (response.status === 200) {
-                    console.log(data);
+                    return history.go(0);
                 }
-                return history.go(0);
             } catch (error) {
                 throw error;
             }

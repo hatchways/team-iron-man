@@ -75,11 +75,9 @@ const ChangeAvatar = () => {
         };
         try {
             const backendResponse = await fetch(`/api/changeavatar`, requestOptions);
-            const backendData = await backendResponse.json();
             if (backendResponse.status === 200) {
-                console.log(backendData);
+                return history.go(0);
             }
-            return history.go(0);
         } catch (error) {
             throw error;
         }
@@ -87,7 +85,7 @@ const ChangeAvatar = () => {
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        accepts: "image/*",
+        accept: "image/*",
         multiple: false,
     });
 
