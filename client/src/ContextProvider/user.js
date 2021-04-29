@@ -26,7 +26,9 @@ const useUserDispatch = () => {
 // Add additional states here that need to be accessed by multiple pages/components
 const initialState = {
   isLoggedIn: false,
+  _id: '',
   user: '',
+  email: '',
   error: '',
 };
 

@@ -10,7 +10,7 @@ const authUser = (req, res) => {
   return User.findOne({ _id: id })
     .then((user) => {
       {
-        return res.status(200).json({ email: user.email, name: user.name });
+        return res.status(200).json({ _id: user._id, email: user.email, name: user.name });
       }
     })
     .catch((err) => res.status(401).json({ message: 'You need to Login' }));
