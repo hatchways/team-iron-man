@@ -14,6 +14,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import { useUserState } from "../ContextProvider/user";
 import ChangeUserName from '../components/ChangeUserName';
 import ChangePassword from '../components/ChangePassword';
+import ChangeAvatar from '../components/ChangeAvatar';
 
 const useStyles = makeStyles({
     container: {
@@ -186,6 +187,7 @@ function Profile() {
                 changePassword={changePassword}
                 handleClickShowPassword={handleClickShowPassword}
             />
+            <ChangeAvatar />
         </div>
     );
 }
