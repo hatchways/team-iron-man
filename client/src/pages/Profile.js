@@ -28,6 +28,7 @@ const useStyles = makeStyles({
         paddingBottom: "80px",
         marginLeft: "25%",
         marginTop: "10vh",
+        overflowY: "scroll"
     },
 
     header: {
