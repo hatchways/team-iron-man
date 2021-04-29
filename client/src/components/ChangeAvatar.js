@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import {
     makeStyles,
@@ -7,7 +7,10 @@ import {
     AccordionSummary,
     AccordionDetails,
 } from "@material-ui/core";
+import ImageIcon from '@material-ui/icons/Image';
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { useHistory } from 'react-router-dom';
+
 const useStyles = makeStyles({
 
     block: {
@@ -25,26 +28,29 @@ const useStyles = makeStyles({
         fontWeight: "bold",
     },
     dropzone: {
-        height: "8rem",
-        margin: "1rem",
-        padding: "1rem",
-        border: "2px dashed salmon",
+        marginTop: "8px",
+        width: "100%",
+        height: "100px",
+        border: "2px dashed #00e676",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontSize: "2rem",
-        fontWeight: "bold",
         cursor: "pointer"
     },
+    dropzoneText: {
+        fontWeight: "600",
+        fontSize: "x-large",
+    },
     active: {
-        border: "2px solid rebeccapurple"
+        border: "3px solid #00e676",
+        backgroundColor: "lightgray"
     }
 });
 
-const ChangeAvatar = (props) => {
+const ChangeAvatar = () => {
 
     const classes = useStyles();
-    const [uploadedFile, setUploadedFile] = useState({});
+    const history = useHistory();
 
     const onDrop = useCallback(async (acceptedFile) => {
         console.log(acceptedFile);
@@ -56,23 +62,34 @@ const ChangeAvatar = (props) => {
             "upload_preset",
             process.env.REACT_APP_NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
         );
-
-        const response = await fetch(url, {
+        const cloudinaryResponse = await fetch(url, {
             method: "post",
             body: formData,
         });
-        const data = await response.json();
-        console.log(data);
-        setUploadedFile(data);
-
-    }, []);
+        const cloudinaryData = await cloudinaryResponse.json();
+        const avatarUrl = cloudinaryData.url
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ avatar: avatarUrl })
+        };
+        try {
+            const backendResponse = await fetch(`/api/changeavatar`, requestOptions);
+            const backendData = await backendResponse.json();
+            if (backendResponse.status === 200) {
+                console.log(backendData);
+            }
+            return history.go(0);
+        } catch (error) {
+            throw error;
+        }
+    }, [history]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accepts: "image/*",
         multiple: false,
     });
-
 
     return (
         <Accordion>
@@ -90,8 +107,9 @@ const ChangeAvatar = (props) => {
                     className={`${classes.dropzone} ${isDragActive ? classes.active : null}`}
                 >
                     <input {...getInputProps()} />
-        Drop An Image File or Click To Browse
-      </div>
+                    <Typography className={classes.dropzoneText}>Drop An Image File or Click To Browse</Typography>
+                    <ImageIcon fontSize="large" />
+                </div>
             </AccordionDetails>
         </Accordion>
     );

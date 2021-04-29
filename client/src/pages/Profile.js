@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { useUserState } from "../ContextProvider/user";
+import { useHistory } from 'react-router-dom';
 import ChangeUserName from '../components/ChangeUserName';
 import ChangePassword from '../components/ChangePassword';
 import ChangeAvatar from '../components/ChangeAvatar';
@@ -78,7 +79,8 @@ const useStyles = makeStyles({
 
 function Profile() {
     const classes = useStyles();
-    const { user, email } = useUserState();
+    const { avatar, user, email } = useUserState();
+    const history = useHistory();
     const [passwordError, setPasswordError] = useState(false);
     const [inputValues, setInputValues] = useState({
         userName: user,
@@ -115,9 +117,11 @@ function Profile() {
             if (response.status === 200) {
                 console.log(data);
             }
+            return history.go(0);
         } catch (error) {
             throw error;
         }
+
     }
 
     const changePassword = async () => {
@@ -133,6 +137,7 @@ function Profile() {
                 if (response.status === 200) {
                     console.log(data);
                 }
+                return history.go(0);
             } catch (error) {
                 throw error;
             }
@@ -149,7 +154,7 @@ function Profile() {
 
                     <Avatar
                         alt="Some Dude"
-                        src="https://i.imgur.com/CLP18jh.png"
+                        src={avatar}
                         className={classes.large}
                     />
                 </Grid>
