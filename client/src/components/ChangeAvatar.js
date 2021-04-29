@@ -53,7 +53,6 @@ const ChangeAvatar = () => {
     const history = useHistory();
 
     const onDrop = useCallback(async (acceptedFile) => {
-        console.log(acceptedFile);
         const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
 
         const formData = new FormData();
