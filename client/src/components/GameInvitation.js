@@ -3,11 +3,16 @@ Component for inviting friends to a new game.
 */
 
 import React, { useState } from "react";
-import { Grid, Button, makeStyles, TextField, Typography } from '@material-ui/core';
-import LinkIcon from '@material-ui/icons/Link';
+import {
+    Grid,
+    Button,
+    makeStyles,
+    TextField,
+    Typography,
+} from "@material-ui/core";
+import LinkIcon from "@material-ui/icons/Link";
 
 const useStyles = makeStyles({
-
     block: {
         display: "block",
     },
@@ -15,29 +20,29 @@ const useStyles = makeStyles({
     form: {
         border: "1px solid lightgray",
         borderRadius: "3px",
-        padding: "5px"
+        padding: "5px",
     },
 
     input: {
         border: "none",
-        width: "100%"
+        width: "100%",
     },
 
     inputFocused: {
         outline: "none",
-        border: "none"
+        border: "none",
     },
 
     invitation: {
         textAlign: "left",
         fontStyle: "italic",
-        color: "gray"
+        color: "gray",
     },
 
     item: {
         marginTop: "50px",
         marginBottom: "50px",
-        padding: "10px"
+        padding: "10px",
     },
 
     itemLeft: {
@@ -51,11 +56,10 @@ const useStyles = makeStyles({
     },
     submitButton: {
         width: "150px",
-    }
-})
+    },
+});
 
 function GameInvitation() {
-
     const classes = useStyles();
 
     const [emailInput, setEmailInput] = useState("");
@@ -63,10 +67,9 @@ function GameInvitation() {
 
     const onInputChange = (e) => {
         setEmailInput(e.target.value);
-    }
+    };
 
     const sendInvitation = (e) => {
-
         e.preventDefault();
         if (emailInput.length > 0) {
             setEmailList([...emailList, emailInput]);
@@ -74,7 +77,7 @@ function GameInvitation() {
 
             // TODO: Implement sending of the actual invitation here.
         }
-    }
+    };
 
     return (
         <Grid container alignItems="center">
@@ -90,24 +93,43 @@ function GameInvitation() {
                             className={classes.input}
                             variant="outlined"
                             type="email"
-                            InputProps={{ endAdornment: <Button variant="contained" type="submit" className={classes.submitButton}>Send Invite</Button> }}
+                            InputProps={{
+                                endAdornment: (
+                                    <Button
+                                        variant="contained"
+                                        type="submit"
+                                        className={classes.submitButton}
+                                    >
+                                        Send Invite
+                                    </Button>
+                                ),
+                            }}
                         />
-
                     </form>
                     {emailList.length > 0 &&
-                        emailList.map(
-                            email =>
-                                <Typography
-                                    className={classes.invitation + " " + classes.block}
-                                    key={email}>
-                                    &#10004; {email + " invited"}
-                                </Typography>)}
+                        emailList.map((email) => (
+                            <Typography
+                                className={classes.invitation + " " + classes.block}
+                                key={email}
+                            >
+                                &#10004; {email + " invited"}
+                            </Typography>
+                        ))}
                 </div>
             </Grid>
             <Grid item xs={3}>
                 <div className={classes.item + " " + classes.block}>
                     <Typography>Or share link:</Typography>
-                    <Button variant="outlined" onClick={() => { navigator.clipboard.writeText("placeholder") }} className={classes.spacingTop}><LinkIcon />&nbsp;Copy</Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            navigator.clipboard.writeText("placeholder");
+                        }}
+                        className={classes.spacingTop}
+                    >
+                        <LinkIcon />
+                        &nbsp;Copy
+                    </Button>
                 </div>
             </Grid>
         </Grid>
