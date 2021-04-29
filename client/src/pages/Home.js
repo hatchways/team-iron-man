@@ -61,7 +61,7 @@ function Home() {
             headers: { 'Content-Type': 'application/json' }
         };
         try {
-            const response = await fetch(`/api/user/newmatch`, requestOptions);
+            const response = await fetch(`/api/match/create`, requestOptions);
             const data = await response.json();
             if (response.status === 200) {
                 socketRef.current.emit('create-game-engine', { user, matchId: data.match });
