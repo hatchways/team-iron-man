@@ -4,7 +4,7 @@ const UserReducer = (state, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        _id: action.payload[0],
+        avatar: action.payload[0],
         user: action.payload[1],
         email: action.payload[2],
       };
