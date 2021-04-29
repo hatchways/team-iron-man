@@ -43,7 +43,7 @@ const ChangeUserName = (props) => {
             </AccordionSummary>
             <AccordionDetails className={classes.block}>
                 <Typography className={classes.inputLabel}>
-                    Enter a new user name:
+                    Enter a New User Name:
                     </Typography>
                 <TextField
                     value={props.userName}
