@@ -1,23 +1,30 @@
 const User = require('../models/UserModel');
 
-const handleChangeUserName = (req, res) => {
+const handleChangePassword = (req, res) => {
     const { oldPassword, newPassword } = req.body;
     if (!oldPassword || !newPassword) {
         return res.status(400).json({ message: 'All fields must be filled in!' });
     }
-    return User.findByIdAndUpdate(
-        { _id: req.userID },
-        { name },
-        { new: true },
-    )
-        .then(() => {
-            res.status(200).json({ status: 'User name updated!' });
+    return User.findById({ _id: req.userID })
+        .then(user => {
+            const isValid = user.validatePassword(password);
+            if (isValid) {
+                user.password = newPassword;
+
+                user
+                    .save()
+                    .then(() => res.json("User password updated!"))
+                    .catch((err) => res.status(400).json("Error: " + err));
+            }
+            else {
+                return res.status(400).json({ message: 'Old password is incorrect.' });
+            }
         })
         .catch((err) => {
-            res.status(400).json({ err });
+            res.status(400).json({ message: 'Error, something went wrong.' });
         });
 }
 
 module.exports = {
-    handleChangeUserName,
+    handleChangePassword,
 };
