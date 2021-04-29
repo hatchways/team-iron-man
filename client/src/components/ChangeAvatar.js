@@ -47,13 +47,14 @@ const ChangeAvatar = (props) => {
     const [uploadedFile, setUploadedFile] = useState({});
 
     const onDrop = useCallback(async (acceptedFile) => {
-        const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+        console.log(acceptedFile);
+        const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
 
         const formData = new FormData();
-        formData.append("file", acceptedFile);
+        formData.append("file", acceptedFile[0]);
         formData.append(
             "upload_preset",
-            process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+            process.env.REACT_APP_NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
         );
 
         const response = await fetch(url, {
@@ -61,7 +62,7 @@ const ChangeAvatar = (props) => {
             body: formData,
         });
         const data = await response.json();
-        console.log(process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+        console.log(data);
         setUploadedFile(data);
 
     }, []);
