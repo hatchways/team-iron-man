@@ -2,7 +2,7 @@
 Component for inviting friends to a new game.
 */
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
     Grid,
     Button,
@@ -11,6 +11,7 @@ import {
     Typography,
 } from "@material-ui/core";
 import LinkIcon from "@material-ui/icons/Link";
+import { MatchContext } from "../ContextProvider/match";
 
 const useStyles = makeStyles({
     block: {
@@ -64,6 +65,7 @@ function GameInvitation() {
 
     const [emailInput, setEmailInput] = useState("");
     const [emailList, setEmailList] = useState([]);
+    const { matchState } = useContext(MatchContext);
 
     const onInputChange = (e) => {
         setEmailInput(e.target.value);
@@ -123,13 +125,15 @@ function GameInvitation() {
                     <Button
                         variant="outlined"
                         onClick={() => {
-                            navigator.clipboard.writeText("placeholder");
+                            navigator.clipboard.writeText(
+                                `localhost:3000/join/${matchState.matchId}`
+                            );
                         }}
                         className={classes.spacingTop}
                     >
                         <LinkIcon />
-                        &nbsp;Copy
-                    </Button>
+            &nbsp;Copy
+          </Button>
                 </div>
             </Grid>
         </Grid>
