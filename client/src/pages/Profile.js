@@ -23,6 +23,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useUserState } from "../ContextProvider/user";
 import ChangeUserName from '../components/ChangeUserName';
+import ChangePassword from '../components/ChangePassword';
 
 const useStyles = makeStyles({
     container: {
@@ -119,6 +120,7 @@ function Profile() {
     });
 
     const handleChange = (prop) => (e) => {
+        prop.indexOf("newPassword") !== -1 && setPasswordError(false);
         setInputValues({
             ...inputValues,
             [prop]: e.target.value,
@@ -173,135 +175,18 @@ function Profile() {
                 handleChange={handleChange}
                 changeUserName={changeUserName}
             />
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    className={classes.accordionSummary}
-                >
-                    <Typography>Change Password</Typography>
-                </AccordionSummary>
-                <AccordionDetails className={classes.block}>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <Typography className={classes.inputLabel}>
-                                Enter New password:
-                            </Typography>
-                            <TextField
-                                value={inputValues.newPassword1}
-                                id="new-password1"
-                                label="New Password"
-                                onChange={handleChange("newPassword1")}
-                                className={classes.inputHalf}
-                                variant="outlined"
-                                error={passwordError}
-                                helperText={passwordError ? "Passwords do not match!" : ""}
-                                type={inputValues.showNewPassword1 ? "text" : "password"}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={() =>
-                                                    handleClickShowPassword("showNewPassword1")
-                                                }
-                                                edge="end"
-                                            >
-                                                {inputValues.showNewPassword1 ? (
-                                                    <Visibility />
-                                                ) : (
-                                                    <VisibilityOff />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography className={classes.inputLabel}>
-                                Confirm New Password:
-                            </Typography>
-                            <TextField
-                                value={inputValues.newPassword2}
-                                id="new-password2"
-                                label="Confirm New Password"
-                                onChange={handleChange("newPassword2")}
-                                error={passwordError}
-                                helperText={passwordError ? "Passwords do not match!" : ""}
-                                className={classes.inputHalf}
-                                variant="outlined"
-                                type={inputValues.showNewPassword2 ? "text" : "password"}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={() =>
-                                                    handleClickShowPassword("showNewPassword2")
-                                                }
-                                                edge="end"
-                                            >
-                                                {inputValues.showNewPassword2 ? (
-                                                    <Visibility />
-                                                ) : (
-                                                    <VisibilityOff />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <Typography className={classes.inputLabel}>
-                                Enter Old password:
-                            </Typography>
-                            <TextField
-                                value={inputValues.oldPassword}
-                                id="old-password"
-                                label="Old Password"
-                                onChange={handleChange("oldPassword")}
-                                className={classes.inputHalf}
-                                variant="outlined"
-                                type={inputValues.showOldPassword ? "text" : "password"}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={() =>
-                                                    handleClickShowPassword("showOldPassword")
-                                                }
-                                                edge="end"
-                                            >
-                                                {inputValues.showOldPassword ? (
-                                                    <Visibility />
-                                                ) : (
-                                                    <VisibilityOff />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6} className={classes.center}>
-                            <Button
-                                variant="contained"
-                                className={classes.buttonGreen}
-                                size="large"
-                                onClick={changePassword}
-                            >
-                                Submit
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </AccordionDetails>
-            </Accordion>
+            <ChangePassword
+                oldPassword={inputValues.oldPassword}
+                newPassword1={inputValues.newPassword1}
+                newPassword2={inputValues.newPassword2}
+                showOldPassword={inputValues.showOldPassword}
+                showNewPassword1={inputValues.showNewPassword1}
+                showNewPassword2={inputValues.showNewPassword2}
+                passwordError={passwordError}
+                handleChange={handleChange}
+                changePassword={changePassword}
+                handleClickShowPassword={handleClickShowPassword}
+            />
         </div>
     );
 }
