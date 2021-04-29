@@ -118,11 +118,26 @@ function Profile() {
         }
     }
 
-    const changePassword = () => {
-        inputValues.newPassword1 === inputValues.newPassword2 ?
-            console.log(inputValues.newPassword2)
-            :
+    const changePassword = async () => {
+        if (inputValues.newPassword1 === inputValues.newPassword2) {
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oldPassword: inputValues.oldPassword, newPassword: inputValues.newPassword1 })
+            };
+            try {
+                const response = await fetch(`/api/changepassword`, requestOptions);
+                const data = await response.json();
+                if (response.status === 200) {
+                    console.log(data);
+                }
+            } catch (error) {
+                throw error;
+            }
+        }
+        else {
             setPasswordError(true)
+        }
     }
 
     return (
