@@ -32,8 +32,8 @@ function App() {
       <CssBaseline />
       <UserProvider>
         <MatchContext.Provider value={matchValue}>
-          <Navigation />
           <BrowserRouter>
+            <Navigation />
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
