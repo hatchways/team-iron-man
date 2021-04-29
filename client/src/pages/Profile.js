@@ -76,7 +76,7 @@ const useStyles = makeStyles({
 
 function Profile() {
     const classes = useStyles();
-    const { _id, user, email } = useUserState();
+    const { user, email } = useUserState();
     const [passwordError, setPasswordError] = useState(false);
     const [inputValues, setInputValues] = useState({
         userName: user,
@@ -101,9 +101,22 @@ function Profile() {
         setInputValues({ ...inputValues, [prop]: !inputValues[prop] });
     };
 
-    const changeUserName = () => {
-        console.log(inputValues.userName);
-    };
+    const changeUserName = async () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: inputValues.userName })
+        };
+        try {
+            const response = await fetch(`/api/changeusername`, requestOptions);
+            const data = await response.json();
+            if (response.status === 200) {
+                console.log(data);
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
     const changePassword = () => {
         inputValues.newPassword1 === inputValues.newPassword2 ?
@@ -128,7 +141,7 @@ function Profile() {
                         {user}
                     </Typography>
                     <Typography color="textPrimary" className={classes.subheader}>
-                        {_id}
+                        {email}
                     </Typography>
                 </Grid>
             </Grid>
