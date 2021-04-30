@@ -17,6 +17,7 @@ import GameLayout from './pages/GameLayout';
 import { UserProvider } from './ContextProvider/user';
 import { MatchContext } from './ContextProvider/match';
 import GameBoard from './components/GameBoard';
+import Profile from './pages/Profile';
 
 function App() {
 
@@ -29,8 +30,8 @@ function App() {
       <CssBaseline />
       <UserProvider>
         <MatchContext.Provider value={matchValue}>
-          <Navigation />
           <BrowserRouter>
+            <Navigation />
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
@@ -41,6 +42,7 @@ function App() {
             <Route path="/gamelayout" component={GameLayout} />
             <Route path="/board" component={GameBoard} />
             <Route path="/home" component={Home} />
+            <Route path="/profile" component={Profile} />
           </BrowserRouter>
         </MatchContext.Provider>
       </UserProvider>

@@ -39,7 +39,7 @@ const loginUser = async (dispatch, loginPayload) => {
     const response = await fetch(`/api/login`, requestOptions);
     const data = await response.json();
     if (response.status === 200) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: [data.name, data.email] });
+      dispatch({ type: 'LOGIN_SUCCESS', payload: [data.avatar, data.name, data.email] });
       return data;
     } else {
       throw data.message;
@@ -59,7 +59,7 @@ const authUser = async (dispatch) => {
     const response = await fetch('/api/authLogin', requestOptions);
     const data = await response.json();
     if (response.status === 200) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: [data.name, data.email] });
+      dispatch({ type: 'LOGIN_SUCCESS', payload: [data.avatar, data.name, data.email] });
       return data;
     } else {
       throw data.message;
