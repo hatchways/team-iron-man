@@ -3,7 +3,8 @@ UI for home page.
 */
 
 import React, { useContext, useRef, useState } from "react";
-import { Button, makeStyles, Typography, TextField } from "@material-ui/core";
+import { Button, makeStyles, Typography, TextField, Snackbar } from "@material-ui/core";
+import { Alert } from '@material-ui/lab';
 import io from "socket.io-client";
 import { useHistory } from "react-router-dom";
 import { MatchContext } from '../ContextProvider/match';
@@ -62,20 +63,35 @@ function Join() {
     const socketRef = useRef();
     socketRef.current = io.connect("/");
     const [matchId, setMatchId] = useState("");
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [joinError, setJoinError] = useState("");
 
     const onTextChange = (e) => {
         setMatchId(e.target.value);
     };
 
-    const submitMatchId = (e) => {
+    const submitMatchId = async (e) => {
         e.preventDefault();
-        // TODO: call api route for joining match
-        socketRef.current.emit("join-match", { matchId });
-        socketRef.current.on("join-game-engine", (game) => {
-            setMatchState(game);
-            socketRef.current.disconnect();
-        });
-        return history.push(`/join/${matchId}`);
+        try {
+          const response = await fetch(`/api/match/join/${matchId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          });
+          const data = await response.json();
+          if (response.status === '200') {
+            socketRef.current.emit('join-match', { matchId });
+            socketRef.current.on('join-game-engine', (game) => {
+              setMatchState(game);
+              socketRef.current.disconnect();
+              return history.push(`/join/${matchId}`);
+            });
+          } else {
+            throw data.message;
+          }
+        } catch (error) {
+          setJoinError("Please provide a valid match ID.");
+          setSnackbarOpen(true);
+        }
     };
 
     return (
@@ -107,6 +123,11 @@ function Join() {
                     </Button>
                 </div>
             </form>
+            <Snackbar open={snackbarOpen}>
+                <Alert onClose={() => setSnackbarOpen(false)} severity="error">
+                  {joinError}
+                </Alert>
+          </Snackbar>
         </div>
     );
 }
