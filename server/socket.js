@@ -19,13 +19,13 @@ exports.socketConnect = function (server) {
             io.emit('start-game-engine', game[matchId].toJson());
         });
 
-        socket.on('assign-role', ({ user, role, matchId }) => {
-            game[matchId].assignRole(user, role);
+        socket.on('assign-role', ({ player, role, matchId }) => {
+            game[matchId].assignRole(player, role);
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
 
-        socket.on('remove-role', ({ user, role, matchId }) => {
-            game[matchId].removeRole(user, role);
+        socket.on('remove-role', ({ player, role, matchId }) => {
+            game[matchId].removeRole(player, role);
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
 

@@ -10,7 +10,7 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-import LinkIcon from "@material-ui/icons/Link";
+import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import { MatchContext } from "../ContextProvider/match";
 
 const useStyles = makeStyles({
@@ -130,10 +130,10 @@ function GameInvitation() {
                             );
                         }}
                         className={classes.spacingTop}
+                        startIcon={<InsertLinkIcon />}
                     >
-                        <LinkIcon />
-            &nbsp;Copy
-          </Button>
+                        Copy
+                    </Button>
                 </div>
             </Grid>
         </Grid>
