@@ -10,7 +10,7 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { loginUser } from '../ContextProvider/actions';
 import { useUserDispatch, useUserState } from '../ContextProvider/user';
@@ -36,15 +36,22 @@ const initialLogInData = {
   signInPassword: '',
 };
 
+
 const LogIn = () => {
   //state declaration
   const [logInData, setLogInData] = useState(initialLogInData);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const { error } = useUserState();
+  const { error, isLoggedIn } = useUserState();
   const dispatch = useUserDispatch();
 
   const classes = useStyles();
   const history = useHistory();
+
+   useEffect(() => {
+    if (isLoggedIn) {
+      return history.push('/home');
+    }
+  }, [isLoggedIn, history]);
 
   const handleChange = (event) => {
     const { value, name } = event.target;
@@ -57,7 +64,7 @@ const LogIn = () => {
       const response = await loginUser(dispatch, logInData);
       if (response) {
         //change this to direct user to a different page
-        return history.push('/newgame');
+        return history.push('/home');
       }
     } catch (err) {
       setSnackbarOpen(true);
