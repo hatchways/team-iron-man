@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 export default function GameBoard() {
     const classes = useStyles();
-    const { user } = useUserState();
+    const { user, email } = useUserState();
     const { matchState } = useContext(MatchContext);
     // TODO: integrate with backend.
     //function onCardClick() {
@@ -46,8 +46,9 @@ export default function GameBoard() {
                             key={card.word}
                             word={card.word}
                             color={card.color}
-                            spyMaster={user === matchState.redSpymaster || user === matchState.blueSpymaster}
+                            spyMaster={email === matchState.redSpymaster.email || email === matchState.blueSpymaster.email}
                             revealed={card.revealed}
+                            onClick={() => console.log("sadsaddas")}
                         />
                     ));
                 })}
