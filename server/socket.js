@@ -37,5 +37,20 @@ exports.socketConnect = function (server) {
             game[matchId].setInProgress();
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
+
+        socket.on('next-turn', ({ matchId }) => {
+            game[matchId].nextTurn();
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
+
+        socket.on('next-phase', ({ matchId }) => {
+            game[matchId].nextPhase();
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
+
+        socket.on('check-card', ({ matchId }, row, column) => {
+            game[matchId].nextTurn(row, column);
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
     });
 }
