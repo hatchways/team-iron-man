@@ -26,13 +26,13 @@ const useStyles = makeStyles({
         borderRadius: "theme.shape.borderRadius",
         backgroundColor: "theme.palette.background.paper",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     list: {
         width: "50%",
         marginBottom: "20px",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     listItem: {
         marginLeft: "-10px",
@@ -79,22 +79,27 @@ const useStyles = makeStyles({
 
 export default function AvailableRoles() {
     const classes = useStyles();
-    const { user } = useUserState();
+    const { user, email } = useUserState();
     const { matchState, setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
     const history = useHistory();
-    const matchId = history.location.pathname.substring(history.location.pathname.lastIndexOf('/') + 1);
+    const matchId = history.location.pathname.substring(
+        history.location.pathname.lastIndexOf("/") + 1
+    );
 
     useEffect(() => {
         socketRef.current = io.connect("/");
         if (matchState) {
             if (matchState.inProgress) {
                 socketRef.current.disconnect();
-                return history.push(`/gamelayout/${matchState.matchId}`)
+                return history.push(`/gamelayout/${matchState.matchId}`);
             }
-            socketRef.current.on("update-game-engine-" + matchState.matchId, (game) => {
-                setMatchState(game);
-            });
+            socketRef.current.on(
+                "update-game-engine-" + matchState.matchId,
+                (game) => {
+                    setMatchState(game);
+                }
+            );
         } else {
             socketRef.current.emit("get-game-engine", { matchId });
             socketRef.current.on("update-game-engine-" + matchId, (game) => {
@@ -106,20 +111,27 @@ export default function AvailableRoles() {
 
     const assignRole = (role) => {
         if (!matchState.inProgress) {
-            socketRef.current.emit("assign-role", { user, role: role, matchId: matchState.matchId });
+            socketRef.current.emit("assign-role", {
+                player: { name: user, email },
+                role: role,
+                matchId: matchState.matchId,
+            });
         }
-
     };
 
     const removeRole = (role) => {
         if (!matchState.inProgress) {
-            socketRef.current.emit("remove-role", { user, role: role, matchId: matchState.matchId });
+            socketRef.current.emit("remove-role", {
+                player: { name: user, email },
+                role: role,
+                matchId: matchState.matchId,
+            });
         }
     };
 
     return (
         <React.Fragment>
-            {matchState ?
+            {matchState ? (
                 <React.Fragment>
                     <List className={classes.list}>
                         <ListItem className={classes.listItem}>
@@ -138,17 +150,21 @@ export default function AvailableRoles() {
                                     //it again, so this will let it load but the check if matchstate
                                     //isn't empty can be removed later on
                                     matchState &&
-                                    (matchState.redSpymaster.length > 0 ||
-                                        matchState.playersReady.indexOf(user) !== -1)
+                                    (matchState.redSpymaster.hasOwnProperty("name") ||
+                                        matchState.playersReady.findIndex(
+                                            (obj) => obj.name === user
+                                        ) !== -1)
                                 }
                             >
                                 <AddIcon onClick={() => assignRole("redSpymaster")} />
                             </Fab>
                         </ListItem>
-                        {matchState && matchState.redSpymaster.length > 0 && (
-                            <ListItem className={classes.listItem + " " + classes.alignCenter}>
-                                <Typography>{matchState.redSpymaster}</Typography>
-                                {matchState.redSpymaster === user && (
+                        {matchState && matchState.redSpymaster.name && (
+                            <ListItem
+                                className={classes.listItem + " " + classes.alignCenter}
+                            >
+                                <Typography>{matchState.redSpymaster.name}</Typography>
+                                {matchState.redSpymaster.name === user && (
                                     <IconButton
                                         color="default"
                                         className={classes.xsmall}
@@ -172,7 +188,10 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    matchState && matchState.playersReady.indexOf(user) !== -1
+                                    matchState &&
+                                    matchState.playersReady.findIndex(
+                                        (obj) => obj.name === user
+                                    ) !== -1
                                 }
                             >
                                 <AddIcon onClick={() => assignRole("redGuessers")} />
@@ -183,10 +202,10 @@ export default function AvailableRoles() {
                             matchState.redGuessers.map((redGuesser) => (
                                 <ListItem
                                     className={classes.listItem + " " + classes.alignCenter}
-                                    key={redGuesser + "redGuesser"}
+                                    key={redGuesser.name + "redGuesser"}
                                 >
-                                    <Typography>{redGuesser}</Typography>
-                                    {redGuesser === user && (
+                                    <Typography>{redGuesser.name}</Typography>
+                                    {redGuesser.name === user && (
                                         <IconButton
                                             color="default"
                                             className={classes.xsmall}
@@ -211,17 +230,21 @@ export default function AvailableRoles() {
                                 aria-label="Add"
                                 disabled={
                                     matchState &&
-                                    (matchState.blueSpymaster.length > 0 ||
-                                        matchState.playersReady.indexOf(user) !== -1)
+                                    (matchState.blueSpymaster.hasOwnProperty("name") ||
+                                        matchState.playersReady.findIndex(
+                                            (obj) => obj.name === user
+                                        ) !== -1)
                                 }
                             >
                                 <AddIcon onClick={() => assignRole("blueSpymaster")} />
                             </Fab>
                         </ListItem>
-                        {matchState && matchState.blueSpymaster.length > 0 && (
-                            <ListItem className={classes.listItem + " " + classes.alignCenter}>
-                                <Typography>{matchState.blueSpymaster}</Typography>
-                                {matchState.blueSpymaster === user && (
+                        {matchState && matchState.blueSpymaster && (
+                            <ListItem
+                                className={classes.listItem + " " + classes.alignCenter}
+                            >
+                                <Typography>{matchState.blueSpymaster.name}</Typography>
+                                {matchState.blueSpymaster.name === user && (
                                     <IconButton
                                         color="default"
                                         className={classes.xsmall}
@@ -245,7 +268,10 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    matchState && matchState.playersReady.indexOf(user) !== -1
+                                    matchState &&
+                                    matchState.playersReady.findIndex(
+                                        (obj) => obj.name === user
+                                    ) !== -1
                                 }
                             >
                                 <AddIcon onClick={() => assignRole("blueGuessers")} />
@@ -256,10 +282,10 @@ export default function AvailableRoles() {
                             matchState.blueGuessers.map((blueGuesser) => (
                                 <ListItem
                                     className={classes.listItem + " " + classes.alignCenter}
-                                    key={blueGuesser + "blueGuesser"}
+                                    key={blueGuesser.name + "blueGuesser"}
                                 >
-                                    <Typography>{blueGuesser}</Typography>
-                                    {blueGuesser === user && (
+                                    <Typography>{blueGuesser.name}</Typography>
+                                    {blueGuesser.name === user && (
                                         <IconButton
                                             color="default"
                                             className={classes.xsmall}
@@ -283,8 +309,10 @@ export default function AvailableRoles() {
                         {matchState && matchState.playersReady.length > 0 && (
                             <List className={classes.block}>
                                 {matchState.playersReady.map((player) => (
-                                    <ListItem key={player} className={classes.block}>
-                                        <Typography className={classes.block}>{player}</Typography>
+                                    <ListItem key={player.name} className={classes.block}>
+                                        <Typography className={classes.block}>
+                                            {player.name}
+                                        </Typography>
                                     </ListItem>
                                 ))}
                             </List>
@@ -313,8 +341,10 @@ export default function AvailableRoles() {
                             </ListItem>
                         </List>
                     </Grid>
-                </React.Fragment> : <CircularProgress className={classes.blueSpinner} />
-            }
+                </React.Fragment>
+            ) : (
+                <CircularProgress className={classes.blueSpinner} />
+            )}
         </React.Fragment>
     );
 }
