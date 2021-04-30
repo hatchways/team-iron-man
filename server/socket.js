@@ -49,7 +49,7 @@ exports.socketConnect = function (server) {
         })
 
         socket.on('check-card', ({ matchId }, row, column) => {
-            game[matchId].nextTurn(row, column);
+            game[matchId].checkCard(row, column);
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
     });
