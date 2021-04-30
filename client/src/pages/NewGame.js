@@ -2,21 +2,24 @@
 UI for creating a new game.
 */
 
-import React from "react";
-import GameInvitation from "../components/GameInvitation"
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import GameInvitation from "../components/GameInvitation";
+import { Button, makeStyles, Typography } from "@material-ui/core";
+import { MatchContext } from "../ContextProvider/match";
 
 const useStyles = makeStyles({
     container: {
         width: "50%",
         textAlign: "center",
         backgroundColor: "white",
-        boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)",
+        boxShadow:
+            "0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)",
         borderRadius: "10px",
         padding: "50px",
         paddingBottom: "80px",
         marginLeft: "25%",
-        marginTop: "9%"
+        marginTop: "9%",
     },
 
     header: {
@@ -26,7 +29,7 @@ const useStyles = makeStyles({
 
     hr: {
         width: "10%",
-        border: "1px solid #00e676"
+        border: "1px solid #00e676",
     },
     spacing: {
         marginTop: "20px",
@@ -34,27 +37,34 @@ const useStyles = makeStyles({
     background: {
         display: "flex",
         justifyContent: "center",
-    }
-})
-
+    },
+});
 
 function NewGame() {
-
+    const history = useHistory();
+    const { matchState } = useContext(MatchContext);
     const classes = useStyles();
 
     // TODO: Implement creation of new game in the future.
     const createGame = () => {
-
-    }
+        history.push(`/join/${matchState.matchId}`);
+    };
 
     return (
         <div className={classes.container}>
             <Typography color="textPrimary" className={classes.header}>
                 New Game
-                    </Typography>
+      </Typography>
             <hr className={classes.hr} />
             <GameInvitation />
-            <Button variant="contained" color="secondary" onClick={createGame} className={classes.spacing}>Create Game</Button>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={createGame}
+                className={classes.spacing}
+            >
+                Create Game
+      </Button>
         </div>
     );
 }
