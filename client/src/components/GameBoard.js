@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 export default function GameBoard() {
     const classes = useStyles();
-    const { user, email } = useUserState();
+    const { email } = useUserState();
     const { matchState } = useContext(MatchContext);
     // TODO: integrate with backend.
     //function onCardClick() {
