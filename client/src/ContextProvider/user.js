@@ -27,6 +27,7 @@ const useUserDispatch = () => {
 const initialState = {
   isLoggedIn: false,
   user: '',
+  email: '',
   error: '',
 };
 

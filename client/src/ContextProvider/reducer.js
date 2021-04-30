@@ -4,7 +4,8 @@ const UserReducer = (state, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        user: action.payload,
+        user: action.payload[0],
+        email: action.payload[1]
       };
     case 'LOGIN_FAILED':
       return {
