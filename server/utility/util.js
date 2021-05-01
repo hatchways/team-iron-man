@@ -22,7 +22,24 @@ const decodeJWT = (token) => {
   return decrypt.id;
 };
 
+const compare = (a, b) => {
+  return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
+}
+
+const bisectLeft = (a, x) => {
+  let lo = 0;
+  let hi = a.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (compare(a[mid], x) < 0) lo = mid + 1;
+    else hi = mid;
+  }
+  return lo;
+}
+
 module.exports = {
   genJWT,
   decodeJWT,
+  compare,
+  bisectLeft
 };
