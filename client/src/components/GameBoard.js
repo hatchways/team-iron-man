@@ -37,6 +37,9 @@ export default function GameBoard() {
     const { matchState, setMatchState } = useContext(MatchContext);
     const history = useHistory();
     const socketRef = useRef();
+    const matchId = history.location.pathname.substring(
+        history.location.pathname.lastIndexOf("/") + 1
+    );
     // TODO: integrate with backend.
     //function onCardClick() {
     //}
@@ -44,15 +47,12 @@ export default function GameBoard() {
     useEffect(() => {
         socketRef.current = io.connect("/");
         if (!matchState) {
-            const matchId = history.location.pathname.substring(
-                history.location.pathname.lastIndexOf("/") + 1
-            );
             socketRef.current.emit("get-game-engine", { matchId });
             socketRef.current.on("update-game-engine-" + matchId, (game) => {
                 setMatchState(game);
             });
         }
-    }, [])
+    }, [matchState, setMatchState, matchId])
 
     return (
         <div className={classes.root}>
