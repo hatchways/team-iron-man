@@ -40,7 +40,7 @@ export default function GameBoard() {
     return (
         <div className={classes.root}>
             <div className={classes.container}>
-                {matchState.board.map(function (row) {
+                {matchState && matchState.board.map(function (row) {
                     return row.map((card) => (
                         <Card
                             key={card.word}
