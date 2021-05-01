@@ -11,6 +11,8 @@ Method for determining if match is over:
 - If you win the game (one team guesses all their words)
 Method for restarting: all the words get reshuffled again, points reset to 0.
 */
+const { bisectLeft } = require('../utility/util');
+const { getWordList } = require('./wordList');
 
 class Game {
     constructor(hostId, matchId) {
@@ -146,119 +148,36 @@ class Game {
     }
 
     shuffleBoard() {
-        let words = [
-            "Cat",
-            "Dog",
-            "Bird",
-            "Fox",
-            "Monkey",
-            "Snake",
-            "Panda",
-            "Dinosaur",
-            "Dolphin",
-            "Human",
-            "Monster",
-            "Slime",
-            "Blueberry",
-            "Strawberry",
-            "Orange",
-            "Mango",
-            "Banana",
-            "Apple",
-            "Tomato",
-            "Cucumber",
-            "Cherry",
-            "Avocado",
-            "Car",
-            "Airplane",
-            "Bike",
-            "Truck",
-            "Tesla",
-            "Sword",
-            "Shield",
-            "Staff",
-            "Bow",
-            "Helmet",
-            "Dagger",
-            "Gun",
-            "Belt",
-            "Armor",
-            "Beach",
-            "Jungle",
-            "Desert",
-            "Water",
-            "Earth",
-            "Wind",
-            "Fire",
-            "Grass",
-            "Space",
-            "Snow",
-            "Moon",
-            "Electricity",
-            "Ball",
-            "Tail",
-            "Shoe",
-            "Rainbow",
-            "Pole",
-            "Computer",
-            "Cellphone",
-            "Camera",
-            "Bitcoin",
-            "Money",
-            "Book",
-            "Television",
-            "House",
-            "Doll",
-            "Run",
-            "Change",
-            "Teleport",
-            "Slash",
-            "Switch",
-            "Eat",
-            "Picture",
-            "Dare",
-            "Retire",
-        ];
-        let colors = [
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "red",
-            "red",
-            "red",
-            "red",
-            "red",
-            "red",
-            "red",
-            "red",
-            "white",
-            "white",
-            "white",
-            "white",
-            "white",
-            "white",
-            "white",
-            "black",
-        ]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
+        let words = getWordList();
+        let colors = ['blue', 'red', 'white', 'black'];
+        let counts = [9, 17, 24, 25];//Cumulative counts for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
+        let cardsLeft = 25;
         this.board = []; //Reset the board
         for (let i = 0; i < 5; i++) {
             this.board.push([]); //Push empty row
             for (let j = 0; j < 5; j++) {
                 const randomWordIndex = Math.floor(Math.random() * words.length); //Pick random word
-                const randomColorIndex = Math.floor(Math.random() * colors.length); //Pick random color
+                const randomColorIndex = bisectLeft(counts, Math.floor(Math.random() * cardsLeft + 1)); //Pick random color
                 let card = {
                     word: words[randomWordIndex],
                     color: colors[randomColorIndex],
                     revealed: false,
+                    row: i,
+                    column: j,
                 };
                 words.splice(randomWordIndex, 1); //Remove the word from the list so it can't be picked again.
-                colors.splice(randomColorIndex, 1);
+                //Decrease the cumulative counts by 1 e.g. if it is a red card then [9,17,24,25] becomes [9,16,23,24].
+                counts = [...counts.slice(0, randomColorIndex === 0 ? 0 : randomColorIndex), ...counts.slice(randomColorIndex).map(function (count) {
+                    return count - 1;
+                })];
+                //If a counter hits 0, remove it from the array.
+                // If the index is not for blue, the counter is 0 if the cumulative count is the same as the previous index.
+                // E.g. [8, 15, 15, 16] means white counter is at 0.
+                if (counts[randomColorIndex] === 0 || (randomColorIndex > 0 && counts[randomColorIndex] === counts[randomColorIndex - 1])) {
+                    counts.splice(randomColorIndex, 1);
+                    colors.splice(randomColorIndex, 1);
+                }
+                cardsLeft--;
                 this.board[i].push(card);
             }
         }
