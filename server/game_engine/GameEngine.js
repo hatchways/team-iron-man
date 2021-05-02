@@ -18,9 +18,9 @@ class Game {
         this.matchId = matchId;
         this.playersReady = [];
         this.blueGuessers = [];
-        this.blueSpymaster = "";
+        this.blueSpymaster = {};
         this.redGuessers = [];
-        this.redSpymaster = "";
+        this.redSpymaster = {};
         this.turn = "blue";
         this.turnPhase = "clue"; // Have a seperate phase so players can't click on stuff while the spymaster comes up with a clue.
         this.clue = "";
@@ -273,19 +273,19 @@ class Game {
         };
     }
 
-    assignRole(playerId, role) {
+    assignRole(player, role) {
         role.indexOf("Spymaster") === -1
-            ? this[role].push(playerId)
-            : (this[role] = playerId);
-        this.playersReady.push(playerId);
+            ? this[role].push(player)
+            : (this[role] = player);
+        this.playersReady.push(player);
     }
 
-    removeRole(playerId, role) {
+    removeRole(player, role) {
         role.indexOf("Spymaster") === -1
-            ? (this[role] = this[role].filter((player) => player !== playerId))
-            : (this[role] = "");
+            ? (this[role] = this[role].filter((p) => p.name !== player.name))
+            : (this[role] = {});
         this.playersReady = this.playersReady.filter(
-            (player) => player !== playerId
+            (p) => p.name !== player.name
         );
     }
 
