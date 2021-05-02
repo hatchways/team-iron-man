@@ -70,7 +70,21 @@ function Join() {
   socketRef.current = io.connect('/');
   const [matchId, setMatchId] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [join, setJoin] = useState(false);
   const [joinError, setJoinError] = useState('');
+
+  useEffect(() => {
+    if (join) {
+      console.log('SOCKET');
+      socketRef.current.emit('join-match', { matchId });
+      socketRef.current.on('join-game-engine', (game) => {
+        setMatchState(game);
+      });
+    }
+    return () => {
+      socketRef.current.off('join-game-engine');
+    };
+  }, [join]);
 
   const onTextChange = (e) => {
     setMatchId(e.target.value);
@@ -79,21 +93,23 @@ function Join() {
   const submitMatchId = async (e) => {
     e.preventDefault();
     try {
+      console.log("HERE!!!!")
       const response = await fetch(`/api/match/join/${matchId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
+      console.log(response.status);
       const data = await response.json();
-      if (response.status === '200') {
-        socketRef.current.emit('join-match', { matchId });
-        socketRef.current.on('join-game-engine', (game) => {
-          setMatchState(game);
-          return history.push(`/join/${matchId}`);
-        });
+     if (response.status === 200) {
+        setJoin(true);
+        console.log('I JUST RAN');
+        history.push(`/join/${matchId}`);
       } else {
+        console.log(data.message);
         throw data.message;
       }
     } catch (error) {
+      console.log(error);
       setJoinError('Please provide a valid match ID.');
       setSnackbarOpen(true);
     }
