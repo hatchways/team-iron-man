@@ -88,7 +88,6 @@ function Join() {
         socketRef.current.emit('join-match', { matchId });
         socketRef.current.on('join-game-engine', (game) => {
           setMatchState(game);
-          socketRef.current.disconnect();
           return history.push(`/join/${matchId}`);
         });
       } else {
