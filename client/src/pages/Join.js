@@ -67,6 +67,21 @@ function Join() {
         setMatchId(e.target.value);
     };
 
+    const joinMatch = async (matchId) => {
+      fetch(`/api/match/join/${matchId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }})
+        .then(() => {
+          console.log("Joining Match");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    };
+
     const submitMatchId = (e) => {
         e.preventDefault();
         // TODO: call api route for joining match
@@ -75,6 +90,9 @@ function Join() {
             setMatchState(game);
         });
         socketRef.current.disconnect();
+
+        // call BE joinMatch api
+        joinMatch(matchId);
         return history.push(`/join/${matchId}`);
     };
 

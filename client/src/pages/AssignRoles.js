@@ -9,6 +9,11 @@ import AvailableRoles from '../components/AvailableRoles';
 import { MatchContext } from '../ContextProvider/match';
 import io from "socket.io-client";
 
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import { useHistory } from 'react-router-dom';
+
+
 const useStyles = makeStyles({
     container: {
         display: 'flex',
@@ -32,6 +37,35 @@ const useStyles = makeStyles({
     button: {
         align: 'center',
         width: '120px'
+    },
+    leaveButton: {
+      marginTop: '20px',
+      align: 'center',
+      width: '120px',
+      backgroundColor: '#f23f3f',
+      color: 'white',
+    },
+    stayButton: {
+      marginTop: '50px',
+      align: 'center',
+      width: '120px',
+      color: 'black',
+    },
+    leaveButtonInner: {
+      marginLeft: '40px',
+      marginTop: '50px',
+      align: 'center',
+      width: '120px',
+      backgroundColor: '#f23f3f',
+      color: 'white',
+    },
+    modal : {
+      textAlign: 'center',
+      paddingTop: '20px',
+    },
+    popupHeader: {
+      fontSize: "20px",
+      color: 'red',
     }
 });
 
@@ -39,6 +73,60 @@ export default function AssignRoles() {
 
     const { matchState } = useContext(MatchContext);
     const classes = useStyles();
+
+    const history = useHistory();
+
+    const askForLeave = async () => {
+      fetch(`/api/match/delete/${matchState.matchId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }})
+        .then((responce) => {
+          console.log(responce);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      return history.push('/home');
+    };
+    const contentStyle = {
+      maxWidth: "600px",
+      width: "90%"
+    };
+    const AskForLeavePopup = () => (
+      <Popup trigger = {
+      < Button className={classes.leaveButton} > LEAVE MATCH < /Button>} modal contentStyle={contentStyle} >
+        {close => (
+          <div className = {classes.modal} >
+          <div className = {classes.popupHeader} > Are you leaving the match? < /div>
+
+          <div className = "actions" >
+
+            <Button className={classes.stayButton} variant="contained" color="secondary"
+              onClick = { () => {
+                close();
+              }
+            } >
+              STAY
+            </Button>
+
+            <Button className={classes.leaveButtonInner}
+              onClick = { () => {
+                console.log("LEAVE MATCH");
+                askForLeave();
+              }
+            } >
+              LEAVE MATCH
+            </Button>
+
+          </div>
+          </div>
+        )}
+      </Popup>
+    );
+
     const socketRef = useRef();
     socketRef.current = io.connect("/");
 
@@ -56,9 +144,11 @@ export default function AssignRoles() {
                 <h2>Available Roles</h2>
                 <AvailableRoles />
                 <Button className={classes.button} variant="contained" color="secondary" onClick={startGame}>Start Game</Button>
+                <AskForLeavePopup></AskForLeavePopup>
             </div>
 
         </React.Fragment>
+
 
     );
 }
