@@ -36,8 +36,6 @@ const UserPrompt = () => {
   ]);
 
   const checkTurn = () => {
-    console.log(role.color);
-    console.log(role.phase);
     setSnackbarOpen(
       matchState.turn === role.color.toLowerCase() &&
         matchState.turnPhase === role.phase
