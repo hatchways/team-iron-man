@@ -12,7 +12,7 @@ Method for determining if match is over:
 Method for restarting: all the words get reshuffled again, points reset to 0.
 */
 const { bisectLeft } = require('../utility/util');
-const { getWordList } = require('./wordList');
+const wordList = require('./wordList');
 
 class Game {
     constructor(hostId, matchId) {
@@ -148,7 +148,7 @@ class Game {
     }
 
     shuffleBoard() {
-        let words = getWordList();
+        let words = wordList;
         let colors = ['blue', 'red', 'white', 'black'];
         let counts = [9, 17, 24, 25];//Cumulative counts for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
         let cardsLeft = 25;
