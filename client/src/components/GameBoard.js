@@ -5,7 +5,7 @@ UI for Game Board
 import React, { useContext, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "./Card";
-import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from "../ContextProvider/user";
 import io from "socket.io-client";
@@ -35,11 +35,8 @@ export default function GameBoard() {
     const classes = useStyles();
     const { email } = useUserState();
     const { matchState, setMatchState } = useContext(MatchContext);
-    const history = useHistory();
     const socketRef = useRef();
-    const matchId = history.location.pathname.substring(
-        history.location.pathname.lastIndexOf("/") + 1
-    );
+    const { matchId } = useParams();
     // TODO: integrate with backend.
     //function onCardClick() {
     //}
