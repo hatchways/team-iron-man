@@ -88,6 +88,22 @@ const AuthNavigation = () => {
         return history.push("/profile");
     }
 
+    const logout = async() => {
+        await fetch('/api/logout', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }})
+          .then((responce) => {
+            console.log(responce);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        return history.push('/');
+    };
+
     return (
         <Toolbar className={classes.root}>
             <Grid container>
@@ -113,7 +129,7 @@ const AuthNavigation = () => {
                         }}
                     >
                         <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose} className={classes.menuItem}>Logout</MenuItem>
+                        <MenuItem onClick={logout} className={classes.menuItem}>Logout</MenuItem>
                     </Menu>
                 </Grid>
             </Grid>
