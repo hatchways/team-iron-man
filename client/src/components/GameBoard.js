@@ -2,11 +2,13 @@
 UI for Game Board
 */
 
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "./Card";
+import ClueModal from "./ClueModal"
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from "../ContextProvider/user";
+import io from "socket.io-client";
 
 const useStyles = makeStyles({
     root: {
@@ -33,9 +35,12 @@ export default function GameBoard() {
     const classes = useStyles();
     const { email } = useUserState();
     const { matchState } = useContext(MatchContext);
+    const socketRef = useRef();
+    socketRef.current = io.connect('/');
     // TODO: integrate with backend.
     //function onCardClick() {
     //}
+
 
     return (
         <div className={classes.root}>
@@ -52,6 +57,7 @@ export default function GameBoard() {
                         />
                     ));
                 })}
+                <ClueModal />
             </div>
         </div>
     );
