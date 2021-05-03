@@ -35,18 +35,10 @@ const UserPrompt = () => {
     matchState.redSpymaster.email,
   ]);
 
-  const checkTurn = () => {
-    setSnackbarOpen(
-      matchState.turn === role.color.toLowerCase() &&
-        matchState.turnPhase === role.phase
-    );
-  };
+
 
   return (
     <div>
-      <Button variant="contained" color="secondary" onClick={() => checkTurn()}>
-        Test Prompt
-      </Button>
       <Snackbar
         open={snackbarOpen}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
