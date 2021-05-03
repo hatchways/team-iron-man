@@ -43,12 +43,18 @@ exports.socketConnect = function (server) {
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
 
+        socket.on('set-clue', ({ matchId, clue }) => {
+            game[matchId].setClue(clue);
+            game[matchId].nextPhase();
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
+
         socket.on('next-phase', ({ matchId }) => {
             game[matchId].nextPhase();
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
 
-        socket.on('check-card', ({ matchId }, row, column) => {
+        socket.on('check-card', ({ matchId, row, column }) => {
             game[matchId].checkCard(row, column);
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
