@@ -6,7 +6,6 @@ import { Alert } from '@material-ui/lab';
 
 const initialRole = {
   color: '',
-  title: '',
   phase: '',
 };
 
@@ -18,15 +17,15 @@ const UserPrompt = () => {
 
   useEffect(() => {
     if (matchState.redSpymaster.email === email) {
-      setRole({ color: 'Red', phase: 'clue', title: 'Spy Master' });
+      setRole({ color: 'Red', phase: 'clue' });
     } else if (matchState.blueSpymaster.email === email) {
-      setRole({ color: 'Blue', phase: 'clue', title: 'Spy Master' });
+      setRole({ color: 'Blue', phase: 'clue' });
     } else if (
       matchState.blueGuessers.find((player) => player.email === email)
     ) {
-      setRole({ color: 'Blue', phase: 'guess', title: 'Guesser' });
+      setRole({ color: 'Blue', phase: 'guess' });
     } else {
-      setRole({ color: 'Red', phase: 'guess', title: 'Guesser' });
+      setRole({ color: 'Red', phase: 'guess' });
     }
   }, [
     email,
@@ -36,6 +35,16 @@ const UserPrompt = () => {
   ]);
 
 
+  const renderSwitch = () => {
+    switch (role.phase) {
+      case 'guess':
+        return `It is ${role.color} Guesser's turn now.`;
+      case 'clue':
+        return `It is ${role.color} Spy Master's turn now.`;
+      default:
+        return `Please make sure you were assigned a role`;
+    }
+  };
 
   return (
     <div>
@@ -44,7 +53,7 @@ const UserPrompt = () => {
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <Alert onClose={() => setSnackbarOpen(false)} severity="info">
-          It is {role.color} {role.title}'s turn now.
+          {renderSwitch()}
         </Alert>
       </Snackbar>
     </div>
