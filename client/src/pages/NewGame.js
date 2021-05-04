@@ -83,7 +83,18 @@ function NewGame() {
     const [open, setOpen] = React.useState(false);
 
     const cancelMatch = () => {
-      console.log("Canceled Match");
+      fetch(`/api/match/delete/${matchState.matchId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }})
+        .then((responce) => {
+          console.log(responce);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       return history.push('/home');
     };
 

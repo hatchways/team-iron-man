@@ -142,7 +142,7 @@ export default function AssignRoles() {
                 <h2>Available Roles</h2>
                 <AvailableRoles />
                 <Button className={classes.button} variant="contained" color="secondary" onClick={startGame}>Start Game</Button>
-                <AskForLeavePopup></AskForLeavePopup>
+                <AskForLeavePopup/>
             </div>
 
         </React.Fragment>
