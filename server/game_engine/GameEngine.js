@@ -11,7 +11,6 @@ Method for determining if match is over:
 - If you win the game (one team guesses all their words)
 Method for restarting: all the words get reshuffled again, points reset to 0.
 */
-const { bisectLeft } = require("../utility/util");
 const wordList = require("./wordList");
 
 class Game {
