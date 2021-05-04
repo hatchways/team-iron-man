@@ -9,6 +9,7 @@ import ClueModal from "./ClueModal"
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from "../ContextProvider/user";
 import io from "socket.io-client";
+import UserPrompt from "./UserPrompt";
 
 const useStyles = makeStyles({
     root: {
@@ -98,6 +99,7 @@ export default function GameBoard() {
                             email === matchState.redSpymaster.email)}
                         submitClue={submitClue}
                     />
+                    <UserPrompt />
                 </div>
             }
         </div>
