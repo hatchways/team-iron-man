@@ -58,7 +58,8 @@ exports.socketConnect = function (server) {
         socket.on('set-vote', ({ matchId, word, row, column, email }) => {
             game[matchId].addVote(word, row, column, email);;
             if (game[matchId].everyoneVoted) {
-                game[matchId].checkCard(row, column);
+                const winningVote = game[matchId].countVotes();
+                game[matchId].checkCard(winningVote.row, winningVote.column);
             }
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })

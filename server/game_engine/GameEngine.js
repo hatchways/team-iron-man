@@ -51,13 +51,12 @@ class Game {
         this.everyoneVoted = false;
         this.incrementGuesses();
         if (card.color === this.turn) {
-            console.log(card.color, this.turn);
-            this.turn === "blue" ? this.incrementBluePoints() : this.incrementRedPoints();
+            this.getTurn() === "blue" ? this.incrementBluePoints() : this.incrementRedPoints();
             if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
                 this.setWinner(this.turn);
                 this.gameOver();
             }
-            if (this.guessesMade === this.maxGuesses) {
+            if (this.guessesMade === this.maxGuesses && this.turnPhase !== "gameOver") {
                 this.nextTurn();
             }
         }
@@ -72,10 +71,9 @@ class Game {
         }
         // If the card color is the other team, increase the other team's points and end the game.
         else {
-            this.turn === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
+            this.getTurn() === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
             this.nextTurn();
         }
-        console.log(`Now it is ${this.turn}'s turn.`)
     }
 
     nextTurn() {
@@ -160,16 +158,15 @@ class Game {
         this.numOfVotes++;
 
         if ((this.turn === "blue" && this.numOfVotes === this.blueGuessers.length) || (this.turn === "red" && this.numOfVotes === this.redGuessers.length)) {
-            console.log("Check from ge.js is true")
             this.everyoneVoted = true;
         }
     }
 
-    tallyVotes() {
+    countVotes() {
         let leader = { numOfVotes: 0 };
-        for (vote in this.votes) {
-            if (vote.numOfVotes > leader.numOfVotes) {
-                leader = vote
+        for (const vote in this.votes) {
+            if (this.votes[vote].numOfVotes > leader.numOfVotes) {
+                leader = this.votes[vote];
             }
         }
         this.votes = {}; //Reset the votes.
