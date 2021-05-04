@@ -1,7 +1,7 @@
 /*
 UI for Game Board
 */
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "./Card";
 import { useParams } from "react-router-dom";
@@ -36,38 +36,68 @@ export default function GameBoard() {
     const { email } = useUserState();
     const { matchState, setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
-    socketRef.current = io.connect("/");
     const { matchId } = useParams();
+    const [selected, setSelected] = useState({});
     // TODO: integrate with backend.
     //function onCardClick() {
     //}
 
     useEffect(() => {
+        socketRef.current = io.connect("/");
         if (!matchState) {
             socketRef.current.emit("get-game-engine", { matchId });
-            socketRef.current.on("update-game-engine-" + matchId, (game) => {
-                setMatchState(game);
-            });
         }
+        socketRef.current.on("update-game-engine-" + matchId, (game) => {
+            setMatchState(game);
+            setSelected({});
+        });
+        console.log(matchState)
+        return () => socketRef.current.disconnect();
     }, [matchState, setMatchState, matchId])
+
+
+    const handleVote = (word, row, column) => {
+        console.log(word, row, column)
+        setSelected({ row, column });
+        socketRef.current.emit("set-vote", { matchId, word, row, column, email });
+        return "x";
+    };
+
+    const submitClue = (clue, numOfGuesses) => {
+        socketRef.current.emit("set-clue", { matchId, clue, numOfGuesses });
+        socketRef.current.on(`update-game-engine-${matchId}`, (game) => {
+            setMatchState(game);
+        });
+    };
 
     return (
         <div className={classes.root}>
-            <div className={classes.container}>
-                {matchState && matchState.board.map(function (row) {
-                    return row.map((card) => (
-                        <Card
-                            key={card.word}
-                            word={card.word}
-                            color={card.color}
-                            spyMaster={email === matchState.redSpymaster.email || email === matchState.blueSpymaster.email}
-                            revealed={card.revealed}
-                            onClick={() => console.log("sadsaddas")}
-                        />
-                    ));
-                })}
-                <ClueModal />
-            </div>
+            {matchState &&
+                <div className={classes.container}>
+                    {matchState.board.map(function (row) {
+                        return row.map((card) => (
+                            <Card
+                                key={card.word}
+                                word={card.word}
+                                color={card.color}
+                                row={card.row}
+                                column={card.column}
+                                spyMaster={email === matchState.redSpymaster.email || email === matchState.blueSpymaster.email}
+                                revealed={card.revealed}
+                                handleVote={handleVote}
+                                selected={selected.row === card.row && selected.column === card.column}
+                            />
+                        ));
+                    })}
+                    <ClueModal open={matchState.turnPhase === "clue" &&
+                        ((matchState.turn === "blue" &&
+                            email === matchState.blueSpymaster.email) ||
+                            matchState.turn === "red" &&
+                            email === matchState.redSpymaster.email)}
+                        submitClue={submitClue}
+                    />
+                </div>
+            }
         </div>
     );
 }
