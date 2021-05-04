@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
+import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem, Snackbar } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { Alert } from '@material-ui/lab';
 import { useUserState } from "../ContextProvider/user";
 import { useHistory } from 'react-router';
 import { useUserDispatch } from '../ContextProvider/user';
@@ -75,6 +76,7 @@ const AuthNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, avatar } = useUserState();
+    const [snackbarOpen, setSnackbarOpen] = useState(false)
     const dispatch = useUserDispatch();
     const history = useHistory();
 
@@ -104,10 +106,8 @@ const AuthNavigation = () => {
             }
           })
           .catch((err) => {
-            console.log(err);
+            setSnackbarOpen(true);
           });
-
-        return history.push('/');
     };
 
     return (
@@ -139,6 +139,11 @@ const AuthNavigation = () => {
                     </Menu>
                 </Grid>
             </Grid>
+            <Snackbar open={snackbarOpen}>
+            <Alert onClose={() => setSnackbarOpen(false)} severity="error">
+              Logout failed! Please try again.
+            </Alert>
+          </Snackbar>
         </Toolbar>
     );
 };
