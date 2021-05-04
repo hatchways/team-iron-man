@@ -34,6 +34,9 @@ class Game {
         this.moveCount = 0;
         this.inProgress = false;
         this.shuffleBoard();
+        this.votes = {};
+        this.numOfVotes = 0;
+        this.everyoneVoted = false;
     }
 
     checkCard(row, column) {
@@ -43,10 +46,14 @@ class Game {
         const card = this.board[row][column];
         card.revealed = true;
         this.moveCount++;
+        this.numOfVotes = 0;
+        this.votes = {};
+        this.everyoneVoted = false;
         this.incrementGuesses();
         if (card.color === this.turn) {
-            this.turn === "blue" ? this.incrementBluePoints : this.incrementRedPoints;
-            if (this.getBluePoints === 9 || this.getRedPoints === 8) {
+            console.log(card.color, this.turn);
+            this.turn === "blue" ? this.incrementBluePoints() : this.incrementRedPoints();
+            if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
                 this.setWinner(this.turn);
                 this.gameOver();
             }
@@ -65,13 +72,14 @@ class Game {
         }
         // If the card color is the other team, increase the other team's points and end the game.
         else {
-            this.turn === "blue" ? this.incrementRedPoints : this.incrementBluePoints;
+            this.turn === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
             this.nextTurn();
         }
+        console.log(`Now it is ${this.turn}'s turn.`)
     }
 
     nextTurn() {
-        this.turn === "blue" ? (this.turn = "red") : (this.turn = " blue");
+        this.turn === "blue" ? (this.turn = "red") : (this.turn = "blue");
         this.guessesMade = 0;
         this.turnPhase = "clue";
         this.turnCount++;
@@ -129,10 +137,50 @@ class Game {
         this.winner = team;
     }
 
+    addVote(word, row, column, email) {
+        //Check to see if user already voted.
+        let oldVote = Object.keys(this.votes).find(vote => this.votes[vote].voters.indexOf(email) !== -1);
+        if (oldVote) {
+            this.numOfVotes--;
+            this.votes[oldVote].numOfVotes--;
+            this.votes[oldVote].voters = this.votes[oldVote].voters.filter(voter => voter !== email);
+        }
+        if (!this.votes[word]) {
+            this.votes[word] = {
+                numOfVotes: 1,
+                row,
+                column,
+                voters: [email]
+            }
+        }
+        else {
+            this.votes[word].numOfVotes++;
+            this.votes[word].voters.push(email);
+        }
+        this.numOfVotes++;
+
+        if ((this.turn === "blue" && this.numOfVotes === this.blueGuessers.length) || (this.turn === "red" && this.numOfVotes === this.redGuessers.length)) {
+            console.log("Check from ge.js is true")
+            this.everyoneVoted = true;
+        }
+    }
+
+    tallyVotes() {
+        let leader = { numOfVotes: 0 };
+        for (vote in this.votes) {
+            if (vote.numOfVotes > leader.numOfVotes) {
+                leader = vote
+            }
+        }
+        this.votes = {}; //Reset the votes.
+        return leader;
+    }
+
     //Not sure if this will be useful, maybe to help with front end integration.
     gameOver() {
         //TODO: save match to database?
         this.turnPhase = "gameOver";
+        console.log(`${this.winner} team won!`);
     }
 
     restartGame() {
@@ -256,6 +304,8 @@ class Game {
                     word: words[randomWordIndex],
                     color: colors[randomColorIndex],
                     revealed: false,
+                    row: i,
+                    column: j
                 };
                 words.splice(randomWordIndex, 1); //Remove the word from the list so it can't be picked again.
                 colors.splice(randomColorIndex, 1);
@@ -313,7 +363,10 @@ class Game {
             turnCount: this.turnCount,
             moveCount: this.moveCount,
             playersReady: this.playersReady,
-            inProgress: this.inProgress
+            inProgress: this.inProgress,
+            votes: this.votes,
+            numOfVotes: this.numOfVotes,
+            everyoneVoted: this.everyoneVoted
         };
     }
 }
