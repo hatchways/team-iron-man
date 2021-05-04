@@ -17,7 +17,7 @@ const handleLogIn = (req, res) => {
             httpOnly: true,
           })
           .status(200)
-          .json({ email: user.email, name: user.name });
+          .json({ avatar: user.avatar, email: user.email, name: user.name });
       } else {
         return res.status(400).json({ message: 'Incorrect email or password' });
       }

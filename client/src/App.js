@@ -5,7 +5,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { theme } from './themes/theme';
 import LandingPage from './pages/Landing';
 import Navigation from './components/Navigation';
-import GameNavigation from './components/GameNavigation';
 import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
@@ -18,6 +17,7 @@ import GameLayout from './pages/GameLayout';
 import { UserProvider } from './ContextProvider/user';
 import { MatchContext } from './ContextProvider/match';
 import GameBoard from './components/GameBoard';
+import Profile from './pages/Profile';
 
 function App() {
 
@@ -30,18 +30,19 @@ function App() {
       <CssBaseline />
       <UserProvider>
         <MatchContext.Provider value={matchValue}>
-          <Navigation />
           <BrowserRouter>
+            <Navigation />
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/join/:id" component={AssignRoles} />
-            <Route path="/newgame" component={NewGame} />
+            <Route exact path="/join/:matchId" component={AssignRoles} />
+            <Route path="/newgame/:matchId" component={NewGame} />
             <Route exact path="/join" component={Join} />
             <Route path="/chat" component={Chat} />
-            <Route path="/gamelayout" component={GameLayout} />
+            <Route path="/gamelayout/:matchId" component={GameLayout} />
             <Route path="/board" component={GameBoard} />
             <Route path="/home" component={Home} />
+            <Route path="/profile" component={Profile} />
           </BrowserRouter>
         </MatchContext.Provider>
       </UserProvider>
