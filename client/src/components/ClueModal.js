@@ -5,7 +5,7 @@ import { Modal, TextField, Button, Typography } from "@material-ui/core/";
 const useStyles = makeStyles({
     modal: {
         width: "40%",
-        height: "40%",
+        height: "50%",
         margin: "auto",
         backgroundColor: "white",
         boxShadow:
