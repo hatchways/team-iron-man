@@ -1,68 +1,105 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Modal, TextField, Button, Typography } from '@material-ui/core/';
-import io from "socket.io-client";
-import { MatchContext } from '../ContextProvider/match';
-import { useUserState } from "../ContextProvider/user";
+import React, { useState, } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Modal, TextField, Button, Typography } from "@material-ui/core/";
 
 const useStyles = makeStyles({
     modal: {
-        width: "50%"
-    }
-})
+        width: "40%",
+        height: "40%",
+        margin: "auto",
+        backgroundColor: "white",
+        boxShadow:
+            "0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+        borderRadius: "10px",
+    },
+    container: {
+        display: "flex",
+        margin: "auto",
+        justifyContent: "center",
+        borderRadius: "10px",
+        textAlign: "center",
+        backgroundColor: "white",
+        width: "100%",
+        height: "100%",
+        padding: "50px",
+        flexDirection: "column",
+    },
+    header: {
+        marginBottom: "20px",
+    },
+    input: {
+        width: "100%",
+        marginBottom: "20px",
+    },
+    button: {
+        marginLeft: '10px'
+    },
+});
 
-
-const ClueModal = () => {
+const ClueModal = (props) => {
     const classes = useStyles();
-    const [phase, setPhase] = useState("clue")
-    const [open, setOpen] = useState(false);
     const [clue, setClue] = useState("");
-    const socketRef = useRef();
-    const { matchState, setMatchState } = useContext(MatchContext);
-    socketRef.current = io.connect('/');
-
-    useEffect(() => {
-        console.log(matchState.turnPhase)
-        if (matchState.turnPhase === "clue") {
-            handleOpen()
-        }
-    }, [matchState.turnPhase])
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        socketRef.current.emit('set-clue', { matchId: matchState.matchId, clue });
-        socketRef.current.on(`update-game-engine-${matchState.matchId}`, (game) => {
-            setMatchState(game);
-        });
-        setOpen(false);
-    };
+    const [numOfGuesses, setNumOfGuesses] = useState(1);
 
     const handleChange = (e) => {
         setClue(e.target.value);
+    };
+
+    const changeGuesses = (e) => {
+        setNumOfGuesses(e.target.value);
     }
+
+    const handleClose = () => {
+        setClue("");
+        props.submitClue(clue, parseInt(numOfGuesses));
+    }
+
     return (
         <Modal
-            open={open}
+            open={props.open}
             onClose={handleClose}
+            className={classes.modal}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
             disableBackdropClick
             disableEscapeKeyDown
         >
-            <React.Fragment>
-                <Typography variant="h6">Enter a Clue Word:</Typography>
-                <TextField
-                    value={clue}
-                    onChange={handleChange}
-                />
-                <Button onClick={handleClose} variant="contained">Give Clue</Button>
-            </React.Fragment>
-
+            <div className={classes.container}>
+                <div className={classes.center}>
+                    <Typography variant="h6" className={classes.header}>
+                        Enter a Clue Word:
+                    </Typography>
+                    <TextField
+                        id="filled-number"
+                        label="Max Number of Guesses"
+                        type="number"
+                        InputProps={{ inputProps: { min: 0, max: 10 } }}
+                        value={numOfGuesses}
+                        onChange={changeGuesses}
+                        className={classes.input}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                    />
+                    <TextField
+                        className={classes.input}
+                        label="Clue Word"
+                        value={clue}
+                        onChange={handleChange}
+                        variant="outlined"
+                    />
+                    <Button className={classes.button} onClick={handleClose} color="secondary" variant="contained" disabled={!clue}>
+                        Give Clue
+                    </Button>
+                </div>
+            </div>
         </Modal>
     );
-}
+};
 
 export default ClueModal;
