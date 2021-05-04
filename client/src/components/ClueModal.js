@@ -77,7 +77,7 @@ const ClueModal = (props) => {
                         id="filled-number"
                         label="Max Number of Guesses"
                         type="number"
-                        InputProps={{ inputProps: { min: 0, max: 10 } }}
+                        InputProps={{ inputProps: { min: "0", max: "5", step: "1" } }}
                         value={numOfGuesses}
                         onChange={changeGuesses}
                         className={classes.input}
