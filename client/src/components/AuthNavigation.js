@@ -3,6 +3,8 @@ import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem }
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { useUserState } from "../ContextProvider/user";
 import { useHistory } from 'react-router';
+import { useUserDispatch } from '../ContextProvider/user';
+import { resetUser } from '../ContextProvider/actions';
 
 const useStyles = makeStyles({
     root: {
@@ -73,6 +75,7 @@ const AuthNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, avatar } = useUserState();
+    const dispatch = useUserDispatch();
     const history = useHistory();
 
     const handleClick = (event) => {
@@ -88,14 +91,17 @@ const AuthNavigation = () => {
         return history.push("/profile");
     }
 
-    const logout = async() => {
-        await fetch('/api/logout', {
+    const logout = () => {
+        fetch('/api/logout', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           }})
-          .then((responce) => {
-            console.log(responce);
+          .then((response) => {
+            if (response.status === 202) {
+              resetUser(dispatch);
+              return history.push('/');
+            }
           })
           .catch((err) => {
             console.log(err);
