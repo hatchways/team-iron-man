@@ -11,8 +11,8 @@ Method for determining if match is over:
 - If you win the game (one team guesses all their words)
 Method for restarting: all the words get reshuffled again, points reset to 0.
 */
-const { bisectLeft } = require('../utility/util');
-const wordList = require('./wordList');
+const { bisectLeft } = require("../utility/util");
+const wordList = require("./wordList");
 
 class Game {
     constructor(hostId, matchId) {
@@ -35,7 +35,7 @@ class Game {
         this.turnCount = 1; // Turn and move counters could be useful to store.
         this.moveCount = 0;
         this.inProgress = false;
-        this.shuffleBoard();
+        this.shuffleBoard({ blues: 9, reds: 8, whites: 7, blacks: 1 });
     }
 
     checkCard(row, column) {
@@ -147,37 +147,27 @@ class Game {
         this.guessesMade = 0;
     }
 
-    shuffleBoard() {
+    shuffleBoard(colorCounts) {
         let words = wordList;
-        let colors = ['blue', 'red', 'white', 'black'];
-        let counts = [9, 17, 24, 25];//Cumulative counts for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
-        let cardsLeft = 25;
-        this.board = []; //Reset the board
+        const { blues, reds, whites, blacks } = colorCounts;
+        let colors = [
+            ...new Array(blues).fill("blue"),
+            ...new Array(reds).fill("red"),
+            ...new Array(whites).fill("white"),
+            ...new Array(blacks).fill("black"),
+        ];
         for (let i = 0; i < 5; i++) {
             this.board.push([]); //Push empty row
             for (let j = 0; j < 5; j++) {
                 const randomWordIndex = Math.floor(Math.random() * words.length); //Pick random word
-                const randomColorIndex = bisectLeft(counts, Math.floor(Math.random() * cardsLeft + 1)); //Pick random color
+                const randomColorIndex = Math.floor(Math.random() * colors.length); //Pick random color
                 let card = {
                     word: words[randomWordIndex],
                     color: colors[randomColorIndex],
                     revealed: false,
-                    row: i,
-                    column: j,
                 };
                 words.splice(randomWordIndex, 1); //Remove the word from the list so it can't be picked again.
-                //Decrease the cumulative counts by 1 e.g. if it is a red card then [9,17,24,25] becomes [9,16,23,24].
-                counts = [...counts.slice(0, randomColorIndex === 0 ? 0 : randomColorIndex), ...counts.slice(randomColorIndex).map(function (count) {
-                    return count - 1;
-                })];
-                //If a counter hits 0, remove it from the array.
-                // If the index is not for blue, the counter is 0 if the cumulative count is the same as the previous index.
-                // E.g. [8, 15, 15, 16] means white counter is at 0.
-                if (counts[randomColorIndex] === 0 || (randomColorIndex > 0 && counts[randomColorIndex] === counts[randomColorIndex - 1])) {
-                    counts.splice(randomColorIndex, 1);
-                    colors.splice(randomColorIndex, 1);
-                }
-                cardsLeft--;
+                colors.splice(randomColorIndex, 1);
                 this.board[i].push(card);
             }
         }
@@ -203,9 +193,7 @@ class Game {
         role.indexOf("Spymaster") === -1
             ? (this[role] = this[role].filter((p) => p.name !== player.name))
             : (this[role] = {});
-        this.playersReady = this.playersReady.filter(
-            (p) => p.name !== player.name
-        );
+        this.playersReady = this.playersReady.filter((p) => p.name !== player.name);
     }
 
     setInProgress() {
@@ -232,7 +220,7 @@ class Game {
             turnCount: this.turnCount,
             moveCount: this.moveCount,
             playersReady: this.playersReady,
-            inProgress: this.inProgress
+            inProgress: this.inProgress,
         };
     }
 }
