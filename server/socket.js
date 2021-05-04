@@ -19,13 +19,13 @@ exports.socketConnect = function (server) {
             io.emit('start-game-engine', game[matchId].toJson());
         });
 
-        socket.on('assign-role', ({ user, role, matchId }) => {
-            game[matchId].assignRole(user, role);
+        socket.on('assign-role', ({ player, role, matchId }) => {
+            game[matchId].assignRole(player, role);
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
 
-        socket.on('remove-role', ({ user, role, matchId }) => {
-            game[matchId].removeRole(user, role);
+        socket.on('remove-role', ({ player, role, matchId }) => {
+            game[matchId].removeRole(player, role);
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
 
@@ -35,6 +35,21 @@ exports.socketConnect = function (server) {
 
         socket.on('set-match-in-progress', ({ matchId }) => {
             game[matchId].setInProgress();
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
+
+        socket.on('next-turn', ({ matchId }) => {
+            game[matchId].nextTurn();
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
+
+        socket.on('next-phase', ({ matchId }) => {
+            game[matchId].nextPhase();
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
+
+        socket.on('check-card', ({ matchId }, row, column) => {
+            game[matchId].checkCard(row, column);
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
     });

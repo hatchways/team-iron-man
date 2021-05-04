@@ -11,7 +11,7 @@ const handleRegister = (req, res) => {
     return res.status(400).json({ message: 'Passwords do not match' });
   }
   if (password.length < MINLENGTH) {
-    return res.status(400).json({ message: `Password must be at least ${MINLENGTH}`});
+    return res.status(400).json({ message: `Password must be at least ${MINLENGTH}` });
   }
   return User.create({ name: name, password: password, email: email })
     .then((user) => {
@@ -21,7 +21,7 @@ const handleRegister = (req, res) => {
           httpOnly: true,
         })
         .status(201)
-        .json({ email: user.email, name: user.name });
+        .json({ avatar: user.avatar, email: user.email, name: user.name });
     })
     .catch((err) =>
       res.status(500).json({ message: 'Email already exists' })
