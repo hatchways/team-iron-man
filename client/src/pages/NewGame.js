@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import GameInvitation from "../components/GameInvitation";
 import { Button, makeStyles, Typography } from "@material-ui/core";
 import { MatchContext } from "../ContextProvider/match";
+import { Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 
 const useStyles = makeStyles({
     container: {
@@ -38,6 +39,35 @@ const useStyles = makeStyles({
         display: "flex",
         justifyContent: "center",
     },
+    leaveButton: {
+      marginTop: '20px',
+      align: 'center',
+      width: '110px',
+      backgroundColor: '#f23f3f',
+      color: 'white',
+    },
+    stayButton: {
+      marginTop: '30px',
+      align: 'center',
+      width: '120px',
+      color: 'black',
+    },
+    leaveButtonInner: {
+      marginLeft: '40px',
+      marginTop: '30px',
+      align: 'center',
+      width: '120px',
+      backgroundColor: '#f23f3f',
+      color: 'white',
+    },
+    modal : {
+      textAlign: 'center',
+      paddingTop: '20px',
+    },
+    popupHeader: {
+      fontSize: "20px",
+      color: 'red',
+    },
 });
 
 function NewGame() {
@@ -49,6 +79,45 @@ function NewGame() {
     const createGame = () => {
         history.push(`/join/${matchState.matchId}`);
     };
+
+    const [open, setOpen] = React.useState(false);
+
+    const cancelMatch = () => {
+      console.log("Canceled Match");
+      return history.push('/home');
+    };
+
+    const CancelMatchPopup = () => (
+      <div>
+        <Button className={classes.leaveButton} onClick={()=>{setOpen(true);}}>
+          CANCEL MATCH
+        </Button>
+          <Dialog
+            open={open}
+            onClose={()=>{setOpen(false);}}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            className = {classes.modal}
+            >
+            <DialogTitle id="alert-dialog-title" className = {classes.popupHeader} >{"Are you canceling the match?"}</DialogTitle>
+
+          <DialogActions>
+            <Button onClick={()=>{setOpen(false);}} className={classes.stayButton} variant="contained" color="secondary">
+              STAY
+            </Button>
+            <Button
+              onClick={() => {
+                console.log("CANCEL MATCH");
+                cancelMatch();}}
+              color="primary"
+              className={classes.leaveButtonInner} >
+              CANCEL MATCH
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+
+    );
 
     return (
         <div className={classes.container}>
@@ -65,6 +134,7 @@ function NewGame() {
             >
                 Create Game
       </Button>
+      <CancelMatchPopup></CancelMatchPopup>
         </div>
     );
 }
