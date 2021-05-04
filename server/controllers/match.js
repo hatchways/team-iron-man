@@ -78,42 +78,6 @@ const deleteMatch = (req, res) => {
     return;
   });
 
-  // let doDelete = false;
-
-  // Match.find(
-  //   {_id: matchID},
-  // ).then((msg) => {
-  //
-  //   if (msg[0].userIDs.length === 0){
-  //     // delete match
-  //     status.push("No players, delete match");
-  //     //res.status(200).json({status: 'No players, delete match' });
-  //     doDelete = true;
-  //   }
-  //   else {
-  //     // keep match
-  //     //res.status(200).json({status: 'Player(s) is in match, keep match' });
-  //     status.push("Player(s) is in match, keep match");
-  //   }
-  //
-  // })
-  // .catch((err) => {
-  //   res.status(400).json({ message: 'Match is not found' });
-  //   return;
-  // });
-
-  // if(doDelete){
-  //   Match.deleteOne({_id: matchID})
-  //     .then(() => {
-  //       //res.status(200).json({status: 'Deleted match'});
-  //       status.push("Deleted match");
-  //       res.status(200).json(JSON.stringify(status));
-  //     })
-  //     .catch((err) => {
-  //       res.status(400).json({ message: 'Delete failed' });
-  //     });
-  //   }
-
 }
 
 
