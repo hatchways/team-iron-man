@@ -5,6 +5,7 @@ UI for Game Board
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "./Card";
+import GameOverModal from './GameOverModal';
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from "../ContextProvider/user";
 
@@ -52,6 +53,7 @@ export default function GameBoard() {
                         />
                     ));
                 })}
+                <GameOverModal />
             </div>
         </div>
     );
