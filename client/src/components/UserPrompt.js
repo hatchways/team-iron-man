@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from '../ContextProvider/user';
-import { Button, Snackbar } from '@material-ui/core';
+import { Button, Snackbar, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 const initialRole = {
@@ -9,13 +9,21 @@ const initialRole = {
   phase: '',
 };
 
+const useStyles = makeStyles({
+  margin: {
+    marginTop: "3%",
+  }
+})
+
 const UserPrompt = () => {
   const [role, setRole] = useState(initialRole);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(true);
   const { email } = useUserState();
   const { matchState } = useContext(MatchContext);
+  const classes = useStyles()
 
   useEffect(() => {
+    setSnackbarOpen(true);
     if (matchState.redSpymaster.email === email) {
       setRole({ color: 'Red', phase: 'clue' });
     } else if (matchState.blueSpymaster.email === email) {
@@ -38,9 +46,9 @@ const UserPrompt = () => {
   const renderSwitch = () => {
     switch (role.phase) {
       case 'guess':
-        return `It is ${role.color} Guesser's turn now.`;
+        return `It is the ${role.color} Guesser's turn now.`;
       case 'clue':
-        return `It is ${role.color} Spy Master's turn now.`;
+        return `It is the ${role.color} Spy Master's turn now.`;
       default:
         return `Please make sure you were assigned a role`;
     }
@@ -49,10 +57,28 @@ const UserPrompt = () => {
   return (
     <div>
       <Snackbar
-        open={snackbarOpen}
+        open={
+          ((matchState.turn === "blue" &&
+            matchState.turnPhase === "guess" &&
+            matchState.blueGuessers.findIndex(
+              (player) => player.email === email
+            ) !== -1) ||
+            (matchState.turn === "red" &&
+              matchState.turnPhase === "guess" &&
+              matchState.redGuessers.findIndex(
+                (player) => player.email === email
+              ) !== -1) ||
+            (matchState.turn === "blue" &&
+              matchState.turnPhase === "clue" &&
+              matchState.blueSpymaster.email === email) ||
+            (matchState.turn === "red" &&
+              matchState.turnPhase === "clue" &&
+              matchState.redSpymaster.email === email)) && snackbarOpen
+        }
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        className={classes.margin}
       >
-        <Alert onClose={() => setSnackbarOpen(false)} severity="info">
+        <Alert onClose={() => setSnackbarOpen(false)} severity={matchState.turn === "blue" ? 'info' : 'error'} variant="filled">
           {renderSwitch()}
         </Alert>
       </Snackbar>

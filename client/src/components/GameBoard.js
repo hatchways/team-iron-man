@@ -5,8 +5,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "./Card";
 import { useParams } from "react-router-dom";
-import ClueModal from "./ClueModal"
-import { MatchContext } from '../ContextProvider/match';
+import ClueModal from "./ClueModal";
+import { MatchContext } from "../ContextProvider/match";
 import { useUserState } from "../ContextProvider/user";
 import io from "socket.io-client";
 import UserPrompt from "./UserPrompt";
@@ -54,13 +54,11 @@ export default function GameBoard() {
                 setSelected({});
             }
         });
-        console.log(matchState)
         return () => socketRef.current.disconnect();
-    }, [matchState, setMatchState, matchId])
-
+    }, [matchState, setMatchState, matchId]);
 
     const handleVote = (word, row, column) => {
-        console.log(word, row, column)
+        console.log(word, row, column);
         setSelected({ row, column });
         socketRef.current.emit("set-vote", { matchId, word, row, column, email });
         return "x";
@@ -75,7 +73,7 @@ export default function GameBoard() {
 
     return (
         <div className={classes.root}>
-            {matchState &&
+            {matchState && (
                 <div className={classes.container}>
                     {matchState.board.map(function (row) {
                         return row.map((card) => (
@@ -85,23 +83,31 @@ export default function GameBoard() {
                                 color={card.color}
                                 row={card.row}
                                 column={card.column}
-                                spyMaster={email === matchState.redSpymaster.email || email === matchState.blueSpymaster.email}
+                                spyMaster={
+                                    email === matchState.redSpymaster.email ||
+                                    email === matchState.blueSpymaster.email
+                                }
                                 revealed={card.revealed}
                                 handleVote={handleVote}
-                                selected={selected.row === card.row && selected.column === card.column}
+                                selected={
+                                    selected.row === card.row && selected.column === card.column
+                                }
                             />
                         ));
                     })}
-                    <ClueModal open={matchState.turnPhase === "clue" &&
-                        ((matchState.turn === "blue" &&
-                            email === matchState.blueSpymaster.email) ||
-                            matchState.turn === "red" &&
-                            email === matchState.redSpymaster.email)}
+                    <ClueModal
+                        open={
+                            matchState.turnPhase === "clue" &&
+                            ((matchState.turn === "blue" &&
+                                email === matchState.blueSpymaster.email) ||
+                                (matchState.turn === "red" &&
+                                    email === matchState.redSpymaster.email))
+                        }
                         submitClue={submitClue}
                     />
                     <UserPrompt />
                 </div>
-            }
+            )}
         </div>
     );
 }
