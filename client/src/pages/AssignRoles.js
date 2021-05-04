@@ -9,8 +9,7 @@ import AvailableRoles from '../components/AvailableRoles';
 import { MatchContext } from '../ContextProvider/match';
 import io from "socket.io-client";
 
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import { Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 
@@ -46,14 +45,14 @@ const useStyles = makeStyles({
       color: 'white',
     },
     stayButton: {
-      marginTop: '50px',
+      marginTop: '30px',
       align: 'center',
       width: '120px',
       color: 'black',
     },
     leaveButtonInner: {
       marginLeft: '40px',
-      marginTop: '50px',
+      marginTop: '30px',
       align: 'center',
       width: '120px',
       backgroundColor: '#f23f3f',
@@ -91,40 +90,39 @@ export default function AssignRoles() {
 
       return history.push('/home');
     };
-    const contentStyle = {
-      maxWidth: "600px",
-      width: "90%"
-    };
+
+    const [open, setOpen] = React.useState(false);
+
     const AskForLeavePopup = () => (
-      <Popup trigger = {
-      < Button className={classes.leaveButton} > LEAVE MATCH < /Button>} modal contentStyle={contentStyle} >
-        {close => (
-          <div className = {classes.modal} >
-          <div className = {classes.popupHeader} > Are you leaving the match? < /div>
+      <div>
+        <Button className={classes.leaveButton} onClick={()=>{setOpen(true);}}>
+          LEAVE MATCH
+        </Button>
+          <Dialog
+            open={open}
+            onClose={()=>{setOpen(false);}}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            className = {classes.modal}
+            >
+            <DialogTitle id="alert-dialog-title" className = {classes.popupHeader} >{"Are you leaving the match?"}</DialogTitle>
 
-          <div className = "actions" >
-
-            <Button className={classes.stayButton} variant="contained" color="secondary"
-              onClick = { () => {
-                close();
-              }
-            } >
+          <DialogActions>
+            <Button onClick={()=>{setOpen(false);}} className={classes.stayButton} variant="contained" color="secondary">
               STAY
             </Button>
-
-            <Button className={classes.leaveButtonInner}
-              onClick = { () => {
+            <Button
+              onClick={() => {
                 console.log("LEAVE MATCH");
-                askForLeave();
-              }
-            } >
+                askForLeave();}}
+              color="primary"
+              className={classes.leaveButtonInner} >
               LEAVE MATCH
             </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
 
-          </div>
-          </div>
-        )}
-      </Popup>
     );
 
     const socketRef = useRef();
