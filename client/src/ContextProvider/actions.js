@@ -14,7 +14,7 @@ const registerUser = async (dispatch, registerPayload) => {
     const response = await fetch(`/api/signup`, requestOptions);
     const data = await response.json();
     if (response.status === 201) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: data.name });
+      dispatch({ type: 'LOGIN_SUCCESS', payload: [data.avatar, data.name, data.email] });
       return data;
     } else {
       throw data.message;
