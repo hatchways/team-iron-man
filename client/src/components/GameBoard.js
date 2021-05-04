@@ -2,11 +2,13 @@
 UI for Game Board
 */
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "./Card";
+import { useParams } from "react-router-dom";
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from "../ContextProvider/user";
+import io from "socket.io-client";
 
 const useStyles = makeStyles({
     root: {
@@ -32,15 +34,27 @@ const useStyles = makeStyles({
 export default function GameBoard() {
     const classes = useStyles();
     const { email } = useUserState();
-    const { matchState } = useContext(MatchContext);
+    const { matchState, setMatchState } = useContext(MatchContext);
+    const socketRef = useRef();
+    const { matchId } = useParams();
     // TODO: integrate with backend.
     //function onCardClick() {
     //}
 
+    useEffect(() => {
+        socketRef.current = io.connect("/");
+        if (!matchState) {
+            socketRef.current.emit("get-game-engine", { matchId });
+            socketRef.current.on("update-game-engine-" + matchId, (game) => {
+                setMatchState(game);
+            });
+        }
+    }, [matchState, setMatchState, matchId])
+
     return (
         <div className={classes.root}>
             <div className={classes.container}>
-                {matchState.board.map(function (row) {
+                {matchState && matchState.board.map(function (row) {
                     return row.map((card) => (
                         <Card
                             key={card.word}
