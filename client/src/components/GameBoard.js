@@ -49,7 +49,9 @@ export default function GameBoard() {
         }
         socketRef.current.on("update-game-engine-" + matchId, (game) => {
             setMatchState(game);
-            setSelected({});
+            if (matchState.votes === {}) {
+                setSelected({});
+            }
         });
         console.log(matchState)
         return () => socketRef.current.disconnect();
