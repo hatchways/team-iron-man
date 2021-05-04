@@ -70,4 +70,8 @@ const authUser = async (dispatch) => {
   }
 };
 
-export { loginUser, registerUser, authUser };
+const resetUser = (dispatch) => {
+  dispatch({ type: 'RESET_STATE' });
+};
+
+export { loginUser, registerUser, authUser, resetUser };
