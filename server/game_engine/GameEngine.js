@@ -192,7 +192,7 @@ class Game {
     }
 
     shuffleBoard(colorCounts) {
-        let words = wordList;
+        let words = [...wordList];
         const { blues, reds, whites, blacks } = colorCounts;
         let colors = [
             ...new Array(blues).fill("blue"),
