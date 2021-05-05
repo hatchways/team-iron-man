@@ -9,7 +9,9 @@ import {
     Grid,
     Avatar,
     Divider,
+    Snackbar,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { useUserState } from "../ContextProvider/user";
 import { useHistory } from 'react-router-dom';
@@ -80,6 +82,7 @@ const useStyles = makeStyles({
 function Profile() {
     const classes = useStyles();
     const { avatar, user, email } = useUserState();
+    const demoAccount = (email.substring(0, 11) === "demoaccount" && email.substring(12) === "@cluewords.com");
     const history = useHistory();
     const [passwordError, setPasswordError] = useState(false);
     const [inputValues, setInputValues] = useState({
@@ -92,6 +95,7 @@ function Profile() {
         showNewPassword1: false,
         showNewPassword2: false,
     });
+    const [snackbarSettings, setSnackbarSettings] = useState({ open: false, msg: '', type: '' })
 
     const handleChange = (prop) => (e) => {
         prop.indexOf("newPassword") !== -1 && setPasswordError(false);
@@ -106,40 +110,51 @@ function Profile() {
     };
 
     const changeUserName = async () => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: inputValues.userName })
-        };
-        try {
-            const response = await fetch(`/api/changeusername`, requestOptions);
-            if (response.status === 200) {
-                return history.go(0);
-            }
-        } catch (error) {
-            throw error;
-        }
-
-    }
-
-    const changePassword = async () => {
-        if (inputValues.newPassword1 === inputValues.newPassword2) {
+        if (!demoAccount) {
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ oldPassword: inputValues.oldPassword, newPassword: inputValues.newPassword1 })
+                body: JSON.stringify({ name: inputValues.userName })
             };
             try {
-                const response = await fetch(`/api/changepassword`, requestOptions);
+                const response = await fetch(`/api/changeusername`, requestOptions);
                 if (response.status === 200) {
                     return history.go(0);
                 }
             } catch (error) {
                 throw error;
             }
+        } else {
+            setSnackbarSettings({ open: true, msg: 'You cannot change the name of a demo account.', type: 'error' });
+        }
+    }
+
+    const changePassword = async () => {
+        if (!demoAccount) {
+            if (inputValues.newPassword1 === inputValues.newPassword2) {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ oldPassword: inputValues.oldPassword, newPassword: inputValues.newPassword1 })
+                };
+                try {
+                    const response = await fetch(`/api/changepassword`, requestOptions);
+                    if (response.status === 200) {
+                        setSnackbarSettings({ open: true, msg: 'Password change successful!', type: 'success' });
+                    }
+                    else if (response.status === 400) {
+                        setSnackbarSettings({ open: true, msg: 'Error! Old password might be incorrect.', type: 'error' });
+                    }
+                } catch (error) {
+                    throw error;
+                }
+            }
+            else {
+                setPasswordError(true)
+            }
         }
         else {
-            setPasswordError(true)
+            setSnackbarSettings({ open: true, msg: 'You cannot change the password of a demo account.', type: 'error' });
         }
     }
 
@@ -189,6 +204,11 @@ function Profile() {
             />
             <ChangeAvatar />
             <Divider className={classes.hr} variant="middle" />
+            <Snackbar open={snackbarSettings.open}>
+                <Alert onClose={() => setSnackbarSettings({ open: false, msg: '', type: '' })} severity={snackbarSettings.type} variant='filled'>
+                    {snackbarSettings.msg}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
