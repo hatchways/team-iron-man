@@ -5,7 +5,6 @@ const handleLogout = (req, res) => {
     return res.status(401).json({ message: 'You need to Login' });
   }
   else {
-    //return res.status(202).clearCookie('jwt').json({ message: 'Logged out' });
     res.clearCookie('jwt');
     res.status(202).json({ message: 'Logged out' });
   }

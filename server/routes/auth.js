@@ -23,6 +23,6 @@ router.post('/changeavatar', verifyToken, userSettings.handleChangeAvatar);
 
 router.get('/authLogin', authUser);
 
-router.get('/logout', verifyToken, logout.handleLogout);
+router.get('/logout', logout.handleLogout);
 
 module.exports = router;
