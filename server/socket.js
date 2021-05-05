@@ -43,12 +43,28 @@ exports.socketConnect = function (server) {
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
 
+        socket.on('set-clue', ({ matchId, clue, numOfGuesses }) => {
+            game[matchId].setClue(clue);
+            game[matchId].setMaxGuesses(numOfGuesses);
+            game[matchId].nextPhase();
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
+
         socket.on('next-phase', ({ matchId }) => {
             game[matchId].nextPhase();
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
 
-        socket.on('check-card', ({ matchId }, row, column) => {
+        socket.on('set-vote', ({ matchId, word, row, column, email }) => {
+            game[matchId].addVote(word, row, column, email);;
+            if (game[matchId].everyoneVoted) {
+                const winningVote = game[matchId].countVotes();
+                game[matchId].checkCard(winningVote.row, winningVote.column);
+            }
+            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+        })
+
+        socket.on('check-card', ({ matchId, row, column }) => {
             game[matchId].checkCard(row, column);
             io.emit('update-game-engine-' + matchId, game[matchId].toJson());
         })
