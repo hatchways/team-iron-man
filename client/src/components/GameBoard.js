@@ -39,9 +39,6 @@ export default function GameBoard() {
     const socketRef = useRef();
     const { matchId } = useParams();
     const [selected, setSelected] = useState({});
-    // TODO: integrate with backend.
-    //function onCardClick() {
-    //}
 
     useEffect(() => {
         socketRef.current = io.connect("/");
@@ -55,13 +52,11 @@ export default function GameBoard() {
             }
         });
         return () => socketRef.current.disconnect();
-    }, [matchState, setMatchState, matchId]);
+    }, []);
 
     const handleVote = (word, row, column) => {
-        console.log(word, row, column);
         setSelected({ row, column });
         socketRef.current.emit("set-vote", { matchId, word, row, column, email });
-        return "x";
     };
 
     const submitClue = (clue, numOfGuesses) => {
