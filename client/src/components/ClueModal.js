@@ -45,6 +45,9 @@ const ClueModal = (props) => {
     const [clue, setClue] = useState("");
     const [numOfGuesses, setNumOfGuesses] = useState(1);
 
+    const [oneWordHelperText, setOneWordHelperText] = useState(null);
+    const [errorState, setErrorState] = useState(false);
+
     const handleChange = (e) => {
         setClue(e.target.value);
     };
@@ -53,9 +56,20 @@ const ClueModal = (props) => {
         setNumOfGuesses(e.target.value);
     }
 
+    const isOneAlphabeticWord = (word) => {
+        const english = /^[A-Za-z]*$/;
+        return english.test(word);
+    }
+
     const handleClose = () => {
         setClue("");
-        props.submitClue(clue, parseInt(numOfGuesses));
+        if (isOneAlphabeticWord(clue)){
+            props.submitClue(clue, parseInt(numOfGuesses));
+        }
+        else {
+            setErrorState(true);
+            setOneWordHelperText("One alphabetic word only, please retry");
+        }
     }
 
     return (
@@ -92,6 +106,8 @@ const ClueModal = (props) => {
                         value={clue}
                         onChange={handleChange}
                         variant="outlined"
+                        error={errorState}
+                        helperText={oneWordHelperText}
                     />
                     <Button className={classes.button} onClick={handleClose} color="secondary" variant="contained" disabled={!clue}>
                         Give Clue
