@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
+import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem, Box } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
 import { useHistory } from 'react-router';
 import { useUserState } from "../ContextProvider/user";
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import BouncingText from 'react-bouncing-text';
 
 const useStyles = makeStyles({
     root: {
@@ -64,13 +65,9 @@ const useStyles = makeStyles({
     },
     title: {
         fontWeight: "500",
-        fontSize: "large",
-        transition: "font-size 0.2s ease-in",
+        fontSize: "x-large",
         '&:hover': {
-            fontWeight: "300",
-            fontSize: "20px",
             cursor: "pointer",
-            transition: "font-size 0.2s ease-in;"
         }
     }
 });
@@ -105,7 +102,16 @@ const GameNavigation = () => {
         <Toolbar className={classes.root}>
             <Grid container>
                 <Grid item xs={4} className={classes.left}>
-                    <Typography className={classes.title} onClick={() => goHome()}>CLUE: {matchState.clue}</Typography>
+                    <Box onClick={() => goHome()}>
+                        <BouncingText
+                            text="CLUEWORDS"
+                            hoverable
+                            delay={10}
+                            duration={200}
+                            className={classes.title}
+                            onClick={() => goHome()}
+                        />
+                    </Box>
                 </Grid>
                 <Grid item xs={4} className={classes.center}>
                     <ArrowRightIcon className={matchState.turn === "blue" ? classes.blue : classes.white} fontSize="large" />

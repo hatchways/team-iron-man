@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
+import { Box, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from "../ContextProvider/user";
 import { useHistory } from 'react-router';
 import GameNavigation from './GameNavigation';
+import BouncingText from 'react-bouncing-text';
 
 const useStyles = makeStyles({
     root: {
@@ -55,18 +56,19 @@ const useStyles = makeStyles({
     red: {
         color: "#ff5e62"
     },
+    white: {
+        color: 'white',
+        WebkitTextStroke: '0.2px black'
+    },
     scoreSpacing: {
         margin: "0 10px 20px 10px"
     },
     title: {
+        display: 'flex',
         fontWeight: "500",
-        fontSize: "large",
-        transition: "font-size 0.2s ease-in",
+        fontSize: "x-large",
         '&:hover': {
-            fontWeight: "300",
-            fontSize: "20px",
             cursor: "pointer",
-            transition: "font-size 0.2s ease-in;"
         }
     }
 });
@@ -103,7 +105,16 @@ const AuthNavigation = () => {
                 <Toolbar className={classes.root}>
                     <Grid container>
                         <Grid item xs={6} className={classes.left}>
-                            <Typography className={classes.title} onClick={() => goHome()}>C L U E W O R D S</Typography>
+                            <Box onClick={() => goHome()}>
+                                <BouncingText
+                                    text="CLUEWORDS"
+                                    hoverable
+                                    delay={30}
+                                    duration={200}
+                                    className={classes.title}
+                                    onClick={() => goHome()}
+                                />
+                            </Box>
                         </Grid>
                         <Grid item xs={6} className={classes.right}>
                             <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
