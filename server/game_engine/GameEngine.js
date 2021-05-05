@@ -73,7 +73,13 @@ class Game {
         // If the card color is the other team, increase the other team's points and end the game.
         else {
             this.getTurn() === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
-            this.nextTurn();
+            if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
+                this.setWinner(this.getTurn() === "blue" ? "red" : "blue");
+                this.gameOver();
+            }
+            else {
+                this.nextTurn();
+            }
         }
     }
 
