@@ -39,7 +39,6 @@ const deleteMatch = (req, res) => {
     { $pull: {'userIDs': id}} )
   .then(() => {
     status.push("Deleted player");
-    //res.status(200).json({status: 'Deleted player'});
     Match.find(
       {_id: matchID},
     ).then((msg) => {
@@ -47,11 +46,8 @@ const deleteMatch = (req, res) => {
       if (msg[0].userIDs.length === 0){
         // delete match
         status.push("No players, delete match");
-        //res.status(200).json({status: 'No players, delete match' });
-        //doDelete = true;
         Match.deleteOne({_id: matchID})
           .then(() => {
-            //res.status(200).json({status: 'Deleted match'});
             status.push("Deleted match");
             res.status(200).json(JSON.stringify(status));
           })
@@ -62,7 +58,6 @@ const deleteMatch = (req, res) => {
       }
       else {
         // keep match
-        //res.status(200).json({status: 'Player(s) is in match, keep match' });
         status.push("Player(s) is in match, keep match");
         res.status(200).json(JSON.stringify(status));
       }

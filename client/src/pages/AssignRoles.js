@@ -81,9 +81,6 @@ export default function AssignRoles() {
         headers: {
           'Content-Type': 'application/json',
         }})
-        .then((responce) => {
-          console.log(responce);
-        })
         .catch((err) => {
           console.log(err);
         });
@@ -96,7 +93,7 @@ export default function AssignRoles() {
     const AskForLeavePopup = () => (
       <div>
         <Button className={classes.leaveButton} onClick={()=>{setOpen(true);}}>
-          LEAVE MATCH
+          Leave Match
         </Button>
           <Dialog
             open={open}
@@ -109,15 +106,14 @@ export default function AssignRoles() {
 
           <DialogActions>
             <Button onClick={()=>{setOpen(false);}} className={classes.stayButton} variant="contained" color="secondary">
-              STAY
+              Stay
             </Button>
             <Button
               onClick={() => {
-                console.log("LEAVE MATCH");
                 askForLeave();}}
               color="primary"
               className={classes.leaveButtonInner} >
-              LEAVE MATCH
+              Leave Match
             </Button>
           </DialogActions>
         </Dialog>

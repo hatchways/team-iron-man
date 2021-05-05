@@ -101,7 +101,7 @@ function NewGame() {
     const CancelMatchPopup = () => (
       <div>
         <Button className={classes.leaveButton} onClick={()=>{setOpen(true);}}>
-          CANCEL MATCH
+          Cancel Match
         </Button>
           <Dialog
             open={open}
@@ -114,7 +114,7 @@ function NewGame() {
 
           <DialogActions>
             <Button onClick={()=>{setOpen(false);}} className={classes.stayButton} variant="contained" color="secondary">
-              STAY
+              Stay
             </Button>
             <Button
               onClick={() => {
@@ -122,7 +122,7 @@ function NewGame() {
                 cancelMatch();}}
               color="primary"
               className={classes.leaveButtonInner} >
-              CANCEL MATCH
+              Cancel Match
             </Button>
           </DialogActions>
         </Dialog>
@@ -145,7 +145,7 @@ function NewGame() {
             >
                 Create Game
       </Button>
-      <CancelMatchPopup></CancelMatchPopup>
+      <CancelMatchPopup />
         </div>
     );
 }
