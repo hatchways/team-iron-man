@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Chat() {
+const Chat = () => {
     const [message, setMessage] = useState('');
 	const [ chat, setChat ] = useState([]);
     const { user } = useUserState();
@@ -100,3 +100,5 @@ export default function Chat() {
         </Box>
 	)
 };
+
+export default Chat;
