@@ -1,91 +1,102 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useParams } from 'react-router-dom';
 import io from "socket.io-client";
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from "@material-ui/core/TextField";
+import { makeStyles, Box, Paper, TextField } from '@material-ui/core';
+import ChatWindow from '../components/ChatWindow';
+import { useUserState } from '../ContextProvider/user';
+
 
 const useStyles = makeStyles({
     card: {
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: '1fr',
         margin: '30px',
-        minHeight: '30rem'
-      },
-    form: {
-        maxWidth: '350px',
-        borderRadius: '5px',
-        padding: '20px',
-        boxShadow: '0px 3px 24px -8px rgba(0, 0, 0, 0.75)'
+        minheight: '10vh',
+        maxWidth: '35vw',
     },
     button: {
-        marginTop: '20px',
+        marginTop: '10px',
+        marginLeft: '10px',
         padding: '10px',
         background: 'transparent',
-        borderRadius: '5px'
+        borderRadius: '5px',
     },
-    span: {
-        color: 'black'
+    window: {
+        height: '60vh',
+        maxHeight: '60vh',
+        maxWidth: '20vw',
     },
-    nameField: {
-        marginBottom: '40px'
-    }
+    message: {
+        width: '75%',
+    },
 });
 
 export default function Chat() {
-    const [ state, setState ] = useState({ message: "", name: "" });
+    const [message, setMessage] = useState('');
 	const [ chat, setChat ] = useState([]);
+    const { user } = useUserState();
+    const { matchId } = useParams();
 	const socketRef = useRef();
     const classes = useStyles();
 
 	useEffect(
 		() => {
-			socketRef.current = io.connect(window.location.origin);
+			socketRef.current = io.connect('/');
+            socketRef.current.emit('join-chat', { matchId });
             socketRef.current.on("message", ({ name, message }) => {
                 setChat([ ...chat, { name, message } ]);
             })
             return () => socketRef.current.disconnect();
-		},[chat]);
+		},[chat, matchId, user]);
 
     const onTextChange = (e) => {
-        setState({ ...state, [e.target.name]: e.target.value });
+        setMessage(e.target.value);
     }
 
     const onMessageSubmit = (e) => {
-        const { name, message } = state;
-        socketRef.current.emit("message", { name, message });
-        e.preventDefault();
-        setState({ message: "", name});
+        socketRef.current.emit('message', { name: user, message });
+        setMessage('');
     }
 
-    const renderChat = () => {
-        return chat.map(({ name, message }, index) => (
-            <div key={index}>
-                <h3>
-                   {name}: <span className={classes.span}>{message}</span>
-                </h3>
-            </div>
-        ))
-    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          onMessageSubmit();
+        }
+  };
     
 	return (
-        <div className={classes.card}>
-            <form className={classes.form} onSubmit={onMessageSubmit}>
-                <div className={classes.nameField}>
-                    <TextField name="name" onChange={(e) => onTextChange(e)} value={state.name} label="Name" />
-                </div>
-                <h1>{state.name}</h1>
-                {renderChat()}
-                <div>
-                    <TextField
-                        name="message"
-                        onChange={(e) => onTextChange(e)}
-                        value={state.message}
-                        id="outlined-multiline-static"
-                        variant="outlined"
-                        label="Message"
-                    />
-                    <button className={classes.button}>Done</button>
-                </div>
-            </form>
-        </div>
+        <Box className={classes.card}>
+          <Paper elevation={3}>
+            <Box p={2}>
+              <h1>Welcome to the Game Chat</h1>
+              <Box
+                className={classes.window}
+                border={1}
+                borderColor="grey.500"
+                overflow="auto"
+              >
+                <ChatWindow chat={chat} />
+              </Box>
+              <Box pt={2}>
+                <TextField
+                  className={classes.message}
+                  name="message"
+                  onChange={(e) => onTextChange(e)}
+                  value={message}
+                  id="outlined-multiline-static"
+                  variant="outlined"
+                  label="Message"
+                  onKeyDown={(event) => handleKeyDown(event)}
+                />
+                <button
+                  className={classes.button}
+                  onClick={() => onMessageSubmit()}
+                >
+                  Send
+                </button>
+              </Box>
+            </Box>
+          </Paper>
+        </Box>
 	)
 };
