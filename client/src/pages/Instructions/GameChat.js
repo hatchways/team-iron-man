@@ -65,7 +65,7 @@ function GameChat() {
                 onClose={handleClose}
                 className={classes.modal}
             >
-                <img src={screenshot} className={classes.enlarged} />
+                <img src={screenshot} alt={"chat"} className={classes.enlarged} />
             </Modal>
         </React.Fragment>
     )

@@ -60,7 +60,7 @@ function CreatingMatch() {
                 invitations to players, or they can copy the game's URL to send to their friends.
             </Typography>
             <div className={classes.center}>
-                <img src={screenshot} className={classes.screenshot} onClick={() => setOpen(true)} />
+                <img src={screenshot} className={classes.screenshot} alt={"Create Match Page"} onClick={() => setOpen(true)} />
                 <figcaption className={classes.description}>Click to enlarge.</figcaption>
             </div>
             <Typography className={classes.description}>
@@ -71,7 +71,7 @@ function CreatingMatch() {
                 onClose={handleClose}
                 className={classes.modal}
             >
-                <img src={screenshot} className={classes.enlarged} />
+                <img src={screenshot} alt={"Create Match Page"} className={classes.enlarged} />
             </Modal>
         </React.Fragment>
     )

@@ -66,7 +66,7 @@ function GameBoard() {
                 one black. The blue team has an extra card because they go first by default.
             </Typography>
             <div className={classes.center}>
-                <img src={screenshot} className={classes.screenshot} onClick={() => setOpen(true)} />
+                <img src={screenshot} alt={"Game Board"} className={classes.screenshot} onClick={() => setOpen(true)} />
                 <figcaption className={classes.description}>Click to enlarge.</figcaption>
             </div>
             <Typography className={classes.description}>
@@ -76,7 +76,7 @@ function GameBoard() {
                 have a gray test for the spymaster to prevent white on white).
             </Typography>
             <div className={classes.center}>
-                <img src={hidden} className={classes.figure} />
+                <img src={hidden} className={classes.figure} alt={"Hidden Cards"} />
                 <figcaption className={classes.description}>Hidden cards. Left: Guesser view. Right: Spymaster view (Blue Team)</figcaption>
             </div>
             <Typography className={classes.description}>
@@ -84,7 +84,7 @@ function GameBoard() {
                 be showed to all players.
             </Typography>
             <div className={classes.center}>
-                <img src={revealed} className={classes.figure} />
+                <img src={revealed} className={classes.figure} alt={"Revealed Cards"} />
                 <figcaption className={classes.description}>Revealed cards.</figcaption>
             </div>
             <Modal
@@ -92,7 +92,7 @@ function GameBoard() {
                 onClose={handleClose}
                 className={classes.modal}
             >
-                <img src={screenshot} className={classes.enlarged} />
+                <img src={screenshot} alt={"Game Board"} className={classes.enlarged} />
             </Modal>
         </React.Fragment>
     )

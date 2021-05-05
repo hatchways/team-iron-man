@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles, Typography, Modal } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
     description: {
@@ -105,13 +105,6 @@ function TurnCycle() {
                 If the game has not ended, once the number of guesses has reached the maximum, or the team
                 voted to pass, the turn ends, and the next team's turn begins at the clue phase.
             </Typography>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                className={classes.modal}
-            >
-                <img src={screenshot} className={classes.enlarged} />
-            </Modal>
         </React.Fragment>
     )
 };

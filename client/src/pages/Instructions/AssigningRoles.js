@@ -70,7 +70,7 @@ function AssigningRoles() {
                 their name.
             </Typography>
             <div className={classes.center}>
-                <img src={screenshot} className={classes.screenshot} onClick={() => setOpen(true)} />
+                <img src={screenshot} className={classes.screenshot} alt={"Assign Roles Page"} onClick={() => setOpen(true)} />
                 <figcaption className={classes.description}>Click to enlarge.</figcaption>
             </div>
             <Typography className={classes.description}>
@@ -81,7 +81,7 @@ function AssigningRoles() {
                 onClose={handleClose}
                 className={classes.modal}
             >
-                <img src={screenshot} className={classes.enlarged} />
+                <img src={screenshot} alt={"Assign Roles Page"} className={classes.enlarged} />
             </Modal>
         </React.Fragment>
     )

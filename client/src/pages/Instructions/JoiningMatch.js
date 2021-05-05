@@ -62,7 +62,7 @@ function JoiningMatch() {
                 or other players already waiting in the lobby.
             </Typography>
             <div className={classes.center}>
-                <img src={screenshot} className={classes.screenshot} onClick={() => setOpen(true)} />
+                <img src={screenshot} className={classes.screenshot} alt={"Joining Match Page"} onClick={() => setOpen(true)} />
                 <figcaption className={classes.description}>Click to enlarge.</figcaption>
             </div>
             <Modal
@@ -70,7 +70,7 @@ function JoiningMatch() {
                 onClose={handleClose}
                 className={classes.modal}
             >
-                <img src={screenshot} className={classes.enlarged} />
+                <img src={screenshot} alt={"Joining Match Page"} className={classes.enlarged} />
             </Modal>
         </React.Fragment>
     )
