@@ -52,11 +52,9 @@ class Game {
         this.everyoneVoted = false;
         this.incrementGuesses();
         const turn = this.getTurn();
-        const bluePoints = this.getBluePoints();
-        const redPoints = this.getRedPoints();
         if (card.color === turn) {
             turn === "blue" ? this.incrementBluePoints() : this.incrementRedPoints();
-            if (bluePoints === 9 || redPoints === 8) {
+            if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
                 this.setWinner(this.turn);
                 this.gameOver();
             }
@@ -76,7 +74,7 @@ class Game {
         // If the card color is the other team, increase the other team's points and end the game.
         else {
             turn === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
-            if (bluePoints === 9 || redPoints === 8) {
+            if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
                 this.setWinner(turn === "blue" ? "red" : "blue");
                 this.gameOver();
             }
