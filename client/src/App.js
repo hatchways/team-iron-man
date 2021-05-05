@@ -18,6 +18,7 @@ import { UserProvider } from './ContextProvider/user';
 import { MatchContext } from './ContextProvider/match';
 import GameBoard from './components/GameBoard';
 import Profile from './pages/Profile';
+import './fonts/KGHAPPY.ttf'
 
 function App() {
 
