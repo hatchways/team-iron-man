@@ -76,7 +76,7 @@ const AuthNavigation = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, avatar } = useUserState();
     const history = useHistory();
-    const { matchState } = useContext(MatchContext);
+    const { matchState, setMatchState } = useContext(MatchContext);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -88,7 +88,13 @@ const AuthNavigation = () => {
 
     const goToProfile = () => {
         handleClose();
+        setMatchState(null);
         return history.push("/profile");
+    }
+
+    const goHome = () => {
+        setMatchState(null);
+        history.push("/home");
     }
 
     return (
@@ -97,7 +103,7 @@ const AuthNavigation = () => {
                 <Toolbar className={classes.root}>
                     <Grid container>
                         <Grid item xs={6} className={classes.left}>
-                            <Typography className={classes.title} onClick={() => history.push("/home")}>C L U E W O R D S</Typography>
+                            <Typography className={classes.title} onClick={() => goHome()}>C L U E W O R D S</Typography>
                         </Grid>
                         <Grid item xs={6} className={classes.right}>
                             <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
