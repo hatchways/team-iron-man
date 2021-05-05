@@ -62,7 +62,7 @@ const GameOverModal = ({ open }) => {
   const history = useHistory();
 
   const handleClose = () => {
-    return history.push('/');
+    return history.push('/home');
   };
   const getTeam = (email) => {
     const blueGuesser = matchState.blueGuessers.find(
