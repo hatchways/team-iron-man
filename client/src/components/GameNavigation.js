@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
-import { AppBar, Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
+import React, { useState, useContext } from 'react';
+import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { MatchContext } from '../ContextProvider/match';
+import { useHistory } from 'react-router';
+import { useUserState } from "../ContextProvider/user";
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 
 const useStyles = makeStyles({
     root: {
         background: 'white',
         color: 'black',
         height: "10vh",
-        justifyContent: "center",
+        width: "100%"
     },
 
     block: {
@@ -32,7 +37,6 @@ const useStyles = makeStyles({
         alignItems: "center",
         justifyContent: "flex-end",
     },
-
     newGameButton: {
         marginRight: "10px",
         color: "white",
@@ -41,30 +45,39 @@ const useStyles = makeStyles({
             backgroundColor: "#76ff03",
         }
     },
-
     menuItem: {
         "&:hover": {
             backgroundColor: "lightgray"
         }
     },
-
     blue: {
         color: "#2196f3",
     },
-
     red: {
         color: "#ff5e62"
     },
-
     scoreSpacing: {
         margin: "0 10px 20px 10px"
+    },
+    title: {
+        fontWeight: "500",
+        fontSize: "large",
+        transition: "font-size 0.2s ease-in",
+        '&:hover': {
+            fontWeight: "600",
+            fontSize: "20px",
+            cursor: "pointer",
+            transition: "font-size 0.2s ease-in;"
+        }
     }
 });
 
-//
 const GameNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
+    const { user, avatar } = useUserState();
+    const history = useHistory();
+    const { matchState } = useContext(MatchContext);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -73,50 +86,55 @@ const GameNavigation = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const goToProfile = () => {
+        handleClose();
+        return history.push("/profile");
+    }
+
     return (
-        <AppBar position="static" className={classes.root}>
-            <Toolbar>
-                <Grid container>
-                    <Grid item xs={4} className={classes.left}>
-                        <Typography variant="h6">C L U E W O R D S</Typography>
-                    </Grid>
-                    <Grid item xs={4} className={classes.center}>
-                        <div className={classes.blue}>
-                            <Typography variant="h3" align="center">0</Typography>
-                            <Typography variant="h6" align="center">Blue Team</Typography>
-                        </div>
-                        <Typography variant="h2" className={classes.scoreSpacing}>-</Typography>
-                        <div className={classes.red}>
-                            <Typography variant="h3" align="center">0</Typography>
-                            <Typography variant="h6" align="center">Red Team</Typography>
-                        </div>
-                    </Grid>
-                    <Grid item xs={4} className={classes.right}>
-                        <Button variant="contained" className={classes.newGameButton}>New Game</Button>
-                        <Avatar alt="Some Dude" src="https://i.imgur.com/CLP18jh.png" />
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                            My Profile<ArrowDropDownIcon />
-                        </Button>
-                        <Menu
-                            id="simple-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                            getContentAnchorEl={null}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                        >
-                            <MenuItem onClick={handleClose} className={classes.menuItem}>Profile</MenuItem>
-                            <MenuItem onClick={handleClose} className={classes.menuItem}>My account</MenuItem>
-                            <MenuItem onClick={handleClose} className={classes.menuItem}>Logout</MenuItem>
-                        </Menu>
-                    </Grid>
+        <Toolbar className={classes.root}>
+            <Grid container>
+                <Grid item xs={4} className={classes.left}>
+                    <Typography className={classes.title} onClick={() => history.push("/home")}>CLUE: {matchState.clue}</Typography>
                 </Grid>
-            </Toolbar>
-        </AppBar>
+                <Grid item xs={4} className={classes.center}>
+                    {matchState.turn === "blue" && <ArrowRightIcon className={classes.blue} fontSize="large" />}
+                    <div className={classes.blue}>
+                        <Typography variant="h3" align="center">{matchState.bluePoints}</Typography>
+                        <Typography variant="h6" align="center">Blue Team</Typography>
+                    </div>
+                    <Typography variant="h2" className={classes.scoreSpacing}>-</Typography>
+                    <div className={classes.red}>
+                        <Typography variant="h3" align="center">{matchState.redPoints}</Typography>
+                        <Typography variant="h6" align="center">Red Team</Typography>
+                    </div>
+                    {matchState.turn === "red" && <ArrowLeftIcon className={classes.red} fontSize="large" />}
+                </Grid>
+                <Grid item xs={4} className={classes.right}>
+                    <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
+                    <Avatar alt="avatar" src={avatar} />
+                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        My Profile<ArrowDropDownIcon />
+                    </Button>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                        getContentAnchorEl={null}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose} className={classes.menuItem}>Logout</MenuItem>
+                    </Menu>
+                </Grid>
+            </Grid>
+        </Toolbar>
     );
 };
 

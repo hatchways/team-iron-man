@@ -17,7 +17,7 @@ import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import { useUserState } from "../ContextProvider/user";
 import io from "socket.io-client";
 import { MatchContext } from "../ContextProvider/match";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
     grid: {
@@ -83,9 +83,7 @@ export default function AvailableRoles() {
     const { matchState, setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
     const history = useHistory();
-    const matchId = history.location.pathname.substring(
-        history.location.pathname.lastIndexOf("/") + 1
-    );
+    const { matchId } = useParams();
 
     useEffect(() => {
         socketRef.current = io.connect("/");
