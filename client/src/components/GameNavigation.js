@@ -56,6 +56,9 @@ const useStyles = makeStyles({
     red: {
         color: "#ff5e62"
     },
+    white: {
+        color: 'white'
+    },
     scoreSpacing: {
         margin: "0 10px 20px 10px"
     },
@@ -64,7 +67,7 @@ const useStyles = makeStyles({
         fontSize: "large",
         transition: "font-size 0.2s ease-in",
         '&:hover': {
-            fontWeight: "600",
+            fontWeight: "300",
             fontSize: "20px",
             cursor: "pointer",
             transition: "font-size 0.2s ease-in;"
@@ -77,7 +80,7 @@ const GameNavigation = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, avatar } = useUserState();
     const history = useHistory();
-    const { matchState } = useContext(MatchContext);
+    const { matchState, setMatchState } = useContext(MatchContext);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -89,17 +92,23 @@ const GameNavigation = () => {
 
     const goToProfile = () => {
         handleClose();
+        setMatchState(null);
         return history.push("/profile");
+    }
+
+    const goHome = () => {
+        setMatchState(null);
+        history.push("/home");
     }
 
     return (
         <Toolbar className={classes.root}>
             <Grid container>
                 <Grid item xs={4} className={classes.left}>
-                    <Typography className={classes.title} onClick={() => history.push("/home")}>CLUE: {matchState.clue}</Typography>
+                    <Typography className={classes.title} onClick={() => goHome()}>CLUE: {matchState.clue}</Typography>
                 </Grid>
                 <Grid item xs={4} className={classes.center}>
-                    {matchState.turn === "blue" && <ArrowRightIcon className={classes.blue} fontSize="large" />}
+                    <ArrowRightIcon className={matchState.turn === "blue" ? classes.blue : classes.white} fontSize="large" />
                     <div className={classes.blue}>
                         <Typography variant="h3" align="center">{matchState.bluePoints}</Typography>
                         <Typography variant="h6" align="center">Blue Team</Typography>
@@ -109,7 +118,7 @@ const GameNavigation = () => {
                         <Typography variant="h3" align="center">{matchState.redPoints}</Typography>
                         <Typography variant="h6" align="center">Red Team</Typography>
                     </div>
-                    {matchState.turn === "red" && <ArrowLeftIcon className={classes.red} fontSize="large" />}
+                    <ArrowLeftIcon className={matchState.turn === "red" ? classes.red : classes.white} fontSize="large" />
                 </Grid>
                 <Grid item xs={4} className={classes.right}>
                     <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
