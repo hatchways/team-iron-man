@@ -87,8 +87,8 @@ const LogIn = () => {
 
   const logInDemo = (num) => {
     setLogInData({
-      signInEmail: process.env[`REACT_APP_DEMO_ACCOUNT${num}_EMAIL`],
-      signInPassword: process.env[`REACT_APP_DEMO_ACCOUNT${num}_PASSWORD`],
+      signInEmail: `demoaccount${num}@cluewords.com`,
+      signInPassword: `demopassword${num}`,
     });
   };
 
