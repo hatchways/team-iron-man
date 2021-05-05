@@ -22,7 +22,6 @@ const useStyles = makeStyles({
         marginLeft: "37.5%",
         marginTop: "9%",
     },
-
     header: {
         fontWeight: "600",
         fontSize: "48px",
@@ -33,12 +32,9 @@ const useStyles = makeStyles({
         border: "1px solid #00e676",
     },
     button: {
+        margin: "auto",
         marginTop: "50px",
         display: "block",
-    },
-    block: {
-        alignItems: "center",
-        justifyContent: "center",
     },
     center: {
         display: "flex",
@@ -80,6 +76,10 @@ function Home() {
         return history.push("/join");
     };
 
+    const instructions = () => {
+        return history.push("/instructions");
+    };
+
     return (
         <div className={classes.container}>
             <Typography color="textPrimary" className={classes.header}>
@@ -87,7 +87,7 @@ function Home() {
             </Typography>
             <hr className={classes.hr} />
             <div className={classes.center}>
-                <div className={classes.block}>
+                <div>
                     <Button
                         variant="contained"
                         color="secondary"
@@ -103,6 +103,14 @@ function Home() {
                         className={classes.button}
                     >
                         Join Game
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={instructions}
+                        className={classes.button}
+                    >
+                        How To Play
                     </Button>
                 </div>
             </div>
