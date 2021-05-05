@@ -8,48 +8,58 @@ import {
   Box,
   makeStyles,
   Snackbar,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { loginUser } from '../ContextProvider/actions';
-import { useUserDispatch, useUserState } from '../ContextProvider/user';
+  Grow,
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { loginUser } from "../ContextProvider/actions";
+import { useUserDispatch, useUserState } from "../ContextProvider/user";
 
 const useStyles = makeStyles({
   textField: {
-    width: '50%',
+    width: "50%",
   },
   bold: {
-    color: 'black',
+    color: "black",
   },
   seperator: {
-    width: '10%',
-    border: '1px solid #00e676',
+    width: "10%",
+    border: "1px solid #00e676",
   },
   formPadding: {
-    padding: '20px',
+    padding: "20px",
+  },
+  demoLink: {
+    cursor: "pointer",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  mr: {
+    marginRight: "10px",
   },
 });
 
 const initialLogInData = {
-  signInEmail: '',
-  signInPassword: '',
+  signInEmail: "",
+  signInPassword: "",
 };
-
 
 const LogIn = () => {
   //state declaration
   const [logInData, setLogInData] = useState(initialLogInData);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [revealed, setRevealed] = useState(false);
   const { error, isLoggedIn } = useUserState();
   const dispatch = useUserDispatch();
 
   const classes = useStyles();
   const history = useHistory();
 
-   useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
-      return history.push('/home');
+      return history.push("/home");
     }
   }, [isLoggedIn, history]);
 
@@ -64,11 +74,22 @@ const LogIn = () => {
       const response = await loginUser(dispatch, logInData);
       if (response) {
         //change this to direct user to a different page
-        return history.push('/home');
+        return history.push("/home");
       }
     } catch (err) {
       setSnackbarOpen(true);
     }
+  };
+
+  const revealDemoAccounts = () => {
+    setRevealed(!revealed);
+  };
+
+  const logInDemo = (num) => {
+    setLogInData({
+      signInEmail: process.env[`REACT_APP_DEMO_ACCOUNT${num}_EMAIL`],
+      signInPassword: process.env[`REACT_APP_DEMO_ACCOUNT${num}_PASSWORD`],
+    });
   };
 
   return (
@@ -127,6 +148,76 @@ const LogIn = () => {
                     <strong className={classes.bold}>Sign up?</strong>
                   </Link>
                 </Typography>
+                <Box p={2.5} m={1}>
+                  <Typography variant="body2">
+                    Don't want to sign up? Use a{" "}
+                    <strong
+                      className={classes.bold + " " + classes.demoLink}
+                      onClick={revealDemoAccounts}
+                    >
+                      Demo Account!
+                    </strong>
+                  </Typography>
+                </Box>
+                {revealed && (
+                  <Box>
+                    <Box>
+                      <Grow in={revealed}>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          type="submit"
+                          className={classes.mr}
+                          onClick={() => logInDemo(1)}
+                        >
+                          Demo 1
+                        </Button>
+                      </Grow>
+                      <Grow
+                        in={revealed}
+                        {...(revealed ? { timeout: 300 } : {})}
+                      >
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          type="submit"
+                          onClick={() => logInDemo(2)}
+                        >
+                          Demo 2
+                        </Button>
+                      </Grow>
+                    </Box>
+                    <Box m={1}>
+                      <Grow
+                        in={revealed}
+                        {...(revealed ? { timeout: 500 } : {})}
+                      >
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          type="submit"
+                          className={classes.mr}
+                          onClick={() => logInDemo(3)}
+                        >
+                          Demo 3
+                        </Button>
+                      </Grow>
+                      <Grow
+                        in={revealed}
+                        {...(revealed ? { timeout: 700 } : {})}
+                      >
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          type="submit"
+                          onClick={() => logInDemo(4)}
+                        >
+                          Demo 4
+                        </Button>
+                      </Grow>
+                    </Box>
+                  </Box>
+                )}
               </Box>
             </form>
           </Paper>
