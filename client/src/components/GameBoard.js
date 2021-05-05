@@ -20,6 +20,7 @@ const useStyles = makeStyles({
         alignItems: "center",
         justifyContent: "center",
         padding: "20px",
+        //backgroundColor: 'white'
     },
     container: {
         width: "100%",

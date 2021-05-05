@@ -63,7 +63,7 @@ const useStyles = makeStyles({
         fontSize: "large",
         transition: "font-size 0.2s ease-in",
         '&:hover': {
-            fontWeight: "600",
+            fontWeight: "300",
             fontSize: "20px",
             cursor: "pointer",
             transition: "font-size 0.2s ease-in;"
