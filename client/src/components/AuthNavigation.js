@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem, Snackbar } from '@material-ui/core';
+import React, { useState, useContext } from 'react';
+import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { Alert } from '@material-ui/lab';
+import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from "../ContextProvider/user";
 import { useHistory } from 'react-router';
-import { useUserDispatch } from '../ContextProvider/user';
-import { resetUser } from '../ContextProvider/actions';
+import GameNavigation from './GameNavigation';
 
 const useStyles = makeStyles({
     root: {
@@ -79,6 +78,7 @@ const AuthNavigation = () => {
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const dispatch = useUserDispatch();
     const history = useHistory();
+    const { matchState } = useContext(MatchContext);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -111,40 +111,40 @@ const AuthNavigation = () => {
     };
 
     return (
-        <Toolbar className={classes.root}>
-            <Grid container>
-                <Grid item xs={6} className={classes.left}>
-                    <Typography className={classes.title} onClick={() => history.push("/home")}>C L U E W O R D S</Typography>
-                </Grid>
-                <Grid item xs={6} className={classes.right}>
-                    <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
-                    <Avatar alt="avatar" src={avatar} />
-                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        My Profile<ArrowDropDownIcon />
-                    </Button>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                        getContentAnchorEl={null}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
-                        <MenuItem onClick={logout} className={classes.menuItem}>Logout</MenuItem>
-                    </Menu>
-                </Grid>
-            </Grid>
-            <Snackbar open={snackbarOpen}>
-            <Alert onClose={() => setSnackbarOpen(false)} severity="error">
-              Logout failed! Please try again.
-            </Alert>
-          </Snackbar>
-        </Toolbar>
+        <React.Fragment>
+            {matchState && matchState.inProgress ? <GameNavigation /> :
+                <Toolbar className={classes.root}>
+                    <Grid container>
+                        <Grid item xs={6} className={classes.left}>
+                            <Typography className={classes.title} onClick={() => history.push("/home")}>C L U E W O R D S</Typography>
+                        </Grid>
+                        <Grid item xs={6} className={classes.right}>
+                            <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
+                            <Avatar alt="avatar" src={avatar} />
+                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                My Profile<ArrowDropDownIcon />
+                            </Button>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                                getContentAnchorEl={null}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
+                                }}
+                            >
+                                <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
+                                <MenuItem onClick={handleClose} className={classes.menuItem}>Logout</MenuItem>
+                            </Menu>
+                        </Grid>
+                    </Grid>
+                </Toolbar>
+            }
+        </React.Fragment>
+
     );
 };
 
