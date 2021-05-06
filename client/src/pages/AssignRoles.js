@@ -25,11 +25,12 @@ const useStyles = makeStyles({
         justifyContent: "center",
         alignItems: "center",
         '@media (max-width:960px)': {
-            width: '80%'
+            width: '80%',
+            marginTop: '5vh'
         }
     },
     hr: {
-        width: '50%',
+        width: '30%',
         border: '1px solid #00e676'
     },
     button: {

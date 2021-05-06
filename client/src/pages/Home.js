@@ -32,7 +32,10 @@ const useStyles = makeStyles({
     },
     header: {
         fontSize: "48px",
-        marginBottom: '20px'
+        marginBottom: '20px',
+        '@media (max-width:600px)': {
+            fontSize: "36px",
+        }
     },
 
     hr: {
