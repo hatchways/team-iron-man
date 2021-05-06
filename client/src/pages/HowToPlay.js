@@ -23,7 +23,7 @@ import WinConditions from './Instructions/WinConditions'
 const useStyles = makeStyles({
     container: {
         width: "50%",
-        height: "80vh",
+        minHeight: "80vh",
         textAlign: "center",
         backgroundColor: "white",
         boxShadow:
