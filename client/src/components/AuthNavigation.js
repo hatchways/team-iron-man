@@ -67,6 +67,16 @@ const useStyles = makeStyles({
         display: 'flex',
         fontWeight: "500",
         fontSize: "x-large",
+        color: '#00e676',
+        WebkitTextStroke: '0.5px black',
+    },
+    logo: {
+        width: '50px',
+        marginRight: '10px'
+    },
+    flex: {
+        display: 'flex',
+        alignItems: 'center',
         '&:hover': {
             cursor: "pointer",
         }
@@ -105,7 +115,8 @@ const AuthNavigation = () => {
                 <Toolbar className={classes.root}>
                     <Grid container>
                         <Grid item xs={6} className={classes.left}>
-                            <Box onClick={() => goHome()}>
+                            <Box onClick={() => goHome()} className={classes.flex}>
+                                <img src="https://res.cloudinary.com/du081ilw3/image/upload/v1620276307/Assets/cluewords_textless_v6vy3n.png" alt="logo" className={classes.logo} />
                                 <BouncingText
                                     text="CLUEWORDS"
                                     hoverable
