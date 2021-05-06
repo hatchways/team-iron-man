@@ -19,21 +19,21 @@ const useStyles = makeStyles({
         borderRadius: "10px",
         padding: "50px",
         paddingBottom: "80px",
-        marginLeft: "37.5%",
-        marginTop: "9%",
+        margin: '5vh auto auto auto'
     },
     header: {
         fontWeight: "600",
         fontSize: "48px",
+        marginBottom: '20px'
     },
 
     hr: {
-        width: "10%",
+        width: "50%",
         border: "1px solid #00e676",
     },
     button: {
         margin: "auto",
-        marginTop: "50px",
+        marginTop: "30px",
         display: "block",
     },
     center: {
@@ -41,6 +41,9 @@ const useStyles = makeStyles({
         alignItems: "center",
         justifyContent: "center",
     },
+    logo: {
+        width: '80%'
+    }
 });
 
 function Home() {
@@ -82,6 +85,7 @@ function Home() {
 
     return (
         <div className={classes.container}>
+            <img src="https://res.cloudinary.com/du081ilw3/image/upload/v1620276073/Assets/cluewords_uief0a.png" alt="logo" className={classes.logo} />
             <Typography color="textPrimary" className={classes.header}>
                 Welcome
             </Typography>
