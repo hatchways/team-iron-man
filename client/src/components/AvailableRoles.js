@@ -229,7 +229,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("blueSpymaster")} />
                             </Fab>
                         </ListItem>
-                        {matchState.blueSpymaster && (
+                        {matchState.blueSpymaster.name && (
                             <ListItem
                                 className={classes.listItem + " " + classes.alignCenter}
                             >
