@@ -43,11 +43,11 @@ export default function GameBoard() {
     useEffect(() => {
         socketRef.current = io.connect("/");
         if (!matchState) {
-            socketRef.current.emit("get-game-engine", { matchIdParam });
+            socketRef.current.emit("get-game-engine", { matchId: matchIdParam });
         }
         socketRef.current.on("update-game-engine-" + matchIdParam, (game) => {
             setMatchState(game);
-            if (matchState.votes === {}) {
+            if (matchState && matchState.votes === {}) {
                 setSelected({});
             }
         });
@@ -56,11 +56,11 @@ export default function GameBoard() {
 
     const handleVote = (word, row, column) => {
         setSelected({ row, column });
-        socketRef.current.emit("set-vote", { matchIdParam, word, row, column, email });
+        socketRef.current.emit("set-vote", { matchId: matchIdParam, word, row, column, email });
     };
 
     const submitClue = (clue, numOfGuesses) => {
-        socketRef.current.emit("set-clue", { matchIdParam, clue, numOfGuesses });
+        socketRef.current.emit("set-clue", { matchId: matchIdParam, clue, numOfGuesses });
         socketRef.current.on(`update-game-engine-${matchIdParam}`, (game) => {
             setMatchState(game);
         });
