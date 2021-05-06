@@ -36,11 +36,11 @@ function App() {
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/lobby/:matchId" component={AssignRoles} />
-            <Route path="/newgame/:matchId" component={NewGame} />
+            <Route exact path="/lobby/:matchIdParam" component={AssignRoles} />
+            <Route path="/newgame/:matchIdParam" component={NewGame} />
             <Route path="/join/:matchIdParam?" component={Join} />
             <Route path="/chat" component={Chat} />
-            <Route path="/gamelayout/:matchId" component={GameLayout} />
+            <Route path="/gamelayout/:matchIdParam" component={GameLayout} />
             <Route path="/board" component={GameBoard} />
             <Route path="/home" component={Home} />
             <Route path="/profile" component={Profile} />

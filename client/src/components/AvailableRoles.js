@@ -83,7 +83,7 @@ export default function AvailableRoles() {
     const { matchState, setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
     const history = useHistory();
-    const { matchId } = useParams();
+    const { matchIdParam } = useParams();
 
     useEffect(() => {
         socketRef.current = io.connect("/");
@@ -99,13 +99,13 @@ export default function AvailableRoles() {
                 }
             );
         } else {
-            socketRef.current.emit("get-game-engine", { matchId });
-            socketRef.current.on("update-game-engine-" + matchId, (game) => {
+            socketRef.current.emit("get-game-engine", { matchIdParam });
+            socketRef.current.on("update-game-engine-" + matchIdParam, (game) => {
                 setMatchState(game);
             });
         }
         return () => socketRef.current.disconnect();
-    }, [matchId, matchState, setMatchState, history]);
+    }, [matchIdParam, matchState, setMatchState, history]);
 
     const assignRole = (role) => {
         if (!matchState.inProgress) {
@@ -332,7 +332,7 @@ export default function AvailableRoles() {
                                     variant="contained"
                                     size="small"
                                     startIcon={<InsertLinkIcon />}
-                                    onClick={() => navigator.clipboard.writeText(matchId)}
+                                    onClick={() => navigator.clipboard.writeText(matchIdParam)}
                                 >
                                     Copy
                                 </Button>
