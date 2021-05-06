@@ -48,6 +48,7 @@ const useStyles = makeStyles({
     },
     whiteTextRevealed: {
         color: "white",
+        WebkitTextStroke: '0.3px black'
     },
     borderGlow: {
         borderColor: '#9ecaed',
