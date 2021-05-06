@@ -1,35 +1,35 @@
 /*
 UI for Game Board
 */
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "./Card";
-import { useParams } from "react-router-dom";
-import ClueModal from "./ClueModal";
-import { MatchContext } from "../ContextProvider/match";
-import { useUserState } from "../ContextProvider/user";
-import io from "socket.io-client";
-import UserPrompt from "./UserPrompt";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from './Card';
+import GameOverModal from './GameOverModal';
+import { useParams } from 'react-router-dom';
+import ClueModal from './ClueModal';
+import { MatchContext } from '../ContextProvider/match';
+import { useUserState } from '../ContextProvider/user';
+import io from 'socket.io-client';
+import UserPrompt from './UserPrompt';
 
 const useStyles = makeStyles({
     root: {
-        width: "100%",
-        border: "1px solid black",
-        height: "90vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "20px",
-        //backgroundColor: 'white'
+        width: '100%',
+        border: '1px solid black',
+        height: '90vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
     },
     container: {
-        width: "100%",
-        height: "100%",
-        display: "grid",
-        gridColumnGap: "30px",
-        alignItems: "center",
-        justifyContent: "center",
-        gridTemplateColumns: "auto auto auto auto auto",
+        width: '100%',
+        height: '100%',
+        display: 'grid',
+        gridColumnGap: '30px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gridTemplateColumns: 'auto auto auto auto auto',
     },
 });
 
@@ -42,11 +42,11 @@ export default function GameBoard() {
     const [selected, setSelected] = useState({});
 
     useEffect(() => {
-        socketRef.current = io.connect("/");
+        socketRef.current = io.connect('/');
         if (!matchState) {
-            socketRef.current.emit("get-game-engine", { matchId });
+            socketRef.current.emit('get-game-engine', { matchId });
         }
-        socketRef.current.on("update-game-engine-" + matchId, (game) => {
+        socketRef.current.on('update-game-engine-' + matchId, (game) => {
             setMatchState(game);
             if (matchState.votes === {}) {
                 setSelected({});
@@ -57,11 +57,11 @@ export default function GameBoard() {
 
     const handleVote = (word, row, column) => {
         setSelected({ row, column });
-        socketRef.current.emit("set-vote", { matchId, word, row, column, email });
+        socketRef.current.emit('set-vote', { matchId, word, row, column, email });
     };
 
     const submitClue = (clue, numOfGuesses) => {
-        socketRef.current.emit("set-clue", { matchId, clue, numOfGuesses });
+        socketRef.current.emit('set-clue', { matchId, clue, numOfGuesses });
         socketRef.current.on(`update-game-engine-${matchId}`, (game) => {
             setMatchState(game);
         });
@@ -93,14 +93,15 @@ export default function GameBoard() {
                     })}
                     <ClueModal
                         open={
-                            matchState.turnPhase === "clue" &&
-                            ((matchState.turn === "blue" &&
+                            matchState.turnPhase === 'clue' &&
+                            ((matchState.turn === 'blue' &&
                                 email === matchState.blueSpymaster.email) ||
-                                (matchState.turn === "red" &&
+                                (matchState.turn === 'red' &&
                                     email === matchState.redSpymaster.email))
                         }
                         submitClue={submitClue}
                     />
+                    <GameOverModal />
                     <UserPrompt />
                 </div>
             )}

@@ -51,8 +51,9 @@ class Game {
         this.votes = {};
         this.everyoneVoted = false;
         this.incrementGuesses();
-        if (card.color === this.turn) {
-            this.getTurn() === "blue" ? this.incrementBluePoints() : this.incrementRedPoints();
+        const turn = this.getTurn();
+        if (card.color === turn) {
+            turn === "blue" ? this.incrementBluePoints() : this.incrementRedPoints();
             if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
                 this.setWinner(this.turn);
                 this.gameOver();
@@ -63,7 +64,7 @@ class Game {
         }
         // If the card color is black, award the victory to the other team then end the game.
         else if (card.color === "black") {
-            this.turn === "blue" ? this.setWinner("red") : this.setWinner("blue");
+            turn === "blue" ? this.setWinner("red") : this.setWinner("blue");
             this.gameOver();
         }
         // If the card color is white, move on to the next turn.
@@ -72,8 +73,14 @@ class Game {
         }
         // If the card color is the other team, increase the other team's points and end the game.
         else {
-            this.getTurn() === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
-            this.nextTurn();
+            turn === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
+            if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
+                this.setWinner(turn === "blue" ? "red" : "blue");
+                this.gameOver();
+            }
+            else {
+                this.nextTurn();
+            }
         }
     }
 
