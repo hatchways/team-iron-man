@@ -299,7 +299,6 @@ export default function AvailableRoles() {
                     <Grid container alignItems="center" className={classes.grid}>
                         <Typography
                             color="textPrimary"
-                            style={{ fontWeight: 600 }}
                             className={classes.sectionOne}
                         >
                             Players ready for match:
@@ -320,7 +319,6 @@ export default function AvailableRoles() {
                             <ListItem>
                                 <Typography
                                     color="textPrimary"
-                                    style={{ fontWeight: 600 }}
                                     align="center"
                                     className={classes.sectionTwo}
                                 >

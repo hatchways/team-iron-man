@@ -4,7 +4,7 @@ UI for assigning roles.
 
 import React, { useContext, useRef } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import AvailableRoles from '../components/AvailableRoles';
 import { MatchContext } from '../ContextProvider/match';
 import io from "socket.io-client";
@@ -32,7 +32,13 @@ const useStyles = makeStyles({
     button: {
         align: 'center',
         width: '120px'
-    }
+    },
+    header: {
+        fontSize: "48px",
+    },
+    subheader: {
+        fontSize: "24px",
+    },
 });
 
 export default function AssignRoles() {
@@ -51,9 +57,13 @@ export default function AssignRoles() {
     return (
         <React.Fragment>
             <div className={classes.container}>
-                <h1>New Game</h1>
+                <Typography color="textPrimary" className={classes.header}>
+                    Game Lobby
+                </Typography>
                 <hr className={classes.hr} />
-                <h2>Available Roles</h2>
+                <Typography color="textPrimary" className={classes.subheader}>
+                    Select Your Roles
+                </Typography>
                 <AvailableRoles />
                 <Button className={classes.button} variant="contained" color="secondary" onClick={startGame}>Start Game</Button>
             </div>

@@ -23,7 +23,6 @@ const useStyles = makeStyles({
     inputLabel: {
         margin: "10px 0 10px 0",
         textAlign: "left",
-        fontWeight: "bold",
     },
 });
 

@@ -38,7 +38,6 @@ const useStyles = makeStyles({
         cursor: "pointer"
     },
     dropzoneText: {
-        fontWeight: "600",
         fontSize: "x-large",
     },
     active: {
