@@ -23,7 +23,6 @@ const useStyles = makeStyles({
     },
 
     header: {
-        fontWeight: "600",
         fontSize: "48px",
     },
 

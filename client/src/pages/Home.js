@@ -22,7 +22,6 @@ const useStyles = makeStyles({
         margin: '5vh auto auto auto'
     },
     header: {
-        fontWeight: "600",
         fontSize: "48px",
         marginBottom: '20px'
     },
