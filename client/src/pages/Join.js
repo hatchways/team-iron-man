@@ -99,7 +99,6 @@ function Join() {
   const submitMatchId = async (e) => {
     e.preventDefault();
     try {
-      console.log("HERE!!!!")
       const response = await fetch(`/api/match/join/${matchId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -108,7 +107,6 @@ function Join() {
       const data = await response.json();
       if (response.status === 200) {
         setJoin(true);
-        console.log('I JUST RAN');
         history.push(`/lobby/${matchId}`);
       } else {
         console.log(data.message);
@@ -134,7 +132,7 @@ function Join() {
           </Typography>
           <TextField
             value={matchId}
-            onChange={(e) => onTextChange(e)}
+            onChange={onTextChange}
             variant="outlined"
             placeholder="Enter a match ID"
             className={classes.input}
