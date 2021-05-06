@@ -104,6 +104,7 @@ export default function GameBoard() {
                                     email === matchState.redSpymaster.email))
                         }
                         submitClue={submitClue}
+                        cards = {matchState.board}
                     />
                     <UserPrompt />
                 </div>

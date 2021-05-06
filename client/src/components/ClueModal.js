@@ -60,10 +60,28 @@ const ClueModal = (props) => {
         const english = /^[A-Za-z]*$/;
         return english.test(word);
     }
+    const isCardWord = (word) => {
+        const cards = props.cards;
+        let i, j;
+        for (i = 0; i < cards.length; i++) {
+          for (j = 0; j < cards[0].length; j++) {
+            if (cards[i][j].word.toLowerCase() === word.trim().toLowerCase()){
+              return true;
+            }
+          }
+        }
+        return false;
+
+    }
 
     const handleClose = () => {
         setClue("");
-        if (isOneAlphabeticWord(clue)){
+        if (isCardWord(clue)){
+            setErrorState(true);
+            setOneWordHelperText("Please enter valid clue word");
+            return;
+        }
+        else if (isOneAlphabeticWord(clue)){
             props.submitClue(clue, parseInt(numOfGuesses));
         }
         else {
