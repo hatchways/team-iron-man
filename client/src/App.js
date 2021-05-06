@@ -18,6 +18,7 @@ import { UserProvider } from './ContextProvider/user';
 import { MatchContext } from './ContextProvider/match';
 import GameBoard from './components/GameBoard';
 import Profile from './pages/Profile';
+import HowToPlay from './pages/HowToPlay';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
             <Route path="/board" component={GameBoard} />
             <Route path="/home" component={Home} />
             <Route path="/profile" component={Profile} />
+            <Route exact path="/instructions" component={HowToPlay} />
           </BrowserRouter>
         </MatchContext.Provider>
       </UserProvider>
