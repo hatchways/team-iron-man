@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Box, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
-import { useUserState } from "../ContextProvider/user";
+import { useUserState, useUserDispatch } from "../ContextProvider/user";
 import { useHistory } from 'react-router';
 import GameNavigation from './GameNavigation';
 import BouncingText from 'react-bouncing-text';
