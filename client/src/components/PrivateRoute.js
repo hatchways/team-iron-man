@@ -9,16 +9,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     const { email } = useUserState();
 
     const checkIfUserInMatch = () => {
-        console.log(matchState)
         if (matchState.hasOwnProperty('notFound')) { return false }
-        const x = ((!matchState.inProgress && matchState.invitedPlayers.findIndex((player) => player.email === email) !== -1) ||
+        const userAllowed = ((!matchState.inProgress && matchState.invitedPlayers.findIndex((player) => player.email === email) !== -1) ||
             (matchState.redSpymaster.email === email ||
                 matchState.blueSpymaster.email === email ||
                 matchState.redGuessers.findIndex((player) => player.email === email) !== -1 ||
                 matchState.blueGuessers.findIndex((player) => player.email === email) !== -1
             ));
-        console.log(x)
-        return x;
+        return userAllowed;
     }
 
     return (
