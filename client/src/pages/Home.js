@@ -19,7 +19,16 @@ const useStyles = makeStyles({
         borderRadius: "10px",
         padding: "50px",
         paddingBottom: "80px",
-        margin: '5vh auto auto auto'
+        margin: '5vh auto auto auto',
+        '@media (max-width:1440px)': {
+            width: '40%'
+        },
+        '@media (max-width:960px)': {
+            width: '60%'
+        },
+        '@media (max-width:600px)': {
+            width: '80%'
+        }
     },
     header: {
         fontSize: "48px",

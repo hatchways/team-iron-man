@@ -83,7 +83,8 @@ const useStyles = makeStyles({
         },
         '@media (max-width:960px)': {
             borderTop: '1px solid lightgray',
-            paddingTop: '20px'
+            paddingTop: '20px',
+            marginTop: '20px'
         }
     },
     copyButton: {
