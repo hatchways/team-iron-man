@@ -75,6 +75,8 @@ const AuthNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, avatar } = useUserState();
+    const [snackbarOpen, setSnackbarOpen] = useState(false)
+    const dispatch = useUserDispatch();
     const history = useHistory();
     const { matchState } = useContext(MatchContext);
 
@@ -90,6 +92,23 @@ const AuthNavigation = () => {
         handleClose();
         return history.push("/profile");
     }
+
+    const logout = () => {
+        fetch('/api/logout', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }})
+          .then((response) => {
+            if (response.status === 202) {
+              resetUser(dispatch);
+              return history.push('/');
+            }
+          })
+          .catch((err) => {
+            setSnackbarOpen(true);
+          });
+    };
 
     return (
         <React.Fragment>
