@@ -12,16 +12,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         if (matchState.hasOwnProperty('notFound')) { return false }
         const userAllowed = ((!matchState.inProgress && matchState.invitedPlayers.findIndex((player) => player.email === email) !== -1) ||
             (matchState.redSpymaster.email === email ||
-                matchState.blueSpymaster.email === email ||
-                matchState.redGuessers.findIndex((player) => player.email === email) !== -1 ||
-                matchState.blueGuessers.findIndex((player) => player.email === email) !== -1
+                (matchState.blueSpymaster.email === email) ||
+                (matchState.redGuessers.findIndex((red) => red.email === email) !== -1) ||
+                (matchState.blueGuessers.findIndex((blue) => blue.email === email) !== -1)
             ));
         return userAllowed;
     }
 
     return (
         <Route  {...rest} render={props => (
-            matchState && !checkIfUserInMatch() ?
+            matchState && email && !checkIfUserInMatch() ?
                 <Redirect to="/lost" /> :
                 <Component {...props} />
         )} />
