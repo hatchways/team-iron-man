@@ -3,6 +3,7 @@ import { Box, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState, useUserDispatch } from "../ContextProvider/user";
+import { resetUser } from "../ContextProvider/actions";
 import { useHistory } from 'react-router';
 import GameNavigation from './GameNavigation';
 import BouncingText from 'react-bouncing-text';
