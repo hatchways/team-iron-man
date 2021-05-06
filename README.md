@@ -13,7 +13,7 @@
 
 This project is currently live at ___________
 
-![Login Preview](./readmeImages/Login.png)
+![Login Preview](./readmeImages/Login.PNG)
 
 # About
 
