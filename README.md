@@ -87,7 +87,7 @@ npm start
 
 For server-side/backend
 ```bash
-cd ./client
+cd ./server
 ```
 
 ```bash
