@@ -33,12 +33,12 @@ const useStyles = makeStyles({
         marginBottom: "20px",
         justifyContent: "center",
         alignItems: "center",
+        '@media (max-width:600px)': {
+            width: '80%'
+        }
     },
     listItem: {
         marginLeft: "-10px",
-    },
-    sectionOne: {
-        marginRight: "20%",
     },
     submitButton: {
         marginLeft: "35%",
@@ -78,8 +78,12 @@ const useStyles = makeStyles({
         justifyContent: "center",
     },
     gridDivider: {
-        '@media (min-width:600px)': {
+        '@media (min-width:960px)': {
             borderLeft: '1px solid lightgray',
+        },
+        '@media (max-width:960px)': {
+            borderTop: '1px solid lightgray',
+            paddingTop: '20px'
         }
     },
     copyButton: {
@@ -299,15 +303,14 @@ export default function AvailableRoles() {
                             ))}
                     </List>
                     <Grid container className={classes.grid}>
-                        <Grid item sm={6} md={4}>
+                        <Grid item xs={12} sm={6} md={5} className={classes.gridItem}>
                             <Typography
                                 color="textPrimary"
-                                className={classes.sectionOne}
                             >
                                 Players ready for match:
-                        </Typography>
+                            </Typography>
                         </Grid>
-                        <Grid item sm={6} md={4} className={classes.gridItem}>
+                        <Grid item xs={12} sm={6} md={3} className={classes.gridItem}>
                             {matchState.playersReady.length > 0 && (
                                 <List className={classes.block}>
                                     {matchState.playersReady.map((player) => (
@@ -320,8 +323,8 @@ export default function AvailableRoles() {
                                 </List>
                             )}
                         </Grid>
-                        <Grid item sm={12} md={4} className={classes.gridItem + ' ' + classes.gridDivider}>
-                            <div className={classes.sub3}>
+                        <Grid item sm={5} md={4} className={classes.gridItem + ' ' + classes.gridDivider}>
+                            <div>
                                 <Typography
                                     color="textPrimary"
                                     align="center"

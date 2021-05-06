@@ -14,24 +14,28 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         margin: 'auto',
-        marginTop: '30px',
+        marginTop: '10vh',
         width: '50%',
         textAlign: 'center',
         backgroundColor: 'white',
         boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
         borderRadius: '10px',
         padding: '1%',
-        paddingBottom: '3%',
+        paddingBottom: '2%',
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        '@media (max-width:960px)': {
+            width: '80%'
+        }
     },
     hr: {
-        width: '10%',
+        width: '50%',
         border: '1px solid #00e676'
     },
     button: {
         align: 'center',
-        width: '120px'
+        width: '120px',
+        marginTop: '30px'
     },
     header: {
         fontSize: "48px",
