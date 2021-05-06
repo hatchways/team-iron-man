@@ -40,9 +40,6 @@ const useStyles = makeStyles({
     sectionOne: {
         marginRight: "20%",
     },
-    sectionTwo: {
-        marginLeft: "5%",
-    },
     submitButton: {
         marginLeft: "35%",
     },
@@ -75,6 +72,21 @@ const useStyles = makeStyles({
     blueSpinner: {
         color: "#03a9f4",
     },
+    gridItem: {
+        display: 'flex',
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    gridDivider: {
+        '@media (min-width:600px)': {
+            borderLeft: '1px solid lightgray',
+        }
+    },
+    copyButton: {
+        backgroundColor: '#eeeeee',
+        marginTop: '20px',
+        border: '1px solid black'
+    }
 });
 
 export default function AvailableRoles() {
@@ -286,46 +298,49 @@ export default function AvailableRoles() {
                                 </ListItem>
                             ))}
                     </List>
-                    <Grid container alignItems="center" className={classes.grid}>
-                        <Typography
-                            color="textPrimary"
-                            className={classes.sectionOne}
-                        >
-                            Players ready for match:
+                    <Grid container className={classes.grid}>
+                        <Grid item sm={6} md={4}>
+                            <Typography
+                                color="textPrimary"
+                                className={classes.sectionOne}
+                            >
+                                Players ready for match:
                         </Typography>
-                        {matchState.playersReady.length > 0 && (
-                            <List className={classes.block}>
-                                {matchState.playersReady.map((player) => (
-                                    <ListItem key={player.name} className={classes.block}>
-                                        <Typography className={classes.block}>
-                                            {player.name}
-                                        </Typography>
-                                    </ListItem>
-                                ))}
-                            </List>
-                        )}
-                        <Divider orientation="vertical" flexItem />
-                        <List>
-                            <ListItem>
+                        </Grid>
+                        <Grid item sm={6} md={4} className={classes.gridItem}>
+                            {matchState.playersReady.length > 0 && (
+                                <List className={classes.block}>
+                                    {matchState.playersReady.map((player) => (
+                                        <ListItem key={player.name} className={classes.block}>
+                                            <Typography className={classes.block}>
+                                                {player.name}
+                                            </Typography>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            )}
+                        </Grid>
+                        <Grid item sm={12} md={4} className={classes.gridItem + ' ' + classes.gridDivider}>
+                            <div className={classes.sub3}>
                                 <Typography
                                     color="textPrimary"
                                     align="center"
-                                    className={classes.sectionTwo}
                                 >
                                     Share match id:
                                 </Typography>
-                            </ListItem>
-                            <ListItem>
+
                                 <Button
                                     variant="contained"
                                     size="small"
                                     startIcon={<InsertLinkIcon />}
                                     onClick={() => navigator.clipboard.writeText(matchId)}
+                                    className={classes.copyButton}
                                 >
                                     Copy
                                 </Button>
-                            </ListItem>
-                        </List>
+                            </div>
+                        </Grid>
+
                     </Grid>
                 </React.Fragment>
             ) : (
