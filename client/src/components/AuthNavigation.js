@@ -74,7 +74,7 @@ const useStyles = makeStyles({
 const AuthNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
-    const { user, avatar } = useUserState();
+    const { user, email, avatar } = useUserState();
     const history = useHistory();
     const { matchState } = useContext(MatchContext);
 
@@ -93,7 +93,7 @@ const AuthNavigation = () => {
 
     return (
         <React.Fragment>
-            {matchState && matchState.inProgress ? <GameNavigation /> :
+            {matchState && matchState.inProgress && matchState.invitedPlayers.find((player) => player.email === email) ? <GameNavigation /> :
                 <Toolbar className={classes.root}>
                     <Grid container>
                         <Grid item xs={6} className={classes.left}>
