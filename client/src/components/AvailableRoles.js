@@ -99,7 +99,7 @@ export default function AvailableRoles() {
                 }
             );
         } else {
-            socketRef.current.emit("get-game-engine", { matchIdParam });
+            socketRef.current.emit("get-game-engine", { matchId: matchIdParam });
             socketRef.current.on("update-game-engine-" + matchIdParam, (game) => {
                 setMatchState(game);
             });
@@ -304,12 +304,12 @@ export default function AvailableRoles() {
                         >
                             Players ready for match:
                         </Typography>
-                        {matchState && matchState.playersReady.length > 0 && (
+                        {matchState && matchState.invitedPlayers.length > 0 && (
                             <List className={classes.block}>
-                                {matchState.playersReady.map((player) => (
+                                {matchState.invitedPlayers.map((player) => (
                                     <ListItem key={player.name} className={classes.block}>
                                         <Typography className={classes.block}>
-                                            {player.name}
+                                            {player.name}{matchState.playersReady.find((ready) => ready.email === player.email) ? <span>{" "}&#9989;</span> : <>&#10060;</>}
                                         </Typography>
                                     </ListItem>
                                 ))}
