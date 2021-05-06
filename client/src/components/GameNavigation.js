@@ -39,6 +39,7 @@ const useStyles = makeStyles({
         justifyContent: "flex-end",
     },
     newGameButton: {
+        display: 'none',
         marginRight: "10px",
         color: "white",
         backgroundColor: "#00e676",
