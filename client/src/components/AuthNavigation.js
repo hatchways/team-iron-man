@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
-import { useUserState } from "../ContextProvider/user";
+import { useUserState, useUserDispatch } from "../ContextProvider/user";
+import { resetUser } from "../ContextProvider/actions";
 import { useHistory } from 'react-router';
 import GameNavigation from './GameNavigation';
 
