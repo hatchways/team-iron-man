@@ -77,7 +77,7 @@ const GameNavigation = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, avatar } = useUserState();
     const history = useHistory();
-    const { matchState } = useContext(MatchContext);
+    const { matchState, setMatchState } = useContext(MatchContext);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -92,11 +92,25 @@ const GameNavigation = () => {
         return history.push("/profile");
     }
 
+    const quitMatch = () => {
+      fetch(`/api/match/delete/${matchState.matchId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      setMatchState({inProgress : false});
+      return history.push('/home');
+    }
+
     return (
         <Toolbar className={classes.root}>
             <Grid container>
                 <Grid item xs={4} className={classes.left}>
-                    <Typography className={classes.title} onClick={() => history.push("/home")}>CLUE: {matchState.clue}</Typography>
+                    <Typography className={classes.title} onClick={() => quitMatch()}>CLUE: {matchState.clue}</Typography>
                 </Grid>
                 <Grid item xs={4} className={classes.center}>
                     {matchState.turn === "blue" && <ArrowRightIcon className={classes.blue} fontSize="large" />}
