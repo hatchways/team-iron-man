@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import io from 'socket.io-client';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { MatchContext } from '../ContextProvider/match';
 
 const useStyles = makeStyles({
@@ -72,6 +72,8 @@ function Join() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [join, setJoin] = useState(false);
   const [joinError, setJoinError] = useState('');
+  const { matchIdParam } = useParams();
+
 
   useEffect(() => {
     if (join) {
@@ -86,6 +88,9 @@ function Join() {
     };
   }, [join]);
 
+  useEffect(() => {
+    setMatchId(matchIdParam ? matchIdParam : '');
+  }, [])
 
   const onTextChange = (e) => {
     setMatchId(e.target.value);
@@ -101,10 +106,10 @@ function Join() {
       });
       console.log(response.status);
       const data = await response.json();
-     if (response.status === 200) {
+      if (response.status === 200) {
         setJoin(true);
         console.log('I JUST RAN');
-        history.push(`/join/${matchId}`);
+        history.push(`/lobby/${matchId}`);
       } else {
         console.log(data.message);
         throw data.message;
@@ -129,7 +134,7 @@ function Join() {
           </Typography>
           <TextField
             value={matchId}
-            onChange={onTextChange}
+            onChange={(e) => onTextChange(e)}
             variant="outlined"
             placeholder="Enter a match ID"
             className={classes.input}
