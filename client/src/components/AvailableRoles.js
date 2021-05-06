@@ -143,11 +143,6 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    // TODO: when testing integration the app would crash sometimes
-                                    //and reloading thepage would give an empty matchState crashing
-                                    //it again, so this will let it load but the check if matchstate
-                                    //isn't empty can be removed later on
-                                    matchState &&
                                     (matchState.redSpymaster.hasOwnProperty("name") ||
                                         matchState.playersReady.findIndex(
                                             (obj) => obj.name === user
@@ -157,7 +152,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("redSpymaster")} />
                             </Fab>
                         </ListItem>
-                        {matchState && matchState.redSpymaster.name && (
+                        {matchState.redSpymaster.name && (
                             <ListItem
                                 className={classes.listItem + " " + classes.alignCenter}
                             >
@@ -186,7 +181,6 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    matchState &&
                                     matchState.playersReady.findIndex(
                                         (obj) => obj.name === user
                                     ) !== -1
@@ -195,8 +189,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("redGuessers")} />
                             </Fab>
                         </ListItem>
-                        {matchState &&
-                            matchState.redGuessers.length > 0 &&
+                        {matchState.redGuessers.length > 0 &&
                             matchState.redGuessers.map((redGuesser) => (
                                 <ListItem
                                     className={classes.listItem + " " + classes.alignCenter}
@@ -227,7 +220,6 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    matchState &&
                                     (matchState.blueSpymaster.hasOwnProperty("name") ||
                                         matchState.playersReady.findIndex(
                                             (obj) => obj.name === user
@@ -237,7 +229,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("blueSpymaster")} />
                             </Fab>
                         </ListItem>
-                        {matchState && matchState.blueSpymaster && (
+                        {matchState.blueSpymaster && (
                             <ListItem
                                 className={classes.listItem + " " + classes.alignCenter}
                             >
@@ -266,7 +258,6 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    matchState &&
                                     matchState.playersReady.findIndex(
                                         (obj) => obj.name === user
                                     ) !== -1
@@ -275,8 +266,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("blueGuessers")} />
                             </Fab>
                         </ListItem>
-                        {matchState &&
-                            matchState.blueGuessers.length > 0 &&
+                        {matchState.blueGuessers.length > 0 &&
                             matchState.blueGuessers.map((blueGuesser) => (
                                 <ListItem
                                     className={classes.listItem + " " + classes.alignCenter}
@@ -303,7 +293,7 @@ export default function AvailableRoles() {
                         >
                             Players ready for match:
                         </Typography>
-                        {matchState && matchState.playersReady.length > 0 && (
+                        {matchState.playersReady.length > 0 && (
                             <List className={classes.block}>
                                 {matchState.playersReady.map((player) => (
                                     <ListItem key={player.name} className={classes.block}>
