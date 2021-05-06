@@ -67,9 +67,11 @@ const useStyles = makeStyles({
     tableOfContentsHeader: {
         fontWeight: "bold",
         margin: "20px 0 20px 0",
+        fontFamily: 'Roboto'
     },
     tableOfContentsLink: {
         color: "#1769aa",
+        fontFamily: 'Roboto',
         "&:hover": {
             textDecoration: "underline",
             cursor: "pointer",
@@ -79,7 +81,8 @@ const useStyles = makeStyles({
         marginLeft: 20,
     },
     description: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        fontFamily: 'Roboto'
     },
     arrowButton: {
         color: "#00e676",
