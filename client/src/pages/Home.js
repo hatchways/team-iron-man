@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 function Home() {
     const classes = useStyles();
     const history = useHistory();
-    const { user } = useUserState();
+    const { user, email } = useUserState();
     const { setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
     socketRef.current = io.connect("/");
@@ -60,7 +60,7 @@ function Home() {
             const response = await fetch(`/api/match/create`, requestOptions);
             const data = await response.json();
             if (response.status === 200) {
-                socketRef.current.emit('create-game-engine', { user, matchId: data.match });
+                socketRef.current.emit('create-game-engine', { player: { name: user, email }, matchId: data.match });
                 socketRef.current.on("start-game-engine", (game) => {
                     setMatchState(game);
                     socketRef.current.disconnect();
