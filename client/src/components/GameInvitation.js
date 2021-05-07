@@ -9,10 +9,13 @@ import {
   makeStyles,
   TextField,
   Typography,
+  Snackbar,
   InputAdornment,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
 import { MatchContext } from '../ContextProvider/match';
+import { useUserState } from '../ContextProvider/user';
 
 const useStyles = makeStyles((theme) => ({
   block: {
@@ -97,19 +100,36 @@ function GameInvitation() {
 
   const [emailInput, setEmailInput] = useState('');
   const [emailList, setEmailList] = useState([]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { matchState } = useContext(MatchContext);
+  const { user } = useUserState();
 
   const onInputChange = (e) => {
     setEmailInput(e.target.value);
   };
 
-  const sendInvitation = (e) => {
+  const sendInvitation = async (e) => {
     e.preventDefault();
-    if (emailInput.length > 0) {
-      setEmailList([...emailList, emailInput]);
-      setEmailInput('');
-
-      // TODO: Implement sending of the actual invitation here.
+    try {
+      const response = await fetch(`/api/match/invite`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user,
+          email: emailInput,
+          matchID: matchState.matchId,
+        }),
+      });
+      const data = await response.json();
+      if (response.status === 200) {
+        setEmailList([...emailList, emailInput]);
+        setEmailInput('');
+      } else {
+        throw data.message;
+      }
+    } catch (error) {
+      console.log(error);
+      setSnackbarOpen(true);
     }
   };
 
@@ -173,6 +193,11 @@ function GameInvitation() {
           </Button>
         </div>
       </Grid>
+      <Snackbar open={snackbarOpen}>
+        <Alert onClose={() => setSnackbarOpen(false)} severity="error">
+          An error was encountered while sending the invite. Please try again.
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 }

@@ -5,9 +5,11 @@ var socket = require("socket.io");
 exports.socketConnect = function (server) {
     const io = socket(server);
     io.on("connection", socket => {
-        socket.on("message", ({ name, message }) => {
-            io.emit("message", { name, message });
-            console.log(name + " has connected.");
+        socket.on('join-chat', ({ matchId }) => {
+         socket.join(matchId);
+        });
+        socket.on("message", ({ name, message, matchId }) => {
+            io.to(matchId).emit('message', { name, message });
         });
 
         socket.on('join-match', ({ matchId }) => {
