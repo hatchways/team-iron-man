@@ -79,17 +79,14 @@ const Chat = () => {
             <TextField
               className={classes.message}
               name="message"
-              onChange={(e) => onTextChange(e)}
+              onChange={onTextChange}
               value={message}
               id="outlined-multiline-static"
               variant="outlined"
               label="Message"
-              onKeyDown={(event) => handleKeyDown(event)}
+              onKeyDown={handleKeyDown}
             />
-            <button
-              className={classes.button}
-              onClick={() => onMessageSubmit()}
-            >
+            <button className={classes.button} onClick={onMessageSubmit}>
               Send
             </button>
           </Box>
