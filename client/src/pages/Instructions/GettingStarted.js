@@ -4,7 +4,8 @@ import { makeStyles, Typography } from "@material-ui/core";
 const useStyles = makeStyles({
     description: {
         fontStyle: 'italic',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        fontFamily: 'Roboto'
     },
     header: {
         fontSize: '24px',

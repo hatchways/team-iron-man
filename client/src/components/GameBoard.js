@@ -107,13 +107,12 @@ export default function GameBoard() {
                   email === matchState.redSpymaster.email))
             }
             submitClue={submitClue}
-            cards = {matchState.board}
+            cards={matchState.board}
           />
           <GameOverModal open={matchState.winner !== ''} />
           <UserPrompt />
-
         </div>
       )}
     </div>
-  );
+  )
 }

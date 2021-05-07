@@ -18,6 +18,7 @@ import { MatchContext } from './ContextProvider/match';
 import GameBoard from './components/GameBoard';
 import Profile from './pages/Profile';
 import HowToPlay from './pages/HowToPlay';
+import './fonts/KGHAPPY.ttf'
 
 function App() {
   const [matchState, setMatchState] = useState(null);

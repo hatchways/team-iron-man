@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   whiteTextRevealed: {
     color: 'white',
+    WebkitTextStroke: '0.3px black'
   },
   borderGlow: {
     borderColor: '#9ecaed',
@@ -80,15 +81,15 @@ const Card = (props) => {
         }
         onClick={
           matchState.turnPhase === 'guess' &&
-          ((matchState.turn === 'blue' &&
-            matchState.blueGuessers.findIndex(
-              (player) => player.email === email
-            ) !== -1) ||
-            (matchState.turn === 'red' &&
-              matchState.redGuessers.findIndex(
+            ((matchState.turn === 'blue' &&
+              matchState.blueGuessers.findIndex(
                 (player) => player.email === email
-              ) !== -1)) &&
-          !props.revealed
+              ) !== -1) ||
+              (matchState.turn === 'red' &&
+                matchState.redGuessers.findIndex(
+                  (player) => player.email === email
+                ) !== -1)) &&
+            !props.revealed
             ? () => props.handleVote(props.word, props.row, props.column)
             : () => console.log('Not your turn.')
         }

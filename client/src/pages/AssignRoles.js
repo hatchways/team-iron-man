@@ -4,7 +4,7 @@ UI for assigning roles.
 
 import React, { useContext, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import AvailableRoles from '../components/AvailableRoles';
 import { MatchContext } from '../ContextProvider/match';
 import io from 'socket.io-client';
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
       width: '60%',
+      marginTop: '5vh'
     },
     [theme.breakpoints.down('sm')]: {
       width: '80%',
@@ -45,6 +46,13 @@ const useStyles = makeStyles((theme) => ({
   button: {
     align: 'center',
     width: '120px',
+    marginTop: '30px'
+  },
+  header: {
+    fontSize: "48px",
+  },
+  subheader: {
+    fontSize: "24px",
   },
   leaveButton: {
     marginTop: '20px',

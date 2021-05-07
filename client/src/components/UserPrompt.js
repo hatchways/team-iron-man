@@ -13,6 +13,9 @@ const useStyles = makeStyles({
   margin: {
     marginTop: "3%",
   },
+  alert: {
+    fontWeight: '100'
+  }
 });
 
 const UserPrompt = () => {
@@ -82,6 +85,7 @@ const UserPrompt = () => {
           onClose={() => setSnackbarOpen(false)}
           severity={matchState.turn === "blue" ? "info" : "error"}
           variant="filled"
+          className={classes.alert}
         >
           {renderSwitch()}
         </Alert>

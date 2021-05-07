@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   header: {
-    fontWeight: '600',
     fontSize: '48px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '28px',

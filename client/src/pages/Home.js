@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  logo: {
+    width: '80%'
+  }
 }));
 
 function Home() {
@@ -100,9 +103,10 @@ function Home() {
 
   return (
     <div className={classes.container}>
+      <img src="https://res.cloudinary.com/du081ilw3/image/upload/v1620276073/Assets/cluewords_uief0a.png" alt="logo" className={classes.logo} />
       <Typography color="textPrimary" className={classes.header}>
         Welcome
-      </Typography>
+            </Typography>
       <hr className={classes.hr} />
       <div className={classes.center}>
         <div>
@@ -113,7 +117,7 @@ function Home() {
             className={classes.button}
           >
             New Game
-          </Button>
+                    </Button>
           <Button
             variant="contained"
             color="secondary"
@@ -121,7 +125,7 @@ function Home() {
             className={classes.button}
           >
             Join Game
-          </Button>
+                    </Button>
           <Button
             variant="contained"
             color="secondary"
@@ -129,7 +133,7 @@ function Home() {
             className={classes.button}
           >
             How To Play
-          </Button>
+                    </Button>
         </div>
       </div>
     </div>

@@ -108,10 +108,49 @@ const useStyles = makeStyles((theme) => ({
       color: '#76ff03',
     },
   },
-  disabled: {
-    fontSize: '50px',
-    color: 'gray',
+  content: {
+    height: "45vh",
+    width: "60%",
+    margin: "auto",
+    textAlign: "left",
+    overflowY: "auto",
+    overflowX: 'hidden'
   },
+  input: {
+    width: "100%",
+  },
+  tableOfContentsHeader: {
+    fontWeight: "bold",
+    margin: "20px 0 20px 0",
+    fontFamily: 'Roboto'
+  },
+  tableOfContentsLink: {
+    color: "#1769aa",
+    fontFamily: 'Roboto',
+    "&:hover": {
+      textDecoration: "underline",
+      cursor: "pointer",
+    },
+  },
+  tabbed: {
+    marginLeft: 20,
+  },
+  description: {
+    fontStyle: 'italic',
+    fontFamily: 'Roboto'
+  },
+  arrowButton: {
+    color: "#00e676",
+    fontSize: "50px",
+    cursor: "pointer",
+    '&:hover': {
+      color: "#76ff03",
+    }
+  },
+  disabled: {
+    fontSize: "50px",
+    color: "gray"
+  }
 }));
 
 function HowToPlay() {

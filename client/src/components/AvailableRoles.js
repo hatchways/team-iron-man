@@ -33,15 +33,12 @@ const useStyles = makeStyles({
         marginBottom: "20px",
         justifyContent: "center",
         alignItems: "center",
+        '@media (max-width:600px)': {
+            width: '80%'
+        }
     },
     listItem: {
         marginLeft: "-10px",
-    },
-    sectionOne: {
-        marginRight: "20%",
-    },
-    sectionTwo: {
-        marginLeft: "5%",
     },
     submitButton: {
         marginLeft: "35%",
@@ -75,6 +72,26 @@ const useStyles = makeStyles({
     blueSpinner: {
         color: "#03a9f4",
     },
+    gridItem: {
+        display: 'flex',
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    gridDivider: {
+        '@media (min-width:960px)': {
+            borderLeft: '1px solid lightgray',
+        },
+        '@media (max-width:960px)': {
+            borderTop: '1px solid lightgray',
+            paddingTop: '20px',
+            marginTop: '20px'
+        }
+    },
+    copyButton: {
+        backgroundColor: '#eeeeee',
+        marginTop: '20px',
+        border: '1px solid black'
+    }
 });
 
 export default function AvailableRoles() {
@@ -143,11 +160,6 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    // TODO: when testing integration the app would crash sometimes
-                                    //and reloading thepage would give an empty matchState crashing
-                                    //it again, so this will let it load but the check if matchstate
-                                    //isn't empty can be removed later on
-                                    matchState &&
                                     (matchState.redSpymaster.hasOwnProperty("name") ||
                                         matchState.playersReady.findIndex(
                                             (obj) => obj.name === user
@@ -157,7 +169,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("redSpymaster")} />
                             </Fab>
                         </ListItem>
-                        {matchState && matchState.redSpymaster.name && (
+                        {matchState.redSpymaster.name && (
                             <ListItem
                                 className={classes.listItem + " " + classes.alignCenter}
                             >
@@ -186,7 +198,6 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    matchState &&
                                     matchState.playersReady.findIndex(
                                         (obj) => obj.name === user
                                     ) !== -1
@@ -195,8 +206,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("redGuessers")} />
                             </Fab>
                         </ListItem>
-                        {matchState &&
-                            matchState.redGuessers.length > 0 &&
+                        {matchState.redGuessers.length > 0 &&
                             matchState.redGuessers.map((redGuesser) => (
                                 <ListItem
                                     className={classes.listItem + " " + classes.alignCenter}
@@ -227,7 +237,6 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    matchState &&
                                     (matchState.blueSpymaster.hasOwnProperty("name") ||
                                         matchState.playersReady.findIndex(
                                             (obj) => obj.name === user
@@ -237,7 +246,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("blueSpymaster")} />
                             </Fab>
                         </ListItem>
-                        {matchState && matchState.blueSpymaster && (
+                        {matchState.blueSpymaster.name && (
                             <ListItem
                                 className={classes.listItem + " " + classes.alignCenter}
                             >
@@ -266,7 +275,6 @@ export default function AvailableRoles() {
                                 color="default"
                                 aria-label="Add"
                                 disabled={
-                                    matchState &&
                                     matchState.playersReady.findIndex(
                                         (obj) => obj.name === user
                                     ) !== -1
@@ -275,8 +283,7 @@ export default function AvailableRoles() {
                                 <AddIcon onClick={() => assignRole("blueGuessers")} />
                             </Fab>
                         </ListItem>
-                        {matchState &&
-                            matchState.blueGuessers.length > 0 &&
+                        {matchState.blueGuessers.length > 0 &&
                             matchState.blueGuessers.map((blueGuesser) => (
                                 <ListItem
                                     className={classes.listItem + " " + classes.alignCenter}
@@ -296,48 +303,48 @@ export default function AvailableRoles() {
                                 </ListItem>
                             ))}
                     </List>
-                    <Grid container alignItems="center" className={classes.grid}>
-                        <Typography
-                            color="textPrimary"
-                            style={{ fontWeight: 600 }}
-                            className={classes.sectionOne}
-                        >
-                            Players ready for match:
-                        </Typography>
-                        {matchState && matchState.playersReady.length > 0 && (
-                            <List className={classes.block}>
-                                {matchState.playersReady.map((player) => (
-                                    <ListItem key={player.name} className={classes.block}>
-                                        <Typography className={classes.block}>
-                                            {player.name}
-                                        </Typography>
-                                    </ListItem>
-                                ))}
-                            </List>
-                        )}
-                        <Divider orientation="vertical" flexItem />
-                        <List>
-                            <ListItem>
+                    <Grid container className={classes.grid}>
+                        <Grid item xs={12} sm={6} md={5} className={classes.gridItem}>
+                            <Typography
+                                color="textPrimary"
+                            >
+                                Players ready for match:
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3} className={classes.gridItem}>
+                            {matchState.playersReady.length > 0 && (
+                                <List className={classes.block}>
+                                    {matchState.playersReady.map((player) => (
+                                        <ListItem key={player.name} className={classes.block}>
+                                            <Typography className={classes.block}>
+                                                {player.name}
+                                            </Typography>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            )}
+                        </Grid>
+                        <Grid item sm={5} md={4} className={classes.gridItem + ' ' + classes.gridDivider}>
+                            <div>
                                 <Typography
                                     color="textPrimary"
-                                    style={{ fontWeight: 600 }}
                                     align="center"
-                                    className={classes.sectionTwo}
                                 >
                                     Share match id:
                                 </Typography>
-                            </ListItem>
-                            <ListItem>
+
                                 <Button
                                     variant="contained"
                                     size="small"
                                     startIcon={<InsertLinkIcon />}
                                     onClick={() => navigator.clipboard.writeText(matchId)}
+                                    className={classes.copyButton}
                                 >
                                     Copy
                                 </Button>
-                            </ListItem>
-                        </List>
+                            </div>
+                        </Grid>
+
                     </Grid>
                 </React.Fragment>
             ) : (
