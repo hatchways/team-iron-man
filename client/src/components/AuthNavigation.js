@@ -93,7 +93,7 @@ const AuthNavigation = () => {
   const { user, email, avatar } = useUserState();
   const dispatch = useUserDispatch();
   const history = useHistory();
-  const { matchState } = useContext(MatchContext);
+  const { matchState, setMatchState } = useContext(MatchContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

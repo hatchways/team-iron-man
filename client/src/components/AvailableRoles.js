@@ -312,12 +312,12 @@ export default function AvailableRoles() {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={6} md={3} className={classes.gridItem}>
-                            {matchState.playersReady.length > 0 && (
+                            {matchState && matchState.invitedPlayers.length > 0 && (
                                 <List className={classes.block}>
-                                    {matchState.playersReady.map((player) => (
+                                    {matchState.invitedPlayers.map((player) => (
                                         <ListItem key={player.name} className={classes.block}>
                                             <Typography className={classes.block}>
-                                                {player.name}
+                                                {player.name}{matchState.playersReady.find((ready) => ready.email === player.email) ? <span>{" "}&#9989;</span> : <>&#10060;</>}
                                             </Typography>
                                         </ListItem>
                                     ))}
@@ -337,7 +337,7 @@ export default function AvailableRoles() {
                                     variant="contained"
                                     size="small"
                                     startIcon={<InsertLinkIcon />}
-                                    onClick={() => navigator.clipboard.writeText(matchId)}
+                                    onClick={() => navigator.clipboard.writeText(matchState.matchId)}
                                     className={classes.copyButton}
                                 >
                                     Copy
