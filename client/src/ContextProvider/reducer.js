@@ -13,6 +13,15 @@ const UserReducer = (state, action) => {
         ...state,
         error: action.payload,
       };
+    case 'RESET_STATE':
+      return {
+        ...state,
+        isLoggedIn: false,
+        _id: '',
+        user: '',
+        email: '',
+        error: '',
+      };
     default:
       throw new Error(`Unhandled action tpye: ${action.type}`);
   }

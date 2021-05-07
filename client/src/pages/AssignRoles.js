@@ -9,6 +9,10 @@ import AvailableRoles from '../components/AvailableRoles';
 import { MatchContext } from '../ContextProvider/match';
 import io from "socket.io-client";
 
+import { Dialog, DialogActions, DialogTitle } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+
+
 const useStyles = makeStyles({
     container: {
         display: 'flex',
@@ -32,6 +36,35 @@ const useStyles = makeStyles({
     button: {
         align: 'center',
         width: '120px'
+    },
+    leaveButton: {
+      marginTop: '20px',
+      align: 'center',
+      width: '120px',
+      backgroundColor: '#f23f3f',
+      color: 'white',
+    },
+    stayButton: {
+      marginTop: '30px',
+      align: 'center',
+      width: '120px',
+      color: 'black',
+    },
+    leaveButtonInner: {
+      marginLeft: '40px',
+      marginTop: '30px',
+      align: 'center',
+      width: '120px',
+      backgroundColor: '#f23f3f',
+      color: 'white',
+    },
+    modal : {
+      textAlign: 'center',
+      paddingTop: '20px',
+    },
+    popupHeader: {
+      fontSize: "20px",
+      color: 'red',
     }
 });
 
@@ -39,6 +72,55 @@ export default function AssignRoles() {
 
     const { matchState } = useContext(MatchContext);
     const classes = useStyles();
+
+    const history = useHistory();
+
+    const askForLeave = async () => {
+      fetch(`/api/match/delete/${matchState.matchId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      return history.push('/home');
+    };
+
+    const [open, setOpen] = React.useState(false);
+
+    const AskForLeavePopup = () => (
+      <div>
+        <Button className={classes.leaveButton} onClick={()=>{setOpen(true);}}>
+          Leave Match
+        </Button>
+          <Dialog
+            open={open}
+            onClose={()=>{setOpen(false);}}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            className = {classes.modal}
+            >
+            <DialogTitle id="alert-dialog-title" className = {classes.popupHeader} >{"Are you leaving the match?"}</DialogTitle>
+
+          <DialogActions>
+            <Button onClick={()=>{setOpen(false);}} className={classes.stayButton} variant="contained" color="secondary">
+              Stay
+            </Button>
+            <Button
+              onClick={() => {
+                askForLeave();}}
+              color="primary"
+              className={classes.leaveButtonInner} >
+              Leave Match
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+
+    );
+
     const socketRef = useRef();
     socketRef.current = io.connect("/");
 
@@ -56,9 +138,11 @@ export default function AssignRoles() {
                 <h2>Available Roles</h2>
                 <AvailableRoles />
                 <Button className={classes.button} variant="contained" color="secondary" onClick={startGame}>Start Game</Button>
+                <AskForLeavePopup/>
             </div>
 
         </React.Fragment>
+
 
     );
 }

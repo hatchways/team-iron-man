@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
-import { useUserState } from "../ContextProvider/user";
+import { useUserState, useUserDispatch } from "../ContextProvider/user";
+import { resetUser } from "../ContextProvider/actions";
 import { useHistory } from 'react-router';
 import GameNavigation from './GameNavigation';
 
@@ -75,8 +76,10 @@ const AuthNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, avatar } = useUserState();
+    const [snackbarOpen, setSnackbarOpen] = useState(false)
+    const dispatch = useUserDispatch();
     const history = useHistory();
-    const { matchState } = useContext(MatchContext);
+    const { matchState, setMatchState } = useContext(MatchContext);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -91,13 +94,36 @@ const AuthNavigation = () => {
         return history.push("/profile");
     }
 
+    const goHome = () => {
+        setMatchState(null);
+        history.push("/home");
+    }
+
+    const logout = () => {
+        fetch('/api/logout', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => {
+                if (response.status === 202) {
+                    resetUser(dispatch);
+                    return history.push('/');
+                }
+            })
+            .catch((err) => {
+                setSnackbarOpen(true);
+            });
+    };
+
     return (
         <React.Fragment>
             {matchState && matchState.inProgress ? <GameNavigation /> :
                 <Toolbar className={classes.root}>
                     <Grid container>
                         <Grid item xs={6} className={classes.left}>
-                            <Typography className={classes.title} onClick={() => history.push("/home")}>C L U E W O R D S</Typography>
+                            <Typography className={classes.title} onClick={() => goHome()}>C L U E W O R D S</Typography>
                         </Grid>
                         <Grid item xs={6} className={classes.right}>
                             <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>

@@ -17,6 +17,7 @@ import { UserProvider } from './ContextProvider/user';
 import { MatchContext } from './ContextProvider/match';
 import GameBoard from './components/GameBoard';
 import Profile from './pages/Profile';
+import HowToPlay from './pages/HowToPlay';
 
 function App() {
   const [matchState, setMatchState] = useState(null);
@@ -36,13 +37,14 @@ function App() {
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/join/:matchId" component={AssignRoles} />
+            <Route exact path="/lobby/:matchId" component={AssignRoles} />
             <Route path="/newgame/:matchId" component={NewGame} />
-            <Route exact path="/join" component={Join} />
+            <Route path="/join/:matchIdParam?" component={Join} />
             <Route path="/gamelayout/:matchId" component={GameLayout} />
             <Route path="/board" component={GameBoard} />
             <Route path="/home" component={Home} />
             <Route path="/profile" component={Profile} />
+            <Route exact path="/instructions" component={HowToPlay} />
           </BrowserRouter>
         </MatchContext.Provider>
       </UserProvider>
