@@ -10,13 +10,14 @@ import {
   TextField,
   Typography,
   Snackbar,
+  InputAdornment,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from '../ContextProvider/user';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   block: {
     display: 'block',
   },
@@ -54,14 +55,45 @@ const useStyles = makeStyles({
     paddingRight: '80px',
     paddingLeft: '50px',
     borderRight: '1px solid lightgray',
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: '2px',
+      paddingRight: '5px',
+    },
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: '40px',
+      paddingRight: '25px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: '2px',
+      paddingRight: '5px',
+    },
   },
   spacingTop: {
     marginTop: '2em',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 'x-small',
+    },
   },
   submitButton: {
-    width: '150px',
+    width: '100px',
+    [theme.breakpoints.down('xs')]: {
+      width: '60px',
+      fontSize: 'x-small',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '70px',
+      fontSize: 'x-small',
+    },
   },
-});
+  resize: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 'x-small',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '12px',
+    },
+  },
+}));
 
 function GameInvitation() {
   const classes = useStyles();
@@ -116,14 +148,19 @@ function GameInvitation() {
               variant="outlined"
               type="email"
               InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
                 endAdornment: (
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    className={classes.submitButton}
-                  >
-                    Send Invite
-                  </Button>
+                  <InputAdornment position="end">
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      className={classes.submitButton}
+                    >
+                      Send Invite
+                    </Button>
+                  </InputAdornment>
                 ),
               }}
             />

@@ -1,8 +1,20 @@
 import React from 'react';
-import { List, ListItem, Typography } from '@material-ui/core';
+import { List, ListItem, Typography, makeStyles } from '@material-ui/core';
 import { useUserState } from '../ContextProvider/user';
 
+const useStyles = makeStyles((theme) => ({
+  message: {
+    [theme.breakpoints.down('md')]: {
+      fontSize: '12px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '12px',
+    },
+  },
+}));
+
 const ChatWindow = ({ chat }) => {
+  const classes = useStyles();
   const { user } = useUserState();
 
   return (
@@ -12,6 +24,7 @@ const ChatWindow = ({ chat }) => {
           {chat.map(({ name, message }, index) => (
             <div key={index}>
               <h3
+                className={classes.message}
                 style={{
                   color: `${name === user ? 'LightSalmon' : 'LightSlateGrey'}`,
                 }}

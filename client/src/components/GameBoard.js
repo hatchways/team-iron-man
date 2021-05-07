@@ -12,7 +12,7 @@ import { useUserState } from '../ContextProvider/user';
 import io from 'socket.io-client';
 import UserPrompt from './UserPrompt';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     border: '1px solid black',
@@ -30,8 +30,14 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
     gridTemplateColumns: 'auto auto auto auto auto',
+    [theme.breakpoints.down('sm')]: {
+      gridColumnGap: '10px',
+    },
+    [theme.breakpoints.down('md')]: {
+      gridColumnGap: '15px',
+    },
   },
-});
+}));
 
 export default function GameBoard() {
   const classes = useStyles();
