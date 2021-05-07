@@ -113,16 +113,6 @@ const AuthNavigation = () => {
     history.push('/home');
   };
 
-  const goToProfile = () => {
-    handleClose();
-    return history.push("/profile");
-  }
-
-  const goHome = () => {
-    setMatchState(null);
-    history.push('/home');
-  };
-
   const logout = () => {
     fetch('/api/logout', {
       method: 'GET',
@@ -141,24 +131,6 @@ const AuthNavigation = () => {
       });
   };
 
-
-  const logout = () => {
-    fetch('/api/logout', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (response.status === 202) {
-          resetUser(dispatch);
-          return history.push('/');
-        }
-      })
-      .catch((err) => {
-        console.log('Logout failed');
-      });
-  };
   return (
     <React.Fragment>
       {matchState && matchState.inProgress ? <GameNavigation /> :
