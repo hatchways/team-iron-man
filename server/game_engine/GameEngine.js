@@ -11,6 +11,7 @@ Method for determining if match is over:
 - If you win the game (one team guesses all their words)
 Method for restarting: all the words get reshuffled again, points reset to 0.
 */
+const wordList = require("./wordList");
 
 class Game {
     constructor(hostId, matchId) {
@@ -33,7 +34,7 @@ class Game {
         this.turnCount = 1; // Turn and move counters could be useful to store.
         this.moveCount = 0;
         this.inProgress = false;
-        this.shuffleBoard();
+        this.shuffleBoard({ blues: 9, reds: 8, whites: 7, blacks: 1 });
         this.votes = {};
         this.numOfVotes = 0;
         this.everyoneVoted = false;
@@ -50,8 +51,9 @@ class Game {
         this.votes = {};
         this.everyoneVoted = false;
         this.incrementGuesses();
-        if (card.color === this.turn) {
-            this.getTurn() === "blue" ? this.incrementBluePoints() : this.incrementRedPoints();
+        const turn = this.getTurn();
+        if (card.color === turn) {
+            turn === "blue" ? this.incrementBluePoints() : this.incrementRedPoints();
             if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
                 this.setWinner(this.turn);
                 this.gameOver();
@@ -62,7 +64,7 @@ class Game {
         }
         // If the card color is black, award the victory to the other team then end the game.
         else if (card.color === "black") {
-            this.turn === "blue" ? this.setWinner("red") : this.setWinner("blue");
+            turn === "blue" ? this.setWinner("red") : this.setWinner("blue");
             this.gameOver();
         }
         // If the card color is white, move on to the next turn.
@@ -71,8 +73,14 @@ class Game {
         }
         // If the card color is the other team, increase the other team's points and end the game.
         else {
-            this.getTurn() === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
-            this.nextTurn();
+            turn === "blue" ? this.incrementRedPoints() : this.incrementBluePoints();
+            if (this.getBluePoints() === 9 || this.getRedPoints() === 8) {
+                this.setWinner(turn === "blue" ? "red" : "blue");
+                this.gameOver();
+            }
+            else {
+                this.nextTurn();
+            }
         }
     }
 
@@ -190,108 +198,15 @@ class Game {
         this.guessesMade = 0;
     }
 
-    shuffleBoard() {
-        let words = [
-            "Cat",
-            "Dog",
-            "Bird",
-            "Fox",
-            "Monkey",
-            "Snake",
-            "Panda",
-            "Dinosaur",
-            "Dolphin",
-            "Human",
-            "Monster",
-            "Slime",
-            "Blueberry",
-            "Strawberry",
-            "Orange",
-            "Mango",
-            "Banana",
-            "Apple",
-            "Tomato",
-            "Cucumber",
-            "Cherry",
-            "Avocado",
-            "Car",
-            "Airplane",
-            "Bike",
-            "Truck",
-            "Tesla",
-            "Sword",
-            "Shield",
-            "Staff",
-            "Bow",
-            "Helmet",
-            "Dagger",
-            "Gun",
-            "Belt",
-            "Armor",
-            "Beach",
-            "Jungle",
-            "Desert",
-            "Water",
-            "Earth",
-            "Wind",
-            "Fire",
-            "Grass",
-            "Space",
-            "Snow",
-            "Moon",
-            "Electricity",
-            "Ball",
-            "Tail",
-            "Shoe",
-            "Rainbow",
-            "Pole",
-            "Computer",
-            "Cellphone",
-            "Camera",
-            "Bitcoin",
-            "Money",
-            "Book",
-            "Television",
-            "House",
-            "Doll",
-            "Run",
-            "Change",
-            "Teleport",
-            "Slash",
-            "Switch",
-            "Eat",
-            "Picture",
-            "Dare",
-            "Retire",
-        ];
+    shuffleBoard(colorCounts) {
+        let words = [...wordList];
+        const { blues, reds, whites, blacks } = colorCounts;
         let colors = [
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "blue",
-            "red",
-            "red",
-            "red",
-            "red",
-            "red",
-            "red",
-            "red",
-            "red",
-            "white",
-            "white",
-            "white",
-            "white",
-            "white",
-            "white",
-            "white",
-            "black",
-        ]; //Counter for card colors to be distributed (9 blue, 8 red, 7 white, 1 black)
-        this.board = []; //Reset the board
+            ...new Array(blues).fill("blue"),
+            ...new Array(reds).fill("red"),
+            ...new Array(whites).fill("white"),
+            ...new Array(blacks).fill("black"),
+        ];
         for (let i = 0; i < 5; i++) {
             this.board.push([]); //Push empty row
             for (let j = 0; j < 5; j++) {
@@ -331,9 +246,7 @@ class Game {
         role.indexOf("Spymaster") === -1
             ? (this[role] = this[role].filter((p) => p.name !== player.name))
             : (this[role] = {});
-        this.playersReady = this.playersReady.filter(
-            (p) => p.name !== player.name
-        );
+        this.playersReady = this.playersReady.filter((p) => p.name !== player.name);
     }
 
     setInProgress() {

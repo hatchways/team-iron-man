@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import io from 'socket.io-client';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { MatchContext } from '../ContextProvider/match';
 
 const useStyles = makeStyles({
@@ -72,6 +72,8 @@ function Join() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [join, setJoin] = useState(false);
   const [joinError, setJoinError] = useState('');
+  const { matchIdParam } = useParams();
+
 
   useEffect(() => {
     if (join) {
@@ -86,6 +88,10 @@ function Join() {
     };
   }, [join]);
 
+  useEffect(() => {
+    setMatchId(matchIdParam ? matchIdParam : '');
+  }, [])
+
   const onTextChange = (e) => {
     setMatchId(e.target.value);
   };
@@ -93,17 +99,15 @@ function Join() {
   const submitMatchId = async (e) => {
     e.preventDefault();
     try {
-      console.log("HERE!!!!")
       const response = await fetch(`/api/match/join/${matchId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
       console.log(response.status);
       const data = await response.json();
-     if (response.status === 200) {
+      if (response.status === 200) {
         setJoin(true);
-        console.log('I JUST RAN');
-        history.push(`/join/${matchId}`);
+        history.push(`/lobby/${matchId}`);
       } else {
         console.log(data.message);
         throw data.message;

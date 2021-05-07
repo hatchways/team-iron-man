@@ -10,7 +10,6 @@ import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Join from './pages/Join';
 import NewGame from './pages/NewGame';
-import Chat from './pages/Chat';
 import './App.css';
 import AssignRoles from './pages/AssignRoles';
 import GameLayout from './pages/GameLayout';
@@ -18,12 +17,15 @@ import { UserProvider } from './ContextProvider/user';
 import { MatchContext } from './ContextProvider/match';
 import GameBoard from './components/GameBoard';
 import Profile from './pages/Profile';
+import HowToPlay from './pages/HowToPlay';
 
 function App() {
-
   const [matchState, setMatchState] = useState(null);
 
-  const matchValue = useMemo(() => ({ matchState, setMatchState }), [matchState, setMatchState]);
+  const matchValue = useMemo(() => ({ matchState, setMatchState }), [
+    matchState,
+    setMatchState,
+  ]);
   //Routes can be cleaned up using Switch
   return (
     <MuiThemeProvider theme={theme}>
@@ -35,14 +37,14 @@ function App() {
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/join/:matchId" component={AssignRoles} />
+            <Route exact path="/lobby/:matchId" component={AssignRoles} />
             <Route path="/newgame/:matchId" component={NewGame} />
-            <Route exact path="/join" component={Join} />
-            <Route path="/chat" component={Chat} />
+            <Route path="/join/:matchIdParam?" component={Join} />
             <Route path="/gamelayout/:matchId" component={GameLayout} />
             <Route path="/board" component={GameBoard} />
             <Route path="/home" component={Home} />
             <Route path="/profile" component={Profile} />
+            <Route exact path="/instructions" component={HowToPlay} />
           </BrowserRouter>
         </MatchContext.Provider>
       </UserProvider>
