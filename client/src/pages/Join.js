@@ -15,7 +15,7 @@ import io from 'socket.io-client';
 import { useHistory, useParams } from 'react-router-dom';
 import { MatchContext } from '../ContextProvider/match';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     width: '50%',
     textAlign: 'center',
@@ -25,13 +25,28 @@ const useStyles = makeStyles({
     borderRadius: '10px',
     padding: '50px',
     paddingBottom: '80px',
-    marginLeft: '25%',
+    margin: 'auto',
     marginTop: '9%',
+    [theme.breakpoints.down('md')]: {
+      width: '60%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '70%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '80%',
+    },
   },
 
   header: {
     fontWeight: '600',
     fontSize: '48px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '38px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '28px',
+    },
   },
 
   hr: {
@@ -60,7 +75,7 @@ const useStyles = makeStyles({
   input: {
     width: '100%',
   },
-});
+}));
 
 function Join() {
   const classes = useStyles();
@@ -73,7 +88,6 @@ function Join() {
   const [join, setJoin] = useState(false);
   const [joinError, setJoinError] = useState('');
   const { matchIdParam } = useParams();
-
 
   useEffect(() => {
     if (join) {
@@ -90,7 +104,7 @@ function Join() {
 
   useEffect(() => {
     setMatchId(matchIdParam ? matchIdParam : '');
-  }, [])
+  }, []);
 
   const onTextChange = (e) => {
     setMatchId(e.target.value);
