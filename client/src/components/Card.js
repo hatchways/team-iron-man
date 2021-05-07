@@ -20,7 +20,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     fontWeight: '500',
     fontSize: 'x-large',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 'large',
+    },
+    [theme.breakpoints.down('xs')]: {
       fontSize: 'x-small',
     },
   },
