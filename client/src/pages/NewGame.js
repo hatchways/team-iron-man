@@ -22,11 +22,11 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     marginTop: '9%',
     [theme.breakpoints.down('md')]: {
-      width: '40%',
+      width: '60%',
       margine: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
-      width: '60%',
+      width: '75%',
       margine: 'auto',
       padding: '30px',
       paddingBottom: '50px',
