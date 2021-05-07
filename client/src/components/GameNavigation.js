@@ -82,7 +82,6 @@ const GameNavigation = () => {
     const { user, avatar } = useUserState();
     const history = useHistory();
     const { matchState, setMatchState } = useContext(MatchContext);
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
     const dispatch = useUserDispatch();
 
     const handleClick = (event) => {
@@ -119,7 +118,7 @@ const GameNavigation = () => {
                 }
             })
             .catch((err) => {
-                setSnackbarOpen(true);
+                console.log("Logout failed");
             });
     };
 
