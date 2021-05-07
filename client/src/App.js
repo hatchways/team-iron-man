@@ -39,10 +39,10 @@ function App() {
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
-            <PrivateRoute exact path="/lobby/:matchIdParam" component={AssignRoles} />
+            <Route exact path="/lobby/:matchIdParam" component={AssignRoles} />
             <Route path="/newgame/:matchIdParam" component={NewGame} />
             <Route path="/join/:matchIdParam?" component={Join} />
-            <PrivateRoute path="/gamelayout/:matchIdParam" component={GameLayout} />
+            <Route path="/gamelayout/:matchIdParam" component={GameLayout} />
             <Route path="/board" component={GameBoard} />
             <Route path="/home" component={Home} />
             <Route path="/profile" component={Profile} />

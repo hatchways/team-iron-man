@@ -168,9 +168,13 @@ export default function AssignRoles() {
   return (
     <React.Fragment>
       <div className={classes.container}>
-        <h1>New Game</h1>
+        <Typography color="textPrimary" className={classes.header}>
+          Game Lobby
+                </Typography>
         <hr className={classes.hr} />
-        <h2>Available Roles</h2>
+        <Typography color="textPrimary" className={classes.subheader}>
+          Select Your Roles
+                </Typography>
         <AvailableRoles />
         <Button
           className={classes.button}

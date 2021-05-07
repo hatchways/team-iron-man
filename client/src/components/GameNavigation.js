@@ -195,7 +195,7 @@ const GameNavigation = () => {
             <Typography variant="h3" align="center" className={classes.points}>{matchState.bluePoints}</Typography>
             <Typography variant="h6" align="center" className={classes.teams}>Blue Team</Typography>
           </div>
-          <Typography variant="h2" className={classes.scoreSpacing}>-</Typography>
+          <Typography variant="h2" className={classes.scoreSpacing + " " + classes.teams}>-</Typography>
           <div className={classes.red}>
             <Typography variant="h3" align="center" className={classes.points}>{matchState.redPoints}</Typography>
             <Typography variant="h6" align="center" className={classes.teams}>Red Team</Typography>
