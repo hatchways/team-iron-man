@@ -58,7 +58,7 @@ function Lost() {
             <hr className={classes.hr} />
             <div className={classes.left}>
                 <Typography color="textPrimary">
-                    You tried to join a match that does not exist, or a match already in progres, or a match you were not invited to.
+                    You tried to join a match that does not exist, or a match already in progress, or a match you were not invited to.
             </Typography>
             </div>
             <Button
