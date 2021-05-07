@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import {
@@ -7,9 +7,11 @@ import {
   Paper,
   TextField,
   Typography,
+  FormHelperText,
 } from '@material-ui/core';
 import ChatWindow from '../components/ChatWindow';
 import { useUserState } from '../ContextProvider/user';
+import { SocketContext } from '../ContextProvider/socket';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -67,24 +69,23 @@ const Chat = () => {
   const [chat, setChat] = useState([]);
   const { user } = useUserState();
   const { matchId } = useParams();
-  const socketRef = useRef();
+  const socket = useContext(SocketContext);
   const classes = useStyles();
 
   useEffect(() => {
-    socketRef.current = io.connect('/');
-    socketRef.current.emit('join-chat', { matchId });
-    socketRef.current.on('message', ({ name, message }) => {
+    socket.emit('join-chat', { matchId });
+    socket.on('message', ({ name, message }) => {
       setChat([...chat, { name, message }]);
     });
-    return () => socketRef.current.disconnect();
-  }, [chat, matchId, user]);
+    return () => socket.off('message');
+  }, [socket, chat, matchId, user]);
 
   const onTextChange = (e) => {
     setMessage(e.target.value);
   };
 
   const onMessageSubmit = (e) => {
-    socketRef.current.emit('message', { name: user, message, matchId });
+    socket.emit('message', { name: user, message, matchId });
     setMessage('');
   };
 

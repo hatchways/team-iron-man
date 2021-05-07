@@ -3,6 +3,7 @@ import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
 import { BrowserRouter, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import { theme } from './themes/theme';
+import { SocketContext, socket } from './ContextProvider/socket';
 import LandingPage from './pages/Landing';
 import Navigation from './components/Navigation';
 import Home from './pages/Home';
@@ -33,23 +34,25 @@ function App() {
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <UserProvider>
-        <MatchContext.Provider value={matchValue}>
-          <BrowserRouter>
-            <Navigation />
-            <Route exact path="/" component={LandingPage} />
-            <Route exact path="/login" component={LogIn} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/lobby/:matchIdParam" component={AssignRoles} />
-            <Route path="/newgame/:matchIdParam" component={NewGame} />
-            <Route path="/join/:matchIdParam?" component={Join} />
-            <Route path="/gamelayout/:matchIdParam" component={GameLayout} />
-            <Route path="/board" component={GameBoard} />
-            <Route path="/home" component={Home} />
-            <Route path="/profile" component={Profile} />
-            <Route exact path="/instructions" component={HowToPlay} />
-            <Route exact path="/lost" component={Lost} />
-          </BrowserRouter>
-        </MatchContext.Provider>
+        <SocketContext.Provider value={socket}>
+          <MatchContext.Provider value={matchValue}>
+            <BrowserRouter>
+              <Navigation />
+              <Route exact path="/" component={LandingPage} />
+              <Route exact path="/login" component={LogIn} />
+              <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/lobby/:matchIdParam" component={AssignRoles} />
+              <Route path="/newgame/:matchIdParam" component={NewGame} />
+              <Route path="/join/:matchIdParam?" component={Join} />
+              <Route path="/gamelayout/:matchIdParam" component={GameLayout} />
+              <Route path="/board" component={GameBoard} />
+              <Route path="/home" component={Home} />
+              <Route path="/profile" component={Profile} />
+              <Route exact path="/instructions" component={HowToPlay} />
+              <Route exact path="/lost" component={Lost} />
+            </BrowserRouter>
+          </MatchContext.Provider>
+        </SocketContext.Provider>
       </UserProvider>
     </MuiThemeProvider>
   );

@@ -2,22 +2,23 @@
 Component for available roles.
 */
 
-import React, { useEffect, useContext, useRef } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { Grid, Button, IconButton, CircularProgress } from "@material-ui/core";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import InsertLinkIcon from "@material-ui/icons/InsertLink";
-import { useUserState } from "../ContextProvider/user";
-import io from "socket.io-client";
-import { MatchContext } from "../ContextProvider/match";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useEffect, useContext, useRef } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import { Grid, Button, IconButton, CircularProgress } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import InsertLinkIcon from '@material-ui/icons/InsertLink';
+import { useUserState } from '../ContextProvider/user';
+import io from 'socket.io-client';
+import { MatchContext } from '../ContextProvider/match';
+import { useHistory, useParams } from 'react-router-dom';
+import { SocketContext } from '../ContextProvider/socket';
 
 const useStyles = makeStyles({
     grid: {
@@ -98,35 +99,31 @@ export default function AvailableRoles() {
     const classes = useStyles();
     const { user, email } = useUserState();
     const { matchState, setMatchState } = useContext(MatchContext);
-    const socketRef = useRef();
+    const socket = useContext(SocketContext);
     const history = useHistory();
     const { matchIdParam } = useParams();
 
     useEffect(() => {
-        socketRef.current = io.connect("/");
         if (matchState) {
             if (matchState.inProgress) {
-                socketRef.current.disconnect();
+                socket.off('update-game-engine-' + matchState.matchId);
                 return history.push(`/gamelayout/${matchState.matchId}`);
             }
-            socketRef.current.on(
-                "update-game-engine-" + matchState.matchId,
-                (game) => {
-                    setMatchState(game);
-                }
-            );
+            socket.on('update-game-engine-' + matchState.matchId, (game) => {
+                setMatchState(game);
+            });
         } else {
-            socketRef.current.emit("get-game-engine", { matchId: matchIdParam });
-            socketRef.current.on("update-game-engine-" + matchIdParam, (game) => {
+            socket.emit('get-game-engine', { matchId });
+            socket.on('update-game-engine-' + matchId, (game) => {
                 setMatchState(game);
             });
         }
-        return () => socketRef.current.disconnect();
-    }, [matchIdParam, matchState, setMatchState, history]);
+        return () => socket.off('update-game-engine-' + matchId);
+    }, [socket, matchId, matchState, setMatchState, history]);
 
     const assignRole = (role) => {
         if (!matchState.inProgress) {
-            socketRef.current.emit("assign-role", {
+            socket.emit('assign-role', {
                 player: { name: user, email },
                 role: role,
                 matchId: matchState.matchId,
@@ -136,7 +133,7 @@ export default function AvailableRoles() {
 
     const removeRole = (role) => {
         if (!matchState.inProgress) {
-            socketRef.current.emit("remove-role", {
+            socket.emit('remove-role', {
                 player: { name: user, email },
                 role: role,
                 matchId: matchState.matchId,
@@ -350,6 +347,6 @@ export default function AvailableRoles() {
             ) : (
                 <CircularProgress className={classes.blueSpinner} />
             )}
-        </React.Fragment>
+        </React.Fragment >
     );
 }
