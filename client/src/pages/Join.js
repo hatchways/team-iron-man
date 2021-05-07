@@ -14,6 +14,7 @@ import { Alert } from '@material-ui/lab';
 import io from 'socket.io-client';
 import { useHistory, useParams } from 'react-router-dom';
 import { MatchContext } from '../ContextProvider/match';
+import { useUserState } from "../ContextProvider/user";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -88,11 +89,12 @@ function Join() {
   const [join, setJoin] = useState(false);
   const [joinError, setJoinError] = useState('');
   const { matchIdParam } = useParams();
+  const { user, email } = useUserState();
 
   useEffect(() => {
     if (join) {
       console.log('SOCKET');
-      socketRef.current.emit('join-match', { matchId });
+      socketRef.current.emit('join-match', { matchId, player: { name: user, email } });
       socketRef.current.on('join-game-engine', (game) => {
         setMatchState(game);
       });

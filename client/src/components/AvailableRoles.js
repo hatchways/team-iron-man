@@ -100,7 +100,7 @@ export default function AvailableRoles() {
     const { matchState, setMatchState } = useContext(MatchContext);
     const socketRef = useRef();
     const history = useHistory();
-    const { matchId } = useParams();
+    const { matchIdParam } = useParams();
 
     useEffect(() => {
         socketRef.current = io.connect("/");
@@ -116,13 +116,13 @@ export default function AvailableRoles() {
                 }
             );
         } else {
-            socketRef.current.emit("get-game-engine", { matchId });
-            socketRef.current.on("update-game-engine-" + matchId, (game) => {
+            socketRef.current.emit("get-game-engine", { matchId: matchIdParam });
+            socketRef.current.on("update-game-engine-" + matchIdParam, (game) => {
                 setMatchState(game);
             });
         }
         return () => socketRef.current.disconnect();
-    }, [matchId, matchState, setMatchState, history]);
+    }, [matchIdParam, matchState, setMatchState, history]);
 
     const assignRole = (role) => {
         if (!matchState.inProgress) {
@@ -303,29 +303,28 @@ export default function AvailableRoles() {
                                 </ListItem>
                             ))}
                     </List>
-                    <Grid container className={classes.grid}>
-                        <Grid item xs={12} sm={6} md={5} className={classes.gridItem}>
-                            <Typography
-                                color="textPrimary"
-                            >
-                                Players ready for match:
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3} className={classes.gridItem}>
-                            {matchState.playersReady.length > 0 && (
-                                <List className={classes.block}>
-                                    {matchState.playersReady.map((player) => (
-                                        <ListItem key={player.name} className={classes.block}>
-                                            <Typography className={classes.block}>
-                                                {player.name}
-                                            </Typography>
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            )}
-                        </Grid>
-                        <Grid item sm={5} md={4} className={classes.gridItem + ' ' + classes.gridDivider}>
-                            <div>
+                    <Grid container alignItems="center" className={classes.grid}>
+                        <Typography
+                            color="textPrimary"
+                            style={{ fontWeight: 600 }}
+                            className={classes.sectionOne}
+                        >
+                            Players ready for match:
+                        </Typography>
+                        {matchState && matchState.invitedPlayers.length > 0 && (
+                            <List className={classes.block}>
+                                {matchState.invitedPlayers.map((player) => (
+                                    <ListItem key={player.name} className={classes.block}>
+                                        <Typography className={classes.block}>
+                                            {player.name}{matchState.playersReady.find((ready) => ready.email === player.email) ? <span>{" "}&#9989;</span> : <>&#10060;</>}
+                                        </Typography>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        )}
+                        <Divider orientation="vertical" flexItem />
+                        <List>
+                            <ListItem>
                                 <Typography
                                     color="textPrimary"
                                     align="center"
@@ -337,7 +336,7 @@ export default function AvailableRoles() {
                                     variant="contained"
                                     size="small"
                                     startIcon={<InsertLinkIcon />}
-                                    onClick={() => navigator.clipboard.writeText(matchId)}
+                                    onClick={() => navigator.clipboard.writeText(matchIdParam)}
                                     className={classes.copyButton}
                                 >
                                     Copy

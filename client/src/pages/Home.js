@@ -64,25 +64,22 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
   const classes = useStyles();
   const history = useHistory();
-  const { user } = useUserState();
+  const { user, email } = useUserState();
   const { setMatchState } = useContext(MatchContext);
   const socketRef = useRef();
-  socketRef.current = io.connect('/');
+  socketRef.current = io.connect("/");
 
   const newGame = async () => {
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }
     };
     try {
       const response = await fetch(`/api/match/create`, requestOptions);
       const data = await response.json();
       if (response.status === 200) {
-        socketRef.current.emit('create-game-engine', {
-          user,
-          matchId: data.match,
-        });
-        socketRef.current.on('start-game-engine', (game) => {
+        socketRef.current.emit('create-game-engine', { player: { name: user, email }, matchId: data.match });
+        socketRef.current.on("start-game-engine", (game) => {
           setMatchState(game);
           socketRef.current.disconnect();
         });
@@ -91,53 +88,54 @@ function Home() {
     } catch (error) {
       throw error;
     }
-  };
+  }
+};
 
-  const joinGame = () => {
-    return history.push('/join');
-  };
+const joinGame = () => {
+  return history.push('/join');
+};
 
-  const instructions = () => {
-    return history.push('/instructions');
-  };
+const instructions = () => {
+  return history.push('/instructions');
+};
 
-  return (
-    <div className={classes.container}>
-      <img src="https://res.cloudinary.com/du081ilw3/image/upload/v1620276073/Assets/cluewords_uief0a.png" alt="logo" className={classes.logo} />
-      <Typography color="textPrimary" className={classes.header}>
-        Welcome
+return (
+  <div className={classes.container}>
+    <img src="https://res.cloudinary.com/du081ilw3/image/upload/v1620276073/Assets/cluewords_uief0a.png" alt="logo" className={classes.logo} />
+    <Typography color="textPrimary" className={classes.header}>
+      Welcome
             </Typography>
-      <hr className={classes.hr} />
-      <div className={classes.center}>
-        <div>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={newGame}
-            className={classes.button}
-          >
-            New Game
+    <hr className={classes.hr} />
+    <div className={classes.center}>
+      <div>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={newGame}
+          className={classes.button}
+        >
+          New Game
                     </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={joinGame}
-            className={classes.button}
-          >
-            Join Game
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={joinGame}
+          className={classes.button}
+        >
+          Join Game
                     </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={instructions}
-            className={classes.button}
-          >
-            How To Play
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={instructions}
+          className={classes.button}
+        >
+          How To Play
                     </Button>
-        </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default Home;

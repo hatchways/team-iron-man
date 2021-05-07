@@ -90,10 +90,10 @@ const useStyles = makeStyles((theme) => ({
 const AuthNavigation = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const { user, avatar } = useUserState();
+  const { user, email, avatar } = useUserState();
   const dispatch = useUserDispatch();
   const history = useHistory();
-  const { matchState, setMatchState } = useContext(MatchContext);
+  const { matchState } = useContext(MatchContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -112,6 +112,35 @@ const AuthNavigation = () => {
     setMatchState(null);
     history.push('/home');
   };
+
+  const goToProfile = () => {
+    handleClose();
+    return history.push("/profile");
+  }
+
+  const goHome = () => {
+    setMatchState(null);
+    history.push('/home');
+  };
+
+  const logout = () => {
+    fetch('/api/logout', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        if (response.status === 202) {
+          resetUser(dispatch);
+          return history.push('/');
+        }
+      })
+      .catch((err) => {
+        setSnackbarOpen(true);
+      });
+  };
+
 
   const logout = () => {
     fetch('/api/logout', {
