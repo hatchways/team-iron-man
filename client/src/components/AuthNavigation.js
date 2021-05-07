@@ -90,22 +90,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuthNavigation = () => {
-<<<<<<< HEAD
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, avatar } = useUserState();
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const dispatch = useUserDispatch();
   const history = useHistory();
   const { matchState, setMatchState } = useContext(MatchContext);
-=======
-    const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState(null);
-    const { user, avatar } = useUserState();
-    const dispatch = useUserDispatch();
-    const history = useHistory();
-    const { matchState, setMatchState } = useContext(MatchContext);
->>>>>>> dev
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -125,7 +115,6 @@ const AuthNavigation = () => {
     history.push('/home');
   };
 
-<<<<<<< HEAD
   const logout = () => {
     fetch('/api/logout', {
       method: 'GET',
@@ -140,63 +129,9 @@ const AuthNavigation = () => {
         }
       })
       .catch((err) => {
-        setSnackbarOpen(true);
+        console.log('Logout failed');
       });
   };
-=======
-    const logout = () => {
-        fetch('/api/logout', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => {
-                if (response.status === 202) {
-                    resetUser(dispatch);
-                    return history.push('/');
-                }
-            })
-            .catch((err) => {
-                console.log("Logout failed");
-            });
-    };
-
-    return (
-        <React.Fragment>
-            {matchState && matchState.inProgress ? <GameNavigation /> :
-                <Toolbar className={classes.root}>
-                    <Grid container>
-                        <Grid item xs={6} className={classes.left}>
-                            <Typography className={classes.title} onClick={() => goHome()}>C L U E W O R D S</Typography>
-                        </Grid>
-                        <Grid item xs={6} className={classes.right}>
-                            <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
-                            <Avatar alt="avatar" src={avatar} />
-                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                My Profile<ArrowDropDownIcon />
-                            </Button>
-                            <Menu
-                                id="simple-menu"
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                                getContentAnchorEl={null}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'center',
-                                }}
-                            >
-                                <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
-                                <MenuItem onClick={logout} className={classes.menuItem}>Logout</MenuItem>
-                            </Menu>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            }
-        </React.Fragment>
->>>>>>> dev
 
   return (
     <React.Fragment>
@@ -242,7 +177,7 @@ const AuthNavigation = () => {
                 <MenuItem onClick={goToProfile} className={classes.menuItem}>
                   Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose} className={classes.menuItem}>
+                <MenuItem onClick={logout} className={classes.menuItem}>
                   Logout
                 </MenuItem>
               </Menu>

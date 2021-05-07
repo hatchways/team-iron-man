@@ -1,7 +1,7 @@
 /*
 UI for Game Board
 */
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from './Card';
 import GameOverModal from './GameOverModal';
@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import ClueModal from './ClueModal';
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from '../ContextProvider/user';
-import io from 'socket.io-client';
+import { SocketContext } from '../ContextProvider/socket';
 import UserPrompt from './UserPrompt';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,37 +42,35 @@ const useStyles = makeStyles((theme) => ({
 export default function GameBoard() {
   const classes = useStyles();
   const { email } = useUserState();
+  const socket = useContext(SocketContext);
   const { matchState, setMatchState } = useContext(MatchContext);
-  const socketRef = useRef();
   const { matchId } = useParams();
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    socketRef.current = io.connect('/');
     if (!matchState) {
-      socketRef.current.emit('get-game-engine', { matchId });
+      socket.emit('get-game-engine', { matchId });
     }
-    socketRef.current.on('update-game-engine-' + matchId, (game) => {
+    socket.on('update-game-engine-' + matchId, (game) => {
       setMatchState(game);
       if (matchState.votes === {}) {
         setSelected({});
       }
     });
-    return () => socketRef.current.disconnect();
-  }, []);
+    return () => socket.off('update-game-engine-' + matchId);
+  }, [socket, matchId, matchState, setMatchState]);
 
   const handleVote = (word, row, column) => {
     setSelected({ row, column });
-    socketRef.current.emit('set-vote', { matchId, word, row, column, email });
+    socket.emit('set-vote', { matchId, word, row, column, email });
   };
 
   const submitClue = (clue, numOfGuesses) => {
-    socketRef.current.emit('set-clue', { matchId, clue, numOfGuesses });
-    socketRef.current.on(`update-game-engine-${matchId}`, (game) => {
+    socket.emit('set-clue', { matchId, clue, numOfGuesses });
+    socket.on(`update-game-engine-${matchId}`, (game) => {
       setMatchState(game);
     });
   };
-
 
   return (
     <div className={classes.root}>
@@ -107,11 +105,10 @@ export default function GameBoard() {
                   email === matchState.redSpymaster.email))
             }
             submitClue={submitClue}
-            cards = {matchState.board}
+            cards={matchState.board}
           />
           <GameOverModal open={matchState.winner !== ''} />
           <UserPrompt />
-
         </div>
       )}
     </div>
