@@ -1,17 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
-import { makeStyles, Box, Paper, TextField } from '@material-ui/core';
+import {
+  makeStyles,
+  Box,
+  Paper,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import ChatWindow from '../components/ChatWindow';
 import { useUserState } from '../ContextProvider/user';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'grid',
     gridTemplateColumns: '1fr',
     margin: '30px',
     minheight: '10vh',
     maxWidth: '35vw',
+    [theme.breakpoints.down('sm')]: {
+      margin: '10px',
+    },
   },
   button: {
     marginTop: '10px',
@@ -24,11 +33,33 @@ const useStyles = makeStyles({
     height: '60vh',
     maxHeight: '60vh',
     maxWidth: '20vw',
+    [theme.breakpoints.down('lg')]: {
+      height: '45vh',
+    },
+    [theme.breakpoints.down('md')]: {
+      height: '35vh',
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: '40vh',
+    },
   },
   message: {
     width: '75%',
   },
-});
+  head: {
+    fontWeight: '600',
+    fontSize: '26px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '16px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '16px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '12px',
+    },
+  },
+}));
 
 const Chat = () => {
   const [message, setMessage] = useState('');
@@ -66,7 +97,9 @@ const Chat = () => {
     <Box className={classes.card}>
       <Paper elevation={3}>
         <Box p={2}>
-          <h1>Welcome to the Game Chat</h1>
+          <Typography className={classes.head}>
+            Welcome to the Game Chat
+          </Typography>
           <Box
             className={classes.window}
             border={1}
