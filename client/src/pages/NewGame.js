@@ -2,42 +2,61 @@
 UI for creating a new game.
 */
 
-import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
-import GameInvitation from "../components/GameInvitation";
-import { Button, makeStyles, Typography } from "@material-ui/core";
-import { MatchContext } from "../ContextProvider/match";
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import GameInvitation from '../components/GameInvitation';
+import { Button, makeStyles, Typography } from '@material-ui/core';
+import { MatchContext } from '../ContextProvider/match';
 import { Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
-    width: "50%",
-    textAlign: "center",
-    backgroundColor: "white",
+    width: '50%',
+    textAlign: 'center',
+    backgroundColor: 'white',
     boxShadow:
-      "0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)",
-    borderRadius: "10px",
-    padding: "50px",
-    paddingBottom: "80px",
-    marginLeft: "25%",
-    marginTop: "9%",
+      '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
+    borderRadius: '10px',
+    padding: '50px',
+    paddingBottom: '80px',
+    margin: 'auto',
+    marginTop: '9%',
+    [theme.breakpoints.down('md')]: {
+      width: '40%',
+      margine: 'auto',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '60%',
+      margine: 'auto',
+      padding: '30px',
+      paddingBottom: '50px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+      margine: 'auto',
+      padding: '20px',
+      paddingBottom: '20px',
+    },
   },
 
   header: {
-    fontWeight: "600",
-    fontSize: "48px",
+    fontWeight: '600',
+    fontSize: '48px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '28px',
+    },
   },
 
   hr: {
-    width: "10%",
-    border: "1px solid #00e676",
+    width: '10%',
+    border: '1px solid #00e676',
   },
   spacing: {
-    marginTop: "20px",
+    marginTop: '20px',
   },
   background: {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
   },
   leaveButton: {
     marginTop: '20px',
@@ -65,10 +84,10 @@ const useStyles = makeStyles({
     paddingTop: '20px',
   },
   popupHeader: {
-    fontSize: "20px",
+    fontSize: '20px',
     color: 'red',
   },
-});
+}));
 
 function NewGame() {
   const history = useHistory();
@@ -87,7 +106,7 @@ function NewGame() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     })
       .then((responce) => {
         console.log(responce);
@@ -101,35 +120,51 @@ function NewGame() {
 
   const CancelMatchPopup = () => (
     <div>
-      <Button className={classes.leaveButton} onClick={() => { setOpen(true); }}>
+      <Button
+        className={classes.leaveButton}
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
         Cancel Match
-        </Button>
+      </Button>
       <Dialog
         open={open}
-        onClose={() => { setOpen(false); }}
+        onClose={() => {
+          setOpen(false);
+        }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         className={classes.modal}
       >
-        <DialogTitle id="alert-dialog-title" className={classes.popupHeader} >{"Are you canceling the match?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title" className={classes.popupHeader}>
+          {'Are you canceling the match?'}
+        </DialogTitle>
 
         <DialogActions>
-          <Button onClick={() => { setOpen(false); }} className={classes.stayButton} variant="contained" color="secondary">
-            Stay
-            </Button>
           <Button
             onClick={() => {
-              console.log("CANCEL MATCH");
+              setOpen(false);
+            }}
+            className={classes.stayButton}
+            variant="contained"
+            color="secondary"
+          >
+            Stay
+          </Button>
+          <Button
+            onClick={() => {
+              console.log('CANCEL MATCH');
               cancelMatch();
             }}
             color="primary"
-            className={classes.leaveButtonInner} >
+            className={classes.leaveButtonInner}
+          >
             Cancel Match
-            </Button>
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
-
   );
 
   return (
