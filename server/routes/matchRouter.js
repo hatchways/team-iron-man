@@ -7,6 +7,6 @@ const { sendInvite } = require('../controllers/invite');
 router.post('/create', verifyToken, match.addMatch);
 router.post('/join/:matchID', verifyToken, match.joinMatch);
 router.post('/delete/:matchID', verifyToken, match.deleteMatch);
-router.post('/invite/:matchID', verifyToken, sendInvite);
+router.post('/invite', verifyToken, sendInvite);
 
 module.exports = router;
