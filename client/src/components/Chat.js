@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     width: '75%',
+    fontFamily: 'Roboto'
   },
   head: {
     fontWeight: '600',

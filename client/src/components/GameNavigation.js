@@ -192,13 +192,13 @@ const GameNavigation = () => {
         <Grid item xs={4} className={classes.center}>
           <ArrowRightIcon className={matchState.turn === "blue" ? classes.blue : classes.white} fontSize="large" />
           <div className={classes.blue}>
-            <Typography variant="h3" align="center">{matchState.bluePoints}</Typography>
-            <Typography variant="h6" align="center">Blue Team</Typography>
+            <Typography variant="h3" align="center" className={classes.points}>{matchState.bluePoints}</Typography>
+            <Typography variant="h6" align="center" className={classes.teams}>Blue Team</Typography>
           </div>
           <Typography variant="h2" className={classes.scoreSpacing}>-</Typography>
           <div className={classes.red}>
-            <Typography variant="h3" align="center">{matchState.redPoints}</Typography>
-            <Typography variant="h6" align="center">Red Team</Typography>
+            <Typography variant="h3" align="center" className={classes.points}>{matchState.redPoints}</Typography>
+            <Typography variant="h6" align="center" className={classes.teams}>Red Team</Typography>
           </div>
           <ArrowLeftIcon className={matchState.turn === "red" ? classes.red : classes.white} fontSize="large" />
         </Grid>
