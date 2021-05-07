@@ -105,6 +105,7 @@ export default function AvailableRoles() {
 
     useEffect(() => {
         if (matchState) {
+            console.log("adsdasdas")
             if (matchState.inProgress) {
                 socket.off('update-game-engine-' + matchState.matchId);
                 return history.push(`/gamelayout/${matchState.matchId}`);
@@ -113,13 +114,14 @@ export default function AvailableRoles() {
                 setMatchState(game);
             });
         } else {
-            socket.emit('get-game-engine', { matchId });
-            socket.on('update-game-engine-' + matchId, (game) => {
+            console.log(matchIdParam)
+            socket.emit('get-game-engine', { matchIdParam });
+            socket.on('update-game-engine-' + matchIdParam, (game) => {
                 setMatchState(game);
             });
         }
-        return () => socket.off('update-game-engine-' + matchId);
-    }, [socket, matchId, matchState, setMatchState, history]);
+        return () => socket.off('update-game-engine-' + matchIdParam);
+    }, [socket, matchIdParam, matchState, setMatchState, history]);
 
     const assignRole = (role) => {
         if (!matchState.inProgress) {

@@ -57,8 +57,8 @@ export default function GameBoard() {
         setSelected({});
       }
     });
-    return () => socket.off('update-game-engine-' + matchId);
-  }, [socket, matchId, matchState, setMatchState]);
+    return () => socket.off('update-game-engine-' + matchIdParam);
+  }, [socket, matchIdParam, matchState, setMatchState]);
 
   const handleVote = (word, row, column) => {
     setSelected({ row, column });
@@ -66,8 +66,8 @@ export default function GameBoard() {
   };
 
   const submitClue = (clue, numOfGuesses) => {
-    socketRef.emit("set-clue", { matchId: matchIdParam, clue, numOfGuesses });
-    socketRef.on(`update-game-engine-${matchIdParam}`, (game) => {
+    socket.emit("set-clue", { matchId: matchIdParam, clue, numOfGuesses });
+    socket.on(`update-game-engine-${matchIdParam}`, (game) => {
       setMatchState(game);
     });
   };
