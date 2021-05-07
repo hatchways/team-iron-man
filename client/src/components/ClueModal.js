@@ -62,13 +62,12 @@ const ClueModal = (props) => {
     }
     const isCardWord = (word) => {
         const cards = props.cards;
-        let i, j;
-        for (i = 0; i < cards.length; i++) {
-          for (j = 0; j < cards[0].length; j++) {
-            if (cards[i][j].word.toLowerCase() === word.trim().toLowerCase()){
-              return true;
-            }
-          }
+
+        for (let i = 0; i < cards.length; i++) {
+          const findCardWord = cards[i].find(
+            card => card.word.toLowerCase() === word.trim().toLowerCase()
+          );
+          if (findCardWord){return true;}
         }
         return false;
 
