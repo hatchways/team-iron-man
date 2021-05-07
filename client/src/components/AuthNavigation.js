@@ -76,7 +76,6 @@ const AuthNavigation = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, avatar } = useUserState();
-    const [snackbarOpen, setSnackbarOpen] = useState(false)
     const dispatch = useUserDispatch();
     const history = useHistory();
     const { matchState, setMatchState } = useContext(MatchContext);
@@ -113,7 +112,7 @@ const AuthNavigation = () => {
                 }
             })
             .catch((err) => {
-                setSnackbarOpen(true);
+                console.log("Logout failed");
             });
     };
 
@@ -144,7 +143,7 @@ const AuthNavigation = () => {
                                 }}
                             >
                                 <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose} className={classes.menuItem}>Logout</MenuItem>
+                                <MenuItem onClick={logout} className={classes.menuItem}>Logout</MenuItem>
                             </Menu>
                         </Grid>
                     </Grid>
