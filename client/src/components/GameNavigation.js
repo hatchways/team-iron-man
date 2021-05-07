@@ -12,12 +12,7 @@ import {
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
 import { useHistory } from 'react-router';
-<<<<<<< HEAD
-import { useUserState } from '../ContextProvider/user';
-import { useUserDispatch } from '../ContextProvider/user';
-=======
 import { useUserState, useUserDispatch } from '../ContextProvider/user';
->>>>>>> dev
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import { resetUser } from '../ContextProvider/actions';
