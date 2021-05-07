@@ -12,9 +12,14 @@ import {
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
 import { useHistory } from 'react-router';
+<<<<<<< HEAD
 import { useUserState } from '../ContextProvider/user';
+=======
+import { useUserState, useUserDispatch } from "../ContextProvider/user";
+>>>>>>> dev
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import { resetUser } from "../ContextProvider/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,11 +122,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GameNavigation = () => {
+<<<<<<< HEAD
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, avatar } = useUserState();
   const history = useHistory();
   const { matchState, setMatchState } = useContext(MatchContext);
+=======
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const { user, avatar } = useUserState();
+    const history = useHistory();
+    const { matchState, setMatchState } = useContext(MatchContext);
+    const dispatch = useUserDispatch();
+>>>>>>> dev
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -142,6 +156,7 @@ const GameNavigation = () => {
     history.push('/home');
   };
 
+<<<<<<< HEAD
   return (
     <Toolbar className={classes.root}>
       <Grid container>
@@ -222,6 +237,71 @@ const GameNavigation = () => {
       </Grid>
     </Toolbar>
   );
+=======
+    const logout = () => {
+        fetch('/api/logout', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => {
+                if (response.status === 202) {
+                    resetUser(dispatch);
+                    setMatchState(null);
+                    return history.push('/');
+                }
+            })
+            .catch((err) => {
+                console.log("Logout failed");
+            });
+    };
+
+    return (
+        <Toolbar className={classes.root}>
+            <Grid container>
+                <Grid item xs={4} className={classes.left}>
+                    <Typography className={classes.title} onClick={() => goHome()}>CLUE: {matchState.clue}</Typography>
+                </Grid>
+                <Grid item xs={4} className={classes.center}>
+                    <ArrowRightIcon className={matchState.turn === "blue" ? classes.blue : classes.white} fontSize="large" />
+                    <div className={classes.blue}>
+                        <Typography variant="h3" align="center">{matchState.bluePoints}</Typography>
+                        <Typography variant="h6" align="center">Blue Team</Typography>
+                    </div>
+                    <Typography variant="h2" className={classes.scoreSpacing}>-</Typography>
+                    <div className={classes.red}>
+                        <Typography variant="h3" align="center">{matchState.redPoints}</Typography>
+                        <Typography variant="h6" align="center">Red Team</Typography>
+                    </div>
+                    <ArrowLeftIcon className={matchState.turn === "red" ? classes.red : classes.white} fontSize="large" />
+                </Grid>
+                <Grid item xs={4} className={classes.right}>
+                    <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
+                    <Avatar alt="avatar" src={avatar} />
+                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        My Profile<ArrowDropDownIcon />
+                    </Button>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                        getContentAnchorEl={null}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
+                        <MenuItem onClick={logout} className={classes.menuItem}>Logout</MenuItem>
+                    </Menu>
+                </Grid>
+            </Grid>
+        </Toolbar>
+    );
+>>>>>>> dev
 };
 
 export default GameNavigation;
