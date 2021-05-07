@@ -3,9 +3,10 @@ import { Typography, Toolbar, makeStyles, Grid, Button, Avatar, Menu, MenuItem }
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
 import { useHistory } from 'react-router';
-import { useUserState } from "../ContextProvider/user";
+import { useUserState, useUserDispatch } from "../ContextProvider/user";
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import { resetUser } from "../ContextProvider/actions";
 
 const useStyles = makeStyles({
     root: {
@@ -81,6 +82,8 @@ const GameNavigation = () => {
     const { user, avatar } = useUserState();
     const history = useHistory();
     const { matchState, setMatchState } = useContext(MatchContext);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const dispatch = useUserDispatch();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -100,6 +103,25 @@ const GameNavigation = () => {
         setMatchState(null);
         history.push("/home");
     }
+
+    const logout = () => {
+        fetch('/api/logout', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => {
+                if (response.status === 202) {
+                    resetUser(dispatch);
+                    setMatchState(null);
+                    return history.push('/');
+                }
+            })
+            .catch((err) => {
+                setSnackbarOpen(true);
+            });
+    };
 
     return (
         <Toolbar className={classes.root}>
@@ -139,7 +161,7 @@ const GameNavigation = () => {
                         }}
                     >
                         <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose} className={classes.menuItem}>Logout</MenuItem>
+                        <MenuItem onClick={logout} className={classes.menuItem}>Logout</MenuItem>
                     </Menu>
                 </Grid>
             </Grid>
