@@ -1,4 +1,4 @@
-import React, {  useContext,  } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Button, Typography, Box } from '@material-ui/core/';
 import { MatchContext } from '../ContextProvider/match';
@@ -7,7 +7,7 @@ import { useUserState } from '../ContextProvider/user';
 import Trophy from '../Images/Won.png';
 import GameOver from '../Images/Lost.png';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   modal: {
     width: '20%',
     height: '40%',
@@ -20,6 +20,18 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     position: 'absolute',
     borderRadius: '10px',
+    [theme.breakpoints.down('md')]: {
+      width: '30%',
+      height: '50%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '40%',
+      height: '70%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '60%',
+      height: '70%',
+    },
   },
   container: {
     display: 'flex',
@@ -53,7 +65,7 @@ const useStyles = makeStyles({
   red: {
     color: '#ff5e62',
   },
-});
+}));
 
 const GameOverModal = ({ open }) => {
   const classes = useStyles();
@@ -94,7 +106,7 @@ const GameOverModal = ({ open }) => {
         }}
       >
         <Box className={classes.center}>
-        {getTeam(email) === matchState.winner ? (
+          {getTeam(email) === matchState.winner ? (
             <Box>
               <img className={classes.image} src={Trophy} alt="Trophy" />
             </Box>

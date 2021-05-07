@@ -101,7 +101,7 @@ export default function GameBoard() {
             }
             submitClue={submitClue}
           />
-          <GameOverModal />
+          <GameOverModal open={matchState.winner !== ''} />
           <UserPrompt />
         </div>
       )}
