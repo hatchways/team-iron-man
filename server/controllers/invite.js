@@ -4,7 +4,7 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendInvite = (req, res) => {
-  const { user, email } = req.body;
+  const { user, email, matchID } = req.body;
   const msg = {
     to: email,
     from: process.env.TEAM_EMAIL_ADDRESS,
@@ -40,14 +40,14 @@ const sendInvite = (req, res) => {
           class="inner-td" 
           style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;"
         >
-          <a href="http://localhost:3000/join" 
+          <a href="http://localhost:3000/join/${matchID}" 
             style="background-color:#60cc6f; border:1px solid #6ac087; border-color:#6ac087; border-radius:6px; border-width:1px; color:#242222; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid;" 
             target="_blank"
           >
             Join Game
           </a>
         </div>
-        <p>You can join the game by clicking <a href="http://localhost:3000/join">here</a></p>
+        <p>You can join the game by clicking <a href="http://localhost:3000/join/${matchID}">here</a></p>
       </div>`,
   };
   sgMail
@@ -56,7 +56,6 @@ const sendInvite = (req, res) => {
       return res.status(200).json({ message: 'Email Sent' });
     })
     .catch((error) => {
-      console.log(error);
       return res.status(500).json({ message: 'Email not sent' });
     });
 };
