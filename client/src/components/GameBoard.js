@@ -67,6 +67,7 @@ export default function GameBoard() {
     });
   };
 
+
   return (
     <div className={classes.root}>
       {matchState && (
@@ -100,9 +101,11 @@ export default function GameBoard() {
                   email === matchState.redSpymaster.email))
             }
             submitClue={submitClue}
+            cards = {matchState.board}
           />
           <GameOverModal open={matchState.winner !== ''} />
           <UserPrompt />
+
         </div>
       )}
     </div>
