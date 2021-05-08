@@ -17,6 +17,9 @@ import { loginUser } from "../ContextProvider/actions";
 import { useUserDispatch, useUserState } from "../ContextProvider/user";
 
 const useStyles = makeStyles((theme) => ({
+  roundedCorners: {
+    borderRadius: '10px',
+  },
   textField: {
     width: "50%",
     [theme.breakpoints.down('lg')]: {
@@ -106,7 +109,7 @@ const LogIn = () => {
       <Grid item xs></Grid>
       <Grid item xs={8} sm={6} md={4} p={2}>
         <Box pt={4} textAlign="center">
-          <Paper elevation={3}>
+          <Paper elevation={3} className={classes.roundedCorners}>
             <form onSubmit={handleSubmit} className={classes.formPadding}>
               <Box>
                 <Typography variant="h4">
