@@ -15,9 +15,18 @@ import { useHistory } from 'react-router-dom';
 import { registerUser } from '../ContextProvider/actions';
 import { useUserDispatch, useUserState } from '../ContextProvider/user';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   textField: {
     width: '50%',
+    [theme.breakpoints.down('lg')]: {
+      width: '70%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
   black: {
     color: 'black',
@@ -29,7 +38,7 @@ const useStyles = makeStyles({
   formPadding: {
     padding: '20px',
   },
-});
+}));
 
 const initialFormData = {
   registerEmail: '',
@@ -101,7 +110,7 @@ const SignUp = () => {
             <form onSubmit={handleSubmit} className={classes.formPadding}>
               <Box>
                 <Typography variant="h4">
-                  <legend>Sign Up</legend>
+                  Sign Up
                   <hr className={classes.seperator} />
                 </Typography>
               </Box>
