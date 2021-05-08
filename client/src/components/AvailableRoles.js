@@ -19,7 +19,7 @@ import { MatchContext } from '../ContextProvider/match';
 import { useHistory, useParams } from 'react-router-dom';
 import { SocketContext } from '../ContextProvider/socket';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     grid: {
         marginBottom: "30px",
         width: "100%",
@@ -33,9 +33,9 @@ const useStyles = makeStyles({
         marginBottom: "20px",
         justifyContent: "center",
         alignItems: "center",
-        '@media (max-width:600px)': {
+        [theme.breakpoints.down('sm')]: {
             width: '80%'
-        }
+        },
     },
     listItem: {
         marginLeft: "-10px",
@@ -78,21 +78,22 @@ const useStyles = makeStyles({
         justifyContent: "center",
     },
     gridDivider: {
-        '@media (min-width:960px)': {
+        [theme.breakpoints.down('lg')]: {
             borderLeft: '1px solid lightgray',
         },
-        '@media (max-width:960px)': {
+        [theme.breakpoints.down('sm')]: {
+            borderLeft: 'none',
             borderTop: '1px solid lightgray',
             paddingTop: '20px',
             marginTop: '20px'
-        }
+        },
     },
     copyButton: {
         backgroundColor: '#eeeeee',
         marginTop: '20px',
         border: '1px solid black'
     }
-});
+}));
 
 export default function AvailableRoles() {
     const classes = useStyles();

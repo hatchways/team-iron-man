@@ -34,23 +34,22 @@ const useStyles = makeStyles((theme) => ({
     margin: '5vh auto auto auto',
     [theme.breakpoints.down('md')]: {
       width: '40%',
-      margine: 'auto',
+      margin: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
       width: '60%',
-      margine: 'auto',
+      margin: 'auto',
       padding: '30px',
       paddingBottom: '50px',
     },
     [theme.breakpoints.down('xs')]: {
       width: '90%',
-      margine: 'auto',
+      margin: 'auto',
       padding: '20px',
       paddingBottom: '20px',
     },
   },
   header: {
-    fontWeight: '600',
     fontSize: '36px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '28px',
@@ -114,7 +113,16 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     textAlign: "left",
     overflowY: "auto",
-    overflowX: 'hidden'
+    overflowX: 'hidden',
+    [theme.breakpoints.down('md')]: {
+      width: '70%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+    },
   },
   input: {
     width: "100%",

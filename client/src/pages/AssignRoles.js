@@ -50,9 +50,15 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     fontSize: "48px",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '36px'
+    },
   },
   subheader: {
     fontSize: "24px",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '18px'
+    },
   },
   leaveButton: {
     marginTop: '20px',
