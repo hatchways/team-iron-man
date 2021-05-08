@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     align: 'center',
-    width: '120px',
+    width: '160px',
     marginTop: '30px'
   },
   header: {
@@ -63,12 +63,13 @@ const useStyles = makeStyles((theme) => ({
   leaveButton: {
     marginTop: '20px',
     align: 'center',
-    width: '120px',
+    width: '160px',
     backgroundColor: '#f44336',
     '&:hover': {
       backgroundColor: '#aa2e25',
     },
     color: 'white',
+    WebkitTextStroke: '0.2px black'
   },
   stayButton: {
     marginTop: '30px',
@@ -82,10 +83,11 @@ const useStyles = makeStyles((theme) => ({
     align: 'center',
     width: '120px',
     backgroundColor: '#f44336',
-    color: 'white',
     '&:hover': {
       backgroundColor: '#aa2e25',
-    }
+    },
+    color: 'white',
+    WebkitTextStroke: '0.2px black'
   },
   modal: {
     textAlign: 'center',
@@ -93,8 +95,10 @@ const useStyles = makeStyles((theme) => ({
   },
   popupHeader: {
     fontSize: '20px',
-    color: 'red',
   },
+  center: {
+    justifyContent: 'center'
+  }
 }));
 
 export default function AssignRoles() {
@@ -141,7 +145,7 @@ export default function AssignRoles() {
           {'Are you leaving the match?'}
         </DialogTitle>
 
-        <DialogActions>
+        <DialogActions className={classes.center}>
           <Button
             onClick={() => {
               setOpen(false);

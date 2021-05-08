@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   textField: {
     width: '50%',
   },
-  bold: {
+  black: {
     color: 'black',
   },
   seperator: {
@@ -68,7 +68,7 @@ const SignUp = () => {
     handleValidation();
   }, [formData, handleValidation]);
 
-   useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
       return history.push('/home');
     }
@@ -183,7 +183,7 @@ const SignUp = () => {
                 <Typography>
                   <Link href="/login" variant="body2" color="textSecondary">
                     Already have an account?{' '}
-                    <strong className={classes.bold}>Sign in?</strong>
+                    <span className={classes.black}>Sign in?</span>
                   </Link>
                 </Typography>
               </Box>

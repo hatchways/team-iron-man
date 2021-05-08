@@ -69,10 +69,13 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     display: 'flex',
-    fontWeight: "500",
     fontSize: "x-large",
     color: '#00e676',
     WebkitTextStroke: '0.5px black',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 'large',
+    },
+
   },
   logo: {
     width: '50px',

@@ -2,12 +2,14 @@
 UI for creating a new game.
 */
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import GameInvitation from '../components/GameInvitation';
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import { MatchContext } from '../ContextProvider/match';
 import { Dialog, DialogActions, DialogTitle } from '@material-ui/core';
+import { SocketContext } from '../ContextProvider/socket';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -102,10 +104,29 @@ const useStyles = makeStyles((theme) => ({
 
 function NewGame() {
   const history = useHistory();
-  const { matchState } = useContext(MatchContext);
+  const { matchState, setMatchState } = useContext(MatchContext);
   const classes = useStyles();
+  const { matchIdParam } = useParams();
+  const socket = useContext(SocketContext);
 
-  // TODO: Implement creation of new game in the future.
+  useEffect(() => {
+    if (matchState) {
+      if (matchState.inProgress) {
+        socket.off('update-game-engine-' + matchState.matchId);
+        return history.push(`/gamelayout/${matchState.matchId}`);
+      }
+      socket.on('update-game-engine-' + matchState.matchId, (game) => {
+        setMatchState(game);
+      });
+    } else {
+      socket.emit('get-game-engine', { matchId: matchIdParam });
+      socket.on('update-game-engine-' + matchIdParam, (game) => {
+        setMatchState(game);
+      });
+    }
+    return () => socket.off('update-game-engine-' + matchIdParam);
+  }, [socket, matchState]);
+
   const createGame = () => {
     history.push(`/lobby/${matchState.matchId}`);
   };

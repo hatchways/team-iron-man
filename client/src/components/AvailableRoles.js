@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
     },
     gridDivider: {
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.up('sm')]: {
             borderLeft: '1px solid lightgray',
         },
         [theme.breakpoints.down('sm')]: {
@@ -327,7 +327,7 @@ export default function AvailableRoles() {
                                     color="textPrimary"
                                     align="center"
                                 >
-                                    Share match id:
+                                    Share Match ID:
                                 </Typography>
 
                                 <Button

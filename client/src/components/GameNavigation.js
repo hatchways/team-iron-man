@@ -92,6 +92,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "x-large",
     color: '#00e676',
     WebkitTextStroke: '0.5px black',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 'medium',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '0',
+    },
   },
   logo: {
     width: '50px',

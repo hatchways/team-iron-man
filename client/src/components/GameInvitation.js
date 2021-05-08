@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   block: {
     display: 'block',
   },
-
   form: {
     border: '1px solid lightgray',
     borderRadius: '3px',
@@ -43,29 +42,32 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
     color: 'gray',
   },
-
+  container: {
+    marginTop: '50px',
+    justifyContent: 'center',
+  },
   item: {
     marginTop: '50px',
     marginBottom: '50px',
     padding: '10px',
   },
-
   itemLeft: {
     textAlign: 'left',
-    paddingRight: '80px',
-    paddingLeft: '50px',
-    borderRight: '1px solid lightgray',
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '2px',
-      paddingRight: '5px',
-    },
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: '40px',
-      paddingRight: '25px',
+    width: '85%',
+    margin: 'auto',
+    [theme.breakpoints.down('lg')]: {
+      width: '95%',
     },
     [theme.breakpoints.down('sm')]: {
       paddingLeft: '2px',
       paddingRight: '5px',
+      margin: 'auto',
+      width: '75%'
+    },
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: '2px',
+      paddingRight: '5px',
+      width: '100%',
     },
   },
   spacingTop: {
@@ -93,6 +95,17 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '12px',
     },
   },
+  gridDivier: {
+    [theme.breakpoints.up('sm')]: {
+      borderLeft: '1px solid lightgray',
+    },
+    [theme.breakpoints.down('sm')]: {
+      borderLeft: 'none',
+      borderTop: '1px solid lightgray',
+      paddingTop: '20px',
+      marginTop: '20px',
+    },
+  }
 }));
 
 function GameInvitation() {
@@ -134,8 +147,8 @@ function GameInvitation() {
   };
 
   return (
-    <Grid container alignItems="center">
-      <Grid item xs={9}>
+    <Grid container alignItems="center" className={classes.container}>
+      <Grid item xs={12} md={9}>
         <div className={classes.item + ' ' + classes.itemLeft}>
           <Typography>Invite friends via email:</Typography>
           <form onSubmit={sendInvitation}>
@@ -168,16 +181,16 @@ function GameInvitation() {
           {emailList.length > 0 &&
             emailList.map((email) => (
               <Typography
-                className={classes.invitation + ' ' + classes.block}
+                className={classes.block}
                 key={email}
               >
-                &#10004; {email + ' invited'}
+                &#9989; <span className={classes.invitation}>{email + ' invited'}</span>
               </Typography>
             ))}
         </div>
       </Grid>
-      <Grid item xs={3}>
-        <div className={classes.item + ' ' + classes.block}>
+      <Grid item xs={4} md={3} className={classes.item + " " + classes.gridDivier}>
+        <div className={classes.block}>
           <Typography>Or share link:</Typography>
           <Button
             variant="outlined"

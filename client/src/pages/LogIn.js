@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   textField: {
     width: "50%",
   },
-  bold: {
+  black: {
     color: "black",
   },
   seperator: {
@@ -145,18 +145,17 @@ const LogIn = () => {
                 <Typography>
                   <Link href="/signup" variant="body2" color="textSecondary">
                     Don't have an account?{" "}
-                    <strong className={classes.bold}>Sign up?</strong>
+                    <span className={classes.black}>Sign up?</span>
                   </Link>
                 </Typography>
                 <Box p={2.5} m={1}>
-                  <Typography variant="body2">
+                  <Typography variant="body2" color="textSecondary" onClick={revealDemoAccounts} className={classes.demoLink}>
                     Don't want to sign up? Use a{" "}
-                    <strong
-                      className={classes.bold + " " + classes.demoLink}
-                      onClick={revealDemoAccounts}
+                    <span
+                      className={classes.black}
                     >
                       Demo Account!
-                    </strong>
+                    </span>
                   </Typography>
                 </Box>
                 {revealed && (
@@ -229,7 +228,7 @@ const LogIn = () => {
         </Box>
       </Grid>
       <Grid item xs></Grid>
-    </Grid>
+    </Grid >
   );
 };
 
