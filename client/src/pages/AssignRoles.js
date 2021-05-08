@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AssignRoles() {
-  const { matchState } = useContext(MatchContext);
+  const { matchState, setMatchState } = useContext(MatchContext);
   const classes = useStyles();
 
   const history = useHistory();
@@ -100,7 +100,7 @@ export default function AssignRoles() {
     }).catch((err) => {
       console.log(err);
     });
-
+    setMatchState(null);
     return history.push('/home');
   };
 

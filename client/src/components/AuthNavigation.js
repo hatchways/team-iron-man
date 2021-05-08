@@ -127,7 +127,7 @@ const AuthNavigation = () => {
         }
       })
       .catch((err) => {
-        setSnackbarOpen(true);
+        throw err;
       });
   };
 

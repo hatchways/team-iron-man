@@ -2,7 +2,7 @@
 Component for available roles.
 */
 
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Grid, Button, IconButton, CircularProgress } from '@material-ui/core';
@@ -15,7 +15,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
 import { useUserState } from '../ContextProvider/user';
-import io from 'socket.io-client';
 import { MatchContext } from '../ContextProvider/match';
 import { useHistory, useParams } from 'react-router-dom';
 import { SocketContext } from '../ContextProvider/socket';
@@ -105,7 +104,6 @@ export default function AvailableRoles() {
 
     useEffect(() => {
         if (matchState) {
-            console.log("adsdasdas")
             if (matchState.inProgress) {
                 socket.off('update-game-engine-' + matchState.matchId);
                 return history.push(`/gamelayout/${matchState.matchId}`);
@@ -114,14 +112,13 @@ export default function AvailableRoles() {
                 setMatchState(game);
             });
         } else {
-            console.log(matchIdParam)
-            socket.emit('get-game-engine', { matchIdParam });
+            socket.emit('get-game-engine', { matchId: matchIdParam });
             socket.on('update-game-engine-' + matchIdParam, (game) => {
                 setMatchState(game);
             });
         }
         return () => socket.off('update-game-engine-' + matchIdParam);
-    }, [socket, matchIdParam, matchState, setMatchState, history]);
+    }, [socket, matchState]);
 
     const assignRole = (role) => {
         if (!matchState.inProgress) {
@@ -343,7 +340,6 @@ export default function AvailableRoles() {
                                 </Button>
                             </div>
                         </Grid>
-
                     </Grid>
                 </React.Fragment>
             ) : (

@@ -7,7 +7,7 @@ import { Button, makeStyles, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { MatchContext } from "../ContextProvider/match";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     container: {
         width: "40%",
         textAlign: "center",
@@ -19,9 +19,17 @@ const useStyles = makeStyles({
         paddingBottom: "80px",
         margin: 'auto',
         marginTop: "9%",
+        [theme.breakpoints.down('md')]: {
+            width: '60%',
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: '70%',
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: '80%',
+        },
     },
     header: {
-        fontWeight: "600",
         fontSize: "48px",
     },
 
@@ -38,7 +46,7 @@ const useStyles = makeStyles({
     left: {
         textAlign: 'left',
     },
-});
+}));
 
 function Lost() {
     const classes = useStyles();

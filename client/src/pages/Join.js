@@ -2,7 +2,7 @@
 UI for home page.
 */
 
-import React, { useContext, useRef, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Button,
   makeStyles,
@@ -11,10 +11,10 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import io from 'socket.io-client';
 import { useHistory, useParams } from 'react-router-dom';
 import { MatchContext } from '../ContextProvider/match';
 import { useUserState } from "../ContextProvider/user";
+import { SocketContext } from '../ContextProvider/socket';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -38,9 +38,7 @@ const useStyles = makeStyles((theme) => ({
       width: '80%',
     },
   },
-
   header: {
-    fontWeight: '600',
     fontSize: '48px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '38px',
@@ -82,8 +80,7 @@ function Join() {
   const classes = useStyles();
   const history = useHistory();
   const { setMatchState } = useContext(MatchContext);
-  const socketRef = useRef();
-  socketRef.current = io.connect('/');
+  const socket = useContext(SocketContext);
   const [matchId, setMatchId] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [join, setJoin] = useState(false);
@@ -94,13 +91,13 @@ function Join() {
   useEffect(() => {
     if (join) {
       console.log('SOCKET');
-      socketRef.current.emit('join-match', { matchId, player: { name: user, email } });
-      socketRef.current.on('join-game-engine', (game) => {
+      socket.emit('join-match', { matchId, player: { name: user, email } });
+      socket.on('join-game-engine', (game) => {
         setMatchState(game);
       });
     }
     return () => {
-      socketRef.current.off('join-game-engine');
+      socket.off('join-game-engine');
     };
   }, [join]);
 
