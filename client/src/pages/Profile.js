@@ -19,7 +19,7 @@ import ChangeUserName from '../components/ChangeUserName';
 import ChangePassword from '../components/ChangePassword';
 import ChangeAvatar from '../components/ChangeAvatar';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     container: {
         width: "50%",
         height: "70vh",
@@ -30,23 +30,44 @@ const useStyles = makeStyles({
         borderRadius: "10px",
         padding: "50px",
         paddingBottom: "80px",
-        marginLeft: "25%",
+        margin: 'auto',
         marginTop: "10vh",
-        overflowY: "auto"
+        overflowY: "auto",
+        [theme.breakpoints.down('sm')]: {
+            marginTop: "5vh",
+            width: '70%',
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: '80%',
+            padding: "20px",
+        },
     },
-
     header: {
-        fontWeight: "600",
         fontSize: "48px",
         textAlign: "left",
+        [theme.breakpoints.down('lg')]: {
+            fontSize: '36px',
+        },
+        [theme.breakpoints.down('md')]: {
+            textAlign: 'center',
+            fontSize: '24px',
+        },
     },
-
     subheader: {
-        fontWeight: "400",
+        fontSize: "24px",
+        textAlign: "left",
+        [theme.breakpoints.down('lg')]: {
+            fontSize: '16px',
+        },
+        [theme.breakpoints.down('md')]: {
+            textAlign: "center",
+            fontSize: '12px',
+        },
+    },
+    settings: {
         fontSize: "24px",
         textAlign: "left",
     },
-
     hr: {
         border: "1px solid #00e676",
         marginTop: "60px",
@@ -76,8 +97,7 @@ const useStyles = makeStyles({
         width: "80px",
         height: "80px",
     },
-
-});
+}));
 
 function Profile() {
     const classes = useStyles();
@@ -161,14 +181,14 @@ function Profile() {
     return (
         <div className={classes.container}>
             <Grid container>
-                <Grid item xs={2} className={classes.left}>
+                <Grid item xs={12} sm={2} className={classes.left}>
                     <Avatar
                         alt="Some Dude"
                         src={avatar}
                         className={classes.large}
                     />
                 </Grid>
-                <Grid item xs={10} className={classes.right}>
+                <Grid item xs={12} sm={10} className={classes.right}>
                     <Typography color="textPrimary" className={classes.header}>
                         {user}
                     </Typography>
@@ -180,7 +200,7 @@ function Profile() {
             <Divider className={classes.hr} variant="middle" />
             <Typography
                 color="textPrimary"
-                className={classes.subheader + " " + classes.bottomSpacing}
+                className={classes.settings + " " + classes.bottomSpacing}
             >
                 <SettingsIcon />
                 Settings:
