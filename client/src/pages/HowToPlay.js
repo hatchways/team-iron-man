@@ -34,17 +34,14 @@ const useStyles = makeStyles((theme) => ({
     margin: '5vh auto auto auto',
     [theme.breakpoints.down('md')]: {
       width: '40%',
-      margin: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
       width: '60%',
-      margin: 'auto',
       padding: '30px',
       paddingBottom: '50px',
     },
     [theme.breakpoints.down('xs')]: {
       width: '90%',
-      margin: 'auto',
       padding: '20px',
       paddingBottom: '20px',
     },

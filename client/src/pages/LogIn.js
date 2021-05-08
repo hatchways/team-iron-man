@@ -16,9 +16,18 @@ import { useHistory } from "react-router-dom";
 import { loginUser } from "../ContextProvider/actions";
 import { useUserDispatch, useUserState } from "../ContextProvider/user";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   textField: {
     width: "50%",
+    [theme.breakpoints.down('lg')]: {
+      width: '70%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
   black: {
     color: "black",
@@ -39,7 +48,7 @@ const useStyles = makeStyles({
   mr: {
     marginRight: "10px",
   },
-});
+}));
 
 const initialLogInData = {
   signInEmail: "",
@@ -101,8 +110,7 @@ const LogIn = () => {
             <form onSubmit={handleSubmit} className={classes.formPadding}>
               <Box>
                 <Typography variant="h4">
-                  <legend>Sign In</legend>
-
+                  Sign In
                   <hr className={classes.seperator} />
                 </Typography>
               </Box>
