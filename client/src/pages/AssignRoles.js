@@ -64,7 +64,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '20px',
     align: 'center',
     width: '120px',
-    backgroundColor: '#f23f3f',
+    backgroundColor: '#f44336',
+    '&:hover': {
+      backgroundColor: '#aa2e25',
+    },
     color: 'white',
   },
   stayButton: {
@@ -78,8 +81,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '30px',
     align: 'center',
     width: '120px',
-    backgroundColor: '#f23f3f',
+    backgroundColor: '#f44336',
     color: 'white',
+    '&:hover': {
+      backgroundColor: '#aa2e25',
+    }
   },
   modal: {
     textAlign: 'center',

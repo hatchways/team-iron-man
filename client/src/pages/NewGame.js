@@ -38,14 +38,12 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: '20px',
     },
   },
-
   header: {
     fontSize: '48px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '28px',
     },
   },
-
   hr: {
     width: '10%',
     border: '1px solid #00e676',
@@ -57,26 +55,38 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  createButton: {
+    width: '160px'
+  },
   leaveButton: {
     marginTop: '20px',
     align: 'center',
-    width: '110px',
-    backgroundColor: '#f23f3f',
+    width: '160px',
+    backgroundColor: '#f44336',
+    '&:hover': {
+      backgroundColor: '#aa2e25',
+    },
     color: 'white',
+    WebkitTextStroke: '0.2px black'
   },
   stayButton: {
     marginTop: '30px',
     align: 'center',
     width: '120px',
     color: 'black',
+    width: '160px'
   },
   leaveButtonInner: {
     marginLeft: '40px',
     marginTop: '30px',
     align: 'center',
-    width: '120px',
-    backgroundColor: '#f23f3f',
+    width: '160px',
+    backgroundColor: '#f44336',
+    '&:hover': {
+      backgroundColor: '#aa2e25',
+    },
     color: 'white',
+    WebkitTextStroke: '0.2px black'
   },
   modal: {
     textAlign: 'center',
@@ -84,8 +94,10 @@ const useStyles = makeStyles((theme) => ({
   },
   popupHeader: {
     fontSize: '20px',
-    color: 'red',
   },
+  center: {
+    justifyContent: 'center'
+  }
 }));
 
 function NewGame() {
@@ -140,7 +152,7 @@ function NewGame() {
           {'Are you canceling the match?'}
         </DialogTitle>
 
-        <DialogActions>
+        <DialogActions className={classes.center}>
           <Button
             onClick={() => {
               setOpen(false);
@@ -177,7 +189,7 @@ function NewGame() {
         variant="contained"
         color="secondary"
         onClick={createGame}
-        className={classes.spacing}
+        className={classes.spacing + " " + classes.createButton}
       >
         Create Game
       </Button>
