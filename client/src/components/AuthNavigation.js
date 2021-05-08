@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
 const AuthNavigation = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const { user, email, avatar } = useUserState();
+  const { user, avatar } = useUserState();
   const dispatch = useUserDispatch();
   const history = useHistory();
   const { matchState, setMatchState } = useContext(MatchContext);
