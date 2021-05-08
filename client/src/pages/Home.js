@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     marginTop: '50px',
     display: 'block',
+    width: '160px'
   },
   center: {
     display: 'flex',
