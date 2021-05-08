@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
       margin: '10px',
     },
   },
+  roundedCorners: {
+    borderRadius: '10px'
+  },
   button: {
     marginTop: '10px',
     marginLeft: '10px',
@@ -50,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Roboto'
   },
   head: {
-    fontWeight: '600',
     fontSize: '26px',
+    textAlign: 'center',
     [theme.breakpoints.down('md')]: {
       fontSize: '16px',
     },
@@ -97,10 +100,10 @@ const Chat = () => {
 
   return (
     <Box className={classes.card}>
-      <Paper elevation={3}>
+      <Paper elevation={3} className={classes.roundedCorners}>
         <Box p={2}>
           <Typography className={classes.head}>
-            Welcome to the Game Chat
+            Game Chat
           </Typography>
           <Box
             className={classes.window}
