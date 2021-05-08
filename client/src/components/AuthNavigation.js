@@ -87,6 +87,12 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       cursor: "pointer",
     }
+  },
+  menuButton: {
+    marginLeft: '5px',
+    '&:hover': {
+      backgroundColor: 'lightgray'
+    }
   }
 }));
 
@@ -155,7 +161,7 @@ const AuthNavigation = () => {
             <Grid item xs={6} className={classes.right}>
               <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
               <Avatar alt="avatar" src={avatar} />
-              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} className={classes.menuButton}>
                 My Profile<ArrowDropDownIcon />
               </Button>
               <Menu

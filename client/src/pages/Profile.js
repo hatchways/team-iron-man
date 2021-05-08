@@ -45,10 +45,11 @@ const useStyles = makeStyles((theme) => ({
     header: {
         fontSize: "48px",
         textAlign: "left",
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('md')]: {
+            marginLeft: '20px',
             fontSize: '36px',
         },
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             textAlign: 'center',
             fontSize: '24px',
         },
@@ -56,10 +57,11 @@ const useStyles = makeStyles((theme) => ({
     subheader: {
         fontSize: "24px",
         textAlign: "left",
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('md')]: {
+            marginLeft: '20px',
             fontSize: '16px',
         },
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             textAlign: "center",
             fontSize: '12px',
         },

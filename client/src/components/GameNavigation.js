@@ -131,6 +131,18 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 'x-small',
     },
   },
+  menuButton: {
+    marginLeft: '5px',
+    '&:hover': {
+      backgroundColor: 'lightgray'
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 'small',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 'x-small',
+    },
+  }
 }));
 
 const GameNavigation = () => {
@@ -211,7 +223,7 @@ const GameNavigation = () => {
         <Grid item xs={4} className={classes.right}>
           <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
           <Avatar alt="avatar" src={avatar} />
-          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} className={classes.menuButton}>
             My Profile<ArrowDropDownIcon />
           </Button>
           <Menu
