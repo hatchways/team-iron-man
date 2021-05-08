@@ -15,7 +15,6 @@ import UserPrompt from './UserPrompt';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    border: '1px solid black',
     height: '90vh',
     display: 'flex',
     alignItems: 'center',
@@ -53,7 +52,7 @@ export default function GameBoard() {
     }
     socket.on("update-game-engine-" + matchIdParam, (game) => {
       setMatchState(game);
-      if (matchState && matchState.votes === {}) {
+      if (matchState && Object.keys(game.votes).length === 0) {
         setSelected({});
       }
     });
