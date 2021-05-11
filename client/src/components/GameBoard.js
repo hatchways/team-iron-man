@@ -15,7 +15,6 @@ import UserPrompt from './UserPrompt';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    border: '1px solid black',
     height: '90vh',
     display: 'flex',
     alignItems: 'center',
@@ -44,30 +43,30 @@ export default function GameBoard() {
   const { email } = useUserState();
   const socket = useContext(SocketContext);
   const { matchState, setMatchState } = useContext(MatchContext);
-  const { matchId } = useParams();
+  const { matchIdParam } = useParams();
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
     if (!matchState) {
-      socket.emit('get-game-engine', { matchId });
+      socket.emit("get-game-engine", { matchId: matchIdParam });
     }
-    socket.on('update-game-engine-' + matchId, (game) => {
+    socket.on("update-game-engine-" + matchIdParam, (game) => {
       setMatchState(game);
-      if (matchState.votes === {}) {
+      if (matchState && Object.keys(game.votes).length === 0) {
         setSelected({});
       }
     });
-    return () => socket.off('update-game-engine-' + matchId);
-  }, [socket, matchId, matchState, setMatchState]);
+    return () => socket.off('update-game-engine-' + matchIdParam);
+  }, [socket, matchIdParam, matchState, setMatchState]);
 
   const handleVote = (word, row, column) => {
     setSelected({ row, column });
-    socket.emit('set-vote', { matchId, word, row, column, email });
+    socket.emit("set-vote", { matchId: matchIdParam, word, row, column, email });
   };
 
   const submitClue = (clue, numOfGuesses) => {
-    socket.emit('set-clue', { matchId, clue, numOfGuesses });
-    socket.on(`update-game-engine-${matchId}`, (game) => {
+    socket.emit("set-clue", { matchId: matchIdParam, clue, numOfGuesses });
+    socket.on(`update-game-engine-${matchIdParam}`, (game) => {
       setMatchState(game);
     });
   };
@@ -112,5 +111,5 @@ export default function GameBoard() {
         </div>
       )}
     </div>
-  );
+  )
 }

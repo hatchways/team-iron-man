@@ -15,11 +15,23 @@ import { useHistory } from 'react-router-dom';
 import { registerUser } from '../ContextProvider/actions';
 import { useUserDispatch, useUserState } from '../ContextProvider/user';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  roundedCorners: {
+    borderRadius: '10px',
+  },
   textField: {
     width: '50%',
+    [theme.breakpoints.down('lg')]: {
+      width: '70%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
-  bold: {
+  black: {
     color: 'black',
   },
   seperator: {
@@ -29,7 +41,7 @@ const useStyles = makeStyles({
   formPadding: {
     padding: '20px',
   },
-});
+}));
 
 const initialFormData = {
   registerEmail: '',
@@ -68,7 +80,7 @@ const SignUp = () => {
     handleValidation();
   }, [formData, handleValidation]);
 
-   useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
       return history.push('/home');
     }
@@ -97,11 +109,11 @@ const SignUp = () => {
       <Grid item xs></Grid>
       <Grid item xs={8} sm={6} md={4} p={2}>
         <Box pt={4} textAlign="center">
-          <Paper elevation={3}>
+          <Paper elevation={3} className={classes.roundedCorners}>
             <form onSubmit={handleSubmit} className={classes.formPadding}>
               <Box>
                 <Typography variant="h4">
-                  <legend>Sign Up</legend>
+                  Sign Up
                   <hr className={classes.seperator} />
                 </Typography>
               </Box>
@@ -183,7 +195,7 @@ const SignUp = () => {
                 <Typography>
                   <Link href="/login" variant="body2" color="textSecondary">
                     Already have an account?{' '}
-                    <strong className={classes.bold}>Sign in?</strong>
+                    <span className={classes.black}>Sign in?</span>
                   </Link>
                 </Typography>
               </Box>

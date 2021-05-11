@@ -4,6 +4,7 @@ import { useUserState } from '../ContextProvider/user';
 
 const useStyles = makeStyles((theme) => ({
   message: {
+    fontFamily: 'Roboto',
     [theme.breakpoints.down('md')]: {
       fontSize: '12px',
     },

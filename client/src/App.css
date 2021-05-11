@@ -33,3 +33,8 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: "KGHappy";
+  src: local("kghappy"), url("./fonts/KGHAPPY.ttf") format("truetype");
+}

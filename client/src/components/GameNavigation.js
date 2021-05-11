@@ -8,6 +8,7 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  Box
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { MatchContext } from '../ContextProvider/match';
@@ -16,6 +17,7 @@ import { useUserState, useUserDispatch } from '../ContextProvider/user';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import { resetUser } from '../ContextProvider/actions';
+import BouncingText from 'react-bouncing-text';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   newGameButton: {
     marginRight: '10px',
+    display: 'none',
     color: 'white',
     backgroundColor: '#00e676',
     '&:hover': {
@@ -84,15 +87,28 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    fontWeight: '500',
-    fontSize: 'large',
-    transition: 'font-size 0.2s ease-in',
-    '&:hover': {
-      fontWeight: '300',
-      fontSize: '20px',
-      cursor: 'pointer',
-      transition: 'font-size 0.2s ease-in;',
+    display: 'flex',
+    fontWeight: "500",
+    fontSize: "x-large",
+    color: '#00e676',
+    WebkitTextStroke: '0.5px black',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 'medium',
     },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '0',
+    },
+  },
+  logo: {
+    width: '50px',
+    marginRight: '10px'
+  },
+  flex: {
+    display: 'flex',
+    alignItems: 'center',
+    '&:hover': {
+      cursor: "pointer",
+    }
   },
   points: {
     [theme.breakpoints.down('sm')]: {
@@ -115,6 +131,18 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 'x-small',
     },
   },
+  menuButton: {
+    marginLeft: '5px',
+    '&:hover': {
+      backgroundColor: 'lightgray'
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 'small',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 'x-small',
+    },
+  }
 }));
 
 const GameNavigation = () => {
@@ -167,57 +195,36 @@ const GameNavigation = () => {
     <Toolbar className={classes.root}>
       <Grid container>
         <Grid item xs={4} className={classes.left}>
-          <Typography className={classes.title} onClick={() => goHome()}>
-            CLUE: {matchState.clue}
-          </Typography>
+          <Box onClick={() => goHome()} className={classes.flex}>
+            <img src="https://res.cloudinary.com/du081ilw3/image/upload/v1620276307/Assets/cluewords_textless_v6vy3n.png" alt="logo" className={classes.logo} />
+            <BouncingText
+              text="CLUEWORDS"
+              hoverable
+              delay={30}
+              duration={200}
+              className={classes.title}
+              onClick={() => goHome()}
+            />
+          </Box>
         </Grid>
         <Grid item xs={4} className={classes.center}>
-          <ArrowRightIcon
-            className={
-              matchState.turn === 'blue' ? classes.blue : classes.white
-            }
-            fontSize="large"
-          />
+          <ArrowRightIcon className={matchState.turn === "blue" ? classes.blue : classes.white} fontSize="large" />
           <div className={classes.blue}>
-            <Typography variant="h3" align="center">
-              {matchState.bluePoints}
-            </Typography>
-            <Typography variant="h6" align="center">
-              Blue Team
-            </Typography>
+            <Typography variant="h3" align="center" className={classes.points}>{matchState.bluePoints}</Typography>
+            <Typography variant="h6" align="center" className={classes.teams}>Blue Team</Typography>
           </div>
-          <Typography variant="h2" className={classes.scoreSpacing}>
-            -
-          </Typography>
+          <Typography variant="h2" className={classes.scoreSpacing + " " + classes.teams}>-</Typography>
           <div className={classes.red}>
-            <Typography variant="h3" align="center">
-              {matchState.redPoints}
-            </Typography>
-            <Typography variant="h6" align="center">
-              Red Team
-            </Typography>
+            <Typography variant="h3" align="center" className={classes.points}>{matchState.redPoints}</Typography>
+            <Typography variant="h6" align="center" className={classes.teams}>Red Team</Typography>
           </div>
-          <ArrowLeftIcon
-            className={matchState.turn === 'red' ? classes.red : classes.white}
-            fontSize="large"
-          />
+          <ArrowLeftIcon className={matchState.turn === "red" ? classes.red : classes.white} fontSize="large" />
         </Grid>
         <Grid item xs={4} className={classes.right}>
-          <Button
-            variant="contained"
-            className={classes.newGameButton}
-            onClick={() => console.log(user)}
-          >
-            New Game
-          </Button>
+          <Button variant="contained" className={classes.newGameButton} onClick={() => console.log(user)}>New Game</Button>
           <Avatar alt="avatar" src={avatar} />
-          <Button
-            aria-controls="simple-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            My Profile
-            <ArrowDropDownIcon />
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} className={classes.menuButton}>
+            My Profile<ArrowDropDownIcon />
           </Button>
           <Menu
             id="simple-menu"
@@ -231,9 +238,7 @@ const GameNavigation = () => {
               horizontal: 'center',
             }}
           >
-            <MenuItem onClick={goToProfile} className={classes.menuItem}>
-              Profile
-            </MenuItem>
+            <MenuItem onClick={goToProfile} className={classes.menuItem}>Profile</MenuItem>
             <MenuItem onClick={logout} className={classes.menuItem}>
               Logout
             </MenuItem>

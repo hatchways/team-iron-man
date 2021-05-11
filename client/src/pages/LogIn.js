@@ -16,11 +16,23 @@ import { useHistory } from "react-router-dom";
 import { loginUser } from "../ContextProvider/actions";
 import { useUserDispatch, useUserState } from "../ContextProvider/user";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  roundedCorners: {
+    borderRadius: '10px',
+  },
   textField: {
     width: "50%",
+    [theme.breakpoints.down('lg')]: {
+      width: '70%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
-  bold: {
+  black: {
     color: "black",
   },
   seperator: {
@@ -39,7 +51,7 @@ const useStyles = makeStyles({
   mr: {
     marginRight: "10px",
   },
-});
+}));
 
 const initialLogInData = {
   signInEmail: "",
@@ -97,12 +109,11 @@ const LogIn = () => {
       <Grid item xs></Grid>
       <Grid item xs={8} sm={6} md={4} p={2}>
         <Box pt={4} textAlign="center">
-          <Paper elevation={3}>
+          <Paper elevation={3} className={classes.roundedCorners}>
             <form onSubmit={handleSubmit} className={classes.formPadding}>
               <Box>
                 <Typography variant="h4">
-                  <legend>Sign In</legend>
-
+                  Sign In
                   <hr className={classes.seperator} />
                 </Typography>
               </Box>
@@ -145,18 +156,17 @@ const LogIn = () => {
                 <Typography>
                   <Link href="/signup" variant="body2" color="textSecondary">
                     Don't have an account?{" "}
-                    <strong className={classes.bold}>Sign up?</strong>
+                    <span className={classes.black}>Sign up?</span>
                   </Link>
                 </Typography>
                 <Box p={2.5} m={1}>
-                  <Typography variant="body2">
+                  <Typography variant="body2" color="textSecondary" onClick={revealDemoAccounts} className={classes.demoLink}>
                     Don't want to sign up? Use a{" "}
-                    <strong
-                      className={classes.bold + " " + classes.demoLink}
-                      onClick={revealDemoAccounts}
+                    <span
+                      className={classes.black}
                     >
                       Demo Account!
-                    </strong>
+                    </span>
                   </Typography>
                 </Box>
                 {revealed && (
@@ -229,7 +239,7 @@ const LogIn = () => {
         </Box>
       </Grid>
       <Grid item xs></Grid>
-    </Grid>
+    </Grid >
   );
 };
 

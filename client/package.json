@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "cloudinary": "^1.25.1",
     "react": "^17.0.1",
+    "react-bouncing-text": "0.0.4",
     "react-card-flip": "^1.1.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.3.2",

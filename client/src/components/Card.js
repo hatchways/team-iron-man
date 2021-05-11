@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
   box: {
     height: '13vh',
     width: '13vw',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+    border: '1px solid lightgray',
+    boxShadow: '0 1px 5px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24)',
     cursor: 'pointer',
     borderRadius: '10px',
     display: 'flex',
@@ -54,10 +55,12 @@ const useStyles = makeStyles((theme) => ({
   },
   whiteTextRevealed: {
     color: 'white',
+    WebkitTextStroke: '0.5px black'
   },
   borderGlow: {
     borderColor: '#9ecaed',
-    boxShadow: '0 0 10px #9ecaed',
+    boxShadow: '0 1px 15px #9ecaed',
+    border: '2px solid #9ecaed'
   },
 }));
 
@@ -80,15 +83,15 @@ const Card = (props) => {
         }
         onClick={
           matchState.turnPhase === 'guess' &&
-          ((matchState.turn === 'blue' &&
-            matchState.blueGuessers.findIndex(
-              (player) => player.email === email
-            ) !== -1) ||
-            (matchState.turn === 'red' &&
-              matchState.redGuessers.findIndex(
+            ((matchState.turn === 'blue' &&
+              matchState.blueGuessers.findIndex(
                 (player) => player.email === email
-              ) !== -1)) &&
-          !props.revealed
+              ) !== -1) ||
+              (matchState.turn === 'red' &&
+                matchState.redGuessers.findIndex(
+                  (player) => player.email === email
+                ) !== -1)) &&
+            !props.revealed
             ? () => props.handleVote(props.word, props.row, props.column)
             : () => console.log('Not your turn.')
         }

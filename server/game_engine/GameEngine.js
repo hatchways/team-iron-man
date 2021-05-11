@@ -14,8 +14,8 @@ Method for restarting: all the words get reshuffled again, points reset to 0.
 const wordList = require("./wordList");
 
 class Game {
-    constructor(hostId, matchId) {
-        this.host = hostId;
+    constructor(host, matchId) {
+        this.host = host.name;
         this.matchId = matchId;
         this.playersReady = [];
         this.blueGuessers = [];
@@ -38,6 +38,7 @@ class Game {
         this.votes = {};
         this.numOfVotes = 0;
         this.everyoneVoted = false;
+        this.invitedPlayers = [host];
     }
 
     checkCard(row, column) {
@@ -226,6 +227,12 @@ class Game {
         }
     }
 
+    addToInviteList(player) {
+        if (!this.invitedPlayers.find((invited) => invited.email === player.email) && !this.inProgress) {
+            this.invitedPlayers.push(player);
+        }
+    }
+
     getRoles() {
         return {
             blueGuessers: this.blueGuessers,
@@ -276,7 +283,8 @@ class Game {
             inProgress: this.inProgress,
             votes: this.votes,
             numOfVotes: this.numOfVotes,
-            everyoneVoted: this.everyoneVoted
+            everyoneVoted: this.everyoneVoted,
+            invitedPlayers: this.invitedPlayers,
         };
     }
 }

@@ -69,11 +69,12 @@ const useStyles = makeStyles((theme) => ({
 
 const GameOverModal = ({ open }) => {
   const classes = useStyles();
-  const { matchState } = useContext(MatchContext);
+  const { matchState, setMatchState } = useContext(MatchContext);
   const { email } = useUserState();
   const history = useHistory();
 
   const handleClose = () => {
+    setMatchState(null);
     return history.push('/home');
   };
   const getTeam = (email) => {
@@ -100,9 +101,8 @@ const GameOverModal = ({ open }) => {
       <Box
         className={classes.container}
         style={{
-          backgroundColor: `${
-            matchState.winner === 'red' ? 'Tomato' : 'PowderBlue'
-          }`,
+          backgroundColor: `${matchState.winner === 'red' ? 'Tomato' : 'PowderBlue'
+            }`,
         }}
       >
         <Box className={classes.center}>

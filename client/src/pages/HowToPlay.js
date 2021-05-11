@@ -34,23 +34,19 @@ const useStyles = makeStyles((theme) => ({
     margin: '5vh auto auto auto',
     [theme.breakpoints.down('md')]: {
       width: '40%',
-      margine: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
       width: '60%',
-      margine: 'auto',
       padding: '30px',
       paddingBottom: '50px',
     },
     [theme.breakpoints.down('xs')]: {
       width: '90%',
-      margine: 'auto',
       padding: '20px',
       paddingBottom: '20px',
     },
   },
   header: {
-    fontWeight: '600',
     fontSize: '36px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '28px',
@@ -108,10 +104,58 @@ const useStyles = makeStyles((theme) => ({
       color: '#76ff03',
     },
   },
-  disabled: {
-    fontSize: '50px',
-    color: 'gray',
+  content: {
+    height: "45vh",
+    width: "60%",
+    margin: "auto",
+    textAlign: "left",
+    overflowY: "auto",
+    overflowX: 'hidden',
+    [theme.breakpoints.down('md')]: {
+      width: '70%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+    },
   },
+  input: {
+    width: "100%",
+  },
+  tableOfContentsHeader: {
+    fontWeight: "bold",
+    margin: "20px 0 20px 0",
+    fontFamily: 'Roboto'
+  },
+  tableOfContentsLink: {
+    color: "#1769aa",
+    fontFamily: 'Roboto',
+    "&:hover": {
+      textDecoration: "underline",
+      cursor: "pointer",
+    },
+  },
+  tabbed: {
+    marginLeft: 20,
+  },
+  description: {
+    fontStyle: 'italic',
+    fontFamily: 'Roboto'
+  },
+  arrowButton: {
+    color: "#00e676",
+    fontSize: "50px",
+    cursor: "pointer",
+    '&:hover': {
+      color: "#76ff03",
+    }
+  },
+  disabled: {
+    fontSize: "50px",
+    color: "gray"
+  }
 }));
 
 function HowToPlay() {

@@ -4,7 +4,7 @@ UI for assigning roles.
 
 import React, { useContext, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import AvailableRoles from '../components/AvailableRoles';
 import { MatchContext } from '../ContextProvider/match';
 import io from 'socket.io-client';
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
       width: '60%',
+      marginTop: '5vh'
     },
     [theme.breakpoints.down('sm')]: {
       width: '80%',
@@ -44,14 +45,31 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     align: 'center',
-    width: '120px',
+    width: '160px',
+    marginTop: '30px'
+  },
+  header: {
+    fontSize: "48px",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '36px'
+    },
+  },
+  subheader: {
+    fontSize: "24px",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '18px'
+    },
   },
   leaveButton: {
     marginTop: '20px',
     align: 'center',
-    width: '120px',
-    backgroundColor: '#f23f3f',
+    width: '160px',
+    backgroundColor: '#f44336',
+    '&:hover': {
+      backgroundColor: '#aa2e25',
+    },
     color: 'white',
+    WebkitTextStroke: '0.2px black'
   },
   stayButton: {
     marginTop: '30px',
@@ -64,8 +82,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '30px',
     align: 'center',
     width: '120px',
-    backgroundColor: '#f23f3f',
+    backgroundColor: '#f44336',
+    '&:hover': {
+      backgroundColor: '#aa2e25',
+    },
     color: 'white',
+    WebkitTextStroke: '0.2px black'
   },
   modal: {
     textAlign: 'center',
@@ -73,12 +95,14 @@ const useStyles = makeStyles((theme) => ({
   },
   popupHeader: {
     fontSize: '20px',
-    color: 'red',
   },
+  center: {
+    justifyContent: 'center'
+  }
 }));
 
 export default function AssignRoles() {
-  const { matchState } = useContext(MatchContext);
+  const { matchState, setMatchState } = useContext(MatchContext);
   const classes = useStyles();
 
   const history = useHistory();
@@ -92,7 +116,7 @@ export default function AssignRoles() {
     }).catch((err) => {
       console.log(err);
     });
-
+    setMatchState(null);
     return history.push('/home');
   };
 
@@ -121,7 +145,7 @@ export default function AssignRoles() {
           {'Are you leaving the match?'}
         </DialogTitle>
 
-        <DialogActions>
+        <DialogActions className={classes.center}>
           <Button
             onClick={() => {
               setOpen(false);
@@ -160,9 +184,13 @@ export default function AssignRoles() {
   return (
     <React.Fragment>
       <div className={classes.container}>
-        <h1>New Game</h1>
+        <Typography color="textPrimary" className={classes.header}>
+          Game Lobby
+                </Typography>
         <hr className={classes.hr} />
-        <h2>Available Roles</h2>
+        <Typography color="textPrimary" className={classes.subheader}>
+          Select Your Roles
+                </Typography>
         <AvailableRoles />
         <Button
           className={classes.button}

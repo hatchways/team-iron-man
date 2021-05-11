@@ -12,12 +12,13 @@ exports.socketConnect = function (server) {
             io.to(matchId).emit('message', { name, message });
         });
 
-        socket.on('join-match', ({ matchId }) => {
+        socket.on('join-match', ({ matchId, player }) => {
+            game[matchId].addToInviteList(player);
             io.emit('join-game-engine', game[matchId].toJson());
         })
 
-        socket.on('create-game-engine', ({ user, matchId }) => {
-            game[matchId] = new gameEngine(user, matchId);
+        socket.on('create-game-engine', ({ player, matchId }) => {
+            game[matchId] = new gameEngine(player, matchId);
             io.emit('start-game-engine', game[matchId].toJson());
         });
 
@@ -32,7 +33,12 @@ exports.socketConnect = function (server) {
         })
 
         socket.on('get-game-engine', ({ matchId }) => {
-            io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+            if (game.hasOwnProperty(matchId)) {
+                io.emit('update-game-engine-' + matchId, game[matchId].toJson());
+            }
+            else {
+                io.emit('update-game-engine-' + matchId, { notFound: true });
+            }
         })
 
         socket.on('set-match-in-progress', ({ matchId }) => {

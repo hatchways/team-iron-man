@@ -15,7 +15,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: "50px",
         display: "block",
@@ -40,7 +40,6 @@ const useStyles = makeStyles({
     inputLabel: {
         margin: "10px 0 10px 0",
         textAlign: "left",
-        fontWeight: "bold",
     },
     buttonGreen: {
         backgroundColor: "#00e676",
@@ -48,8 +47,11 @@ const useStyles = makeStyles({
         "&:hover": {
             backgroundColor: "#00a152",
         },
+        [theme.breakpoints.down('lg')]: {
+            marginTop: '20px',
+        },
     },
-});
+}));
 
 const ChangePassword = (props) => {
 
@@ -67,7 +69,7 @@ const ChangePassword = (props) => {
             </AccordionSummary>
             <AccordionDetails className={classes.block}>
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} lg={6}>
                         <Typography className={classes.inputLabel}>
                             Enter New password:
                             </Typography>
@@ -100,7 +102,7 @@ const ChangePassword = (props) => {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} lg={6}>
                         <Typography className={classes.inputLabel}>
                             Confirm New Password:
                             </Typography>
@@ -135,7 +137,7 @@ const ChangePassword = (props) => {
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} lg={6}>
                         <Typography className={classes.inputLabel}>
                             Enter Old password:
                             </Typography>
@@ -166,7 +168,7 @@ const ChangePassword = (props) => {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={6} className={classes.center}>
+                    <Grid item xs={12} lg={6} className={classes.center}>
                         <Button
                             variant="contained"
                             className={classes.buttonGreen}
